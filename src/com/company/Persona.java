@@ -3,9 +3,10 @@ package com.company;
 
 import com.google.gson.annotations.SerializedName;
 
+import javax.swing.*;
+
 public class Persona {
 
-    ///Atributos
 
     @SerializedName("Usuario")
     private String miusuario;

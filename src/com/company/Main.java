@@ -12,10 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-<<<<<<< HEAD
-=======
 
->>>>>>> f26047334008ff2fee92dcb4fabce807a61c3ee3
         ///Probando clases Usuario y DatosVuelo
         /*
         Date fecha=null;

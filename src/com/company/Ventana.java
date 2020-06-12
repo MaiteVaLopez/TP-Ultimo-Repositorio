@@ -2,15 +2,13 @@ package com.company;
 
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -21,13 +19,25 @@ public class Ventana extends javax.swing.JFrame {
 
 
     ArrayList<Persona> Usuarios = null;
-    String path;
-    File archivo;
+    ArrayList<TresAviones> ListaAvionesPosibles = null;
+    ArrayList<TresAviones> Aviones ;
+    ArrayList<Date> FechasAviones= null;
+
+
+    String pathUsuarios;
+    File archivoUsuarios;
+    File archivoAviones;
+    String pathAviones;
 
     FileOutputStream salida;
     Persona usuario;
     Persona usuarioPantalla;
     Gson objGson;
+
+    Date fechaElegida;
+
+    String origen;
+    String destino;
 
 
     /**
@@ -77,14 +87,20 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
 
+        origen = new String("");
+        destino = new String("");
+        fechaElegida = new Date();
         Usuarios = new ArrayList<Persona>();
-        path = "C:\\Maite\\Tec. sup. Programación\\Programacion III\\Archivos TXT\\Usuario.json";
-        archivo = new File(path);
+        ListaAvionesPosibles = new ArrayList<TresAviones>();
+        Aviones= new ArrayList<TresAviones>();
+        pathUsuarios = "C:\\Maite\\Tec. sup. Programación\\Programacion III\\Archivos TXT\\Usuario.json";
+        pathAviones="C:\\Maite\\Tec. sup. Programación\\Programacion III\\Archivos TXT\\Aviones.json";
+        archivoUsuarios = new File(pathUsuarios);
+        archivoAviones = new File(pathAviones);
         objGson = new Gson();
         usuario = new Persona();
         usuarioPantalla = new Persona();
         Registarse = new javax.swing.JFrame();
-
         PantallaPrincipal = new javax.swing.JFrame();
         PanelBajoPantallaPrincipal = new javax.swing.JPanel();
         PanelAeroTaxiPantallaPrincipal = new javax.swing.JPanel();
@@ -126,16 +142,14 @@ public class Ventana extends javax.swing.JFrame {
         BotonAtrasPFecha = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
-        OrigenDestino = new javax.swing.JFrame();
+        Origen = new javax.swing.JFrame();
         PanelAeroTaxiPRegistrarse2 = new javax.swing.JPanel();
         LabelAeroTaxiPRegistrarse2 = new javax.swing.JLabel();
         PanelBotonesPRegistrarse2 = new javax.swing.JPanel();
         BotonSiguientePOrigen = new javax.swing.JButton();
         BotonAtrasPDestino = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxOrigen = new javax.swing.JComboBox<>();
         AvionesDisponibles = new javax.swing.JFrame();
         PanelAeroTaxiPRegistrarse3 = new javax.swing.JPanel();
         LabelAeroTaxiPRegistrarse3 = new javax.swing.JLabel();
@@ -144,7 +158,8 @@ public class Ventana extends javax.swing.JFrame {
         BotonAtrasPAviones = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
         CostoVuelo = new javax.swing.JFrame();
         PanelAeroTaxiPRegistrarse4 = new javax.swing.JPanel();
         LabelAeroTaxiPRegistrarse4 = new javax.swing.JLabel();
@@ -182,6 +197,14 @@ public class Ventana extends javax.swing.JFrame {
         LabelCancelarViaje = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        Destino = new javax.swing.JFrame();
+        PanelBotonesPRegistrarse9 = new javax.swing.JPanel();
+        BotonSiguientePDestino = new javax.swing.JButton();
+        BotonAtrasPagDestino = new javax.swing.JButton();
+        PanelAeroTaxiPRegistrarse10 = new javax.swing.JPanel();
+        LabelAeroTaxiPRegistrarse10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBoxDestino1 = new javax.swing.JComboBox<>();
         PanelBienvenidos = new javax.swing.JPanel();
         ConfortExcelencia = new javax.swing.JLabel();
         Bienvenidos = new javax.swing.JLabel();
@@ -670,16 +693,16 @@ public class Ventana extends javax.swing.JFrame {
         PanelAeroTaxiPRegistrarse2Layout.setHorizontalGroup(
                 PanelAeroTaxiPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse2Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45))
+                                .addContainerGap(53, Short.MAX_VALUE)
+                                .addComponent(LabelAeroTaxiPRegistrarse2)
+                                .addGap(31, 31, 31))
         );
         PanelAeroTaxiPRegistrarse2Layout.setVerticalGroup(
                 PanelAeroTaxiPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse2Layout.createSequentialGroup()
-                                .addContainerGap(13, Short.MAX_VALUE)
+                        .addGroup(PanelAeroTaxiPRegistrarse2Layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addComponent(LabelAeroTaxiPRegistrarse2)
-                                .addContainerGap())
+                                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         PanelBotonesPRegistrarse2.setBackground(new java.awt.Color(0, 153, 255));
@@ -721,48 +744,41 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jLabel2.setText("Destino");
-
         jLabel3.setText("Origen");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bs As", "Córdoba", "Montevideo" }));
+        jComboBoxOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxOrigenActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout OrigenDestinoLayout = new javax.swing.GroupLayout(OrigenDestino.getContentPane());
-        OrigenDestino.getContentPane().setLayout(OrigenDestinoLayout);
-        OrigenDestinoLayout.setHorizontalGroup(
-                OrigenDestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout OrigenLayout = new javax.swing.GroupLayout(Origen.getContentPane());
+        Origen.getContentPane().setLayout(OrigenLayout);
+        OrigenLayout.setHorizontalGroup(
+                OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(PanelBotonesPRegistrarse2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OrigenDestinoLayout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(OrigenDestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OrigenLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBoxOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(140, 140, 140))
-                        .addGroup(OrigenDestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(OrigenDestinoLayout.createSequentialGroup()
+                        .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(OrigenLayout.createSequentialGroup()
                                         .addGap(81, 81, 81)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(325, Short.MAX_VALUE)))
+                                        .addContainerGap(335, Short.MAX_VALUE)))
         );
-        OrigenDestinoLayout.setVerticalGroup(
-                OrigenDestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(OrigenDestinoLayout.createSequentialGroup()
+        OrigenLayout.setVerticalGroup(
+                OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(OrigenLayout.createSequentialGroup()
                                 .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(89, 89, 89)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)
-                                .addGroup(OrigenDestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
+                                .addComponent(jComboBoxOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
                                 .addComponent(PanelBotonesPRegistrarse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(OrigenDestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(OrigenDestinoLayout.createSequentialGroup()
+                        .addGroup(OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(OrigenLayout.createSequentialGroup()
                                         .addGap(158, 158, 158)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(356, Short.MAX_VALUE)))
@@ -836,9 +852,15 @@ public class Ventana extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Aviones Disponibles Para La Fecha Elegida");
 
-        jLabel5.setText("Aviones");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Aviones Disponibles-> ");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList2);
 
         javax.swing.GroupLayout AvionesDisponiblesLayout = new javax.swing.GroupLayout(AvionesDisponibles.getContentPane());
         AvionesDisponibles.getContentPane().setLayout(AvionesDisponiblesLayout);
@@ -847,27 +869,32 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(PanelAeroTaxiPRegistrarse3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PanelBotonesPRegistrarse3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                .addGap(66, 66, 66)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84))
-                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
                                 .addGap(19, 19, 19)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(23, Short.MAX_VALUE))
+                                .addGroup(AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(23, Short.MAX_VALUE))
+                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(59, 59, 59)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(105, 105, 105))))
         );
         AvionesDisponiblesLayout.setVerticalGroup(
                 AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(46, 46, 46)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59)
-                                .addGroup(AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                                .addGroup(AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
+                                                .addComponent(PanelAeroTaxiPRegistrarse3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(46, 46, 46)
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(90, 90, 90)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 48, Short.MAX_VALUE))
+                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(140, 140, 140)
                                 .addComponent(PanelBotonesPRegistrarse3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1046,6 +1073,8 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap())
         );
 
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         javax.swing.GroupLayout AcompañantesLayout = new javax.swing.GroupLayout(Acompañantes.getContentPane());
         Acompañantes.getContentPane().setLayout(AcompañantesLayout);
         AcompañantesLayout.setHorizontalGroup(
@@ -1184,7 +1213,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addGroup(ReservarCancelarLayout.createSequentialGroup()
                                 .addComponent(PanelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(76, 76, 76)
-                                .addGroup(ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(LabelUsuarioPSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
@@ -1292,6 +1321,99 @@ public class Ventana extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addComponent(PanelBotonesPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PanelBotonesPRegistrarse9.setBackground(new java.awt.Color(0, 153, 255));
+        PanelBotonesPRegistrarse9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelBotonesPRegistrarse9.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonSiguientePDestino.setText("Siguiente");
+        BotonSiguientePDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonSiguientePDestinoActionPerformed(evt);
+            }
+        });
+
+        BotonAtrasPagDestino.setText("Atras");
+        BotonAtrasPagDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasPagDestinoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelBotonesPRegistrarse9Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse9);
+        PanelBotonesPRegistrarse9.setLayout(PanelBotonesPRegistrarse9Layout);
+        PanelBotonesPRegistrarse9Layout.setHorizontalGroup(
+                PanelBotonesPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse9Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(BotonSiguientePDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotonAtrasPagDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+        );
+        PanelBotonesPRegistrarse9Layout.setVerticalGroup(
+                PanelBotonesPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBotonesPRegistrarse9Layout.createSequentialGroup()
+                                .addContainerGap(30, Short.MAX_VALUE)
+                                .addGroup(PanelBotonesPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonSiguientePDestino)
+                                        .addComponent(BotonAtrasPagDestino))
+                                .addGap(19, 19, 19))
+        );
+
+        PanelAeroTaxiPRegistrarse10.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse10.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse10.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse10.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse10Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse10);
+        PanelAeroTaxiPRegistrarse10.setLayout(PanelAeroTaxiPRegistrarse10Layout);
+        PanelAeroTaxiPRegistrarse10Layout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarse10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse10Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(LabelAeroTaxiPRegistrarse10, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelAeroTaxiPRegistrarse10Layout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarse10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse10Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelAeroTaxiPRegistrarse10)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jLabel11.setText("Destino");
+
+        jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Córdoba ", "Santiago", "Montevideo" }));
+
+        javax.swing.GroupLayout DestinoLayout = new javax.swing.GroupLayout(Destino.getContentPane());
+        Destino.getContentPane().setLayout(DestinoLayout);
+        DestinoLayout.setHorizontalGroup(
+                DestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxiPRegistrarse10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelBotonesPRegistrarse9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DestinoLayout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBoxDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(122, 122, 122))
+        );
+        DestinoLayout.setVerticalGroup(
+                DestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(DestinoLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxiPRegistrarse10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84)
+                                .addGroup(DestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jComboBoxDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
+                                .addComponent(PanelBotonesPRegistrarse9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1467,15 +1589,19 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFrame jFrame11 = ReservarCancelar;
         JFrame jFrame22 = PantallaPrincipal;
-
+///Aqui se guardara el usuario ingresado por pantalla
         Persona usuarioIngresadoTeclado = new Persona();
+///Si el usuario esta en la lista de archivo devuelve true
         boolean usuarioEncontrado = false;
 
-        Archivo DAO = new Archivo(path);
-        Constructor constructor = new Constructor(DAO);
+        ///Instancia un archivo enviando las direcciones donde se guardan los usuarios y los aviones
+        Archivo DAOUsuarios = new Archivo(pathUsuarios,pathAviones,Aviones);
+
+        ///Deberia manejar los datos
+        Constructor constructor = new Constructor(DAOUsuarios);
 
         ///Carga la lista del archivo:
-        Usuarios = constructor.pasarUsuariosDeArchivo(DAO);
+       // Usuarios = constructor.pasarUsuariosDeArchivo(DAOUsuarios);
 
         ///Usuario Ingresado
         usuarioIngresadoTeclado.setMiusuario(TextUsuarioPantallaPrincipal.getText());
@@ -1541,21 +1667,21 @@ public class Ventana extends javax.swing.JFrame {
         JFrame jFrame11= Registarse;
 
         try {
-            if (!archivo.exists()) {
+            if (!archivoUsuarios.exists()) {
 
 
                 System.out.println("El archivo no existe, Creando uno...");
 
-                archivo.createNewFile();
+                archivoUsuarios.createNewFile();
 
-                System.out.println("Archivo " + archivo.getName() + " creado con exito");
+                System.out.println("Archivo " + archivoUsuarios.getName() + " creado con exito");
 
             }
 
 
 
 
-            if (archivo.getName().endsWith("json")) {
+            if (archivoUsuarios.getName().endsWith("json")) {
 
 
                 usuario.setMiusuario(TextUsuarioPRegistrarse.getText());
@@ -1565,11 +1691,12 @@ public class Ventana extends javax.swing.JFrame {
                 usuario.setDNI(TextDNIPRegistrarse.getText());
                 usuario.setEdad(TextEdadPRegistrarse.getText());
 
+                Usuarios.add(usuario);
 
-                String s = objGson.toJson(usuario);
+                String s = objGson.toJson(Usuarios);
 
 
-                String mensaje = GuardarArchivo(archivo, s);
+                String mensaje = GuardarArchivo(archivoUsuarios, s);
 
                 if (mensaje != null) {
                     JOptionPane.showMessageDialog(null, mensaje);
@@ -1693,7 +1820,12 @@ public class Ventana extends javax.swing.JFrame {
     private void BotonSiguientePFechaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         JFrame jFrame11 = Fecha;
-        JFrame jFrame22 = OrigenDestino;
+        JFrame jFrame22 = Origen;
+
+
+        ///Guardo la fecha elegida para utilizarla luego
+
+        fechaElegida= (Date) jSpinner1.getValue();
 
         jFrame22.setVisible(true);
         jFrame22.setSize(560,660);
@@ -1729,7 +1861,7 @@ public class Ventana extends javax.swing.JFrame {
     private void BotonAtrasPDestinoActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         JFrame jFrame11 = Fecha;
-        JFrame jFrame22 = OrigenDestino;
+        JFrame jFrame22 = Origen;
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
@@ -1748,13 +1880,42 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonSiguientePOrigenActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = Acompañantes;
+        JFrame jFrame11 = Destino;
 
-        JFrame jFrame22 = OrigenDestino;
+        JFrame jFrame22 = Origen;
+
+        ///guardo la posicion elegida
+        int indexCiudadOrigen = jComboBoxOrigen.getSelectedIndex();
+
+        ///Guardo origen
+        origen=jComboBoxOrigen.getItemAt(indexCiudadOrigen);
+
+        //Comparo para indicar los valores de Destino
+
+        if(indexCiudadOrigen==0) {
+
+
+            jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago", "Montevideo","Cordoba"}));
+        }
+        else{
+            if (indexCiudadOrigen == 1) {
+
+                jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago", "Montevideo"}));
+
+            } else {
+
+                if (indexCiudadOrigen == 2) {
+
+                    jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago"}));
+
+
+                }
+            }
+        }
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
-        jFrame11.setTitle("Acompañantes");
+        jFrame11.setTitle("Destino");
 
 
 //este metodo devuelve el tamaño de la pantalla
@@ -1874,6 +2035,35 @@ public class Ventana extends javax.swing.JFrame {
         dispose();
         JFrame jFrame22 = Acompañantes;
 
+
+///Hay que ver que aviones están disponibles para la fecha pedida
+
+        ///traer el listado de aviones
+        ArrayList<TresAviones> Aviones = null;
+        Archivo DAOAviones = new Archivo(pathUsuarios,pathAviones,Aviones);
+        Constructor constructor = new Constructor(DAOAviones);
+        Aviones = constructor.ListaAvionesDeArchivo(DAOAviones);
+//
+//        ///Verificar los aviones para la fecha que quiero
+//
+//        for(TresAviones avion: Aviones){
+//
+//            ///TAMBIEN TRNDRIA QUE RECORRER TODA LA LISTA DE LISTADO DE RESERVAS
+//            for(Date fecha : avion.listadoReservas){
+//
+//                ///Comparo que la fecha no coincida para guardar el avion en una lista de aviones posibles
+//                if(fecha!=fechaElegida){
+//
+//                    ListaAvionesPosibles.add(avion);
+//                }
+//
+//            }
+//
+//        }
+//
+
+
+        
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Aviones Disponibles");
@@ -1889,7 +2079,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonAtrasPAcompañantesActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = OrigenDestino;
+        JFrame jFrame11 = Destino;
         dispose();
         JFrame jFrame22 = Acompañantes;
 
@@ -1971,6 +2161,53 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setVisible(true);
     }
 
+    private void jComboBoxOrigenActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void BotonSiguientePDestinoActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = Acompañantes;
+        dispose();
+        JFrame jFrame22 = Destino;
+        ///guardo la posicion elegida
+        int indexCiudadOrigen = jComboBoxOrigen.getSelectedIndex();
+
+        ///Guardo destino
+        destino=jComboBoxOrigen.getItemAt(indexCiudadOrigen);
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Acompañantes");
+
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    private void BotonAtrasPagDestinoActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = Origen;
+        dispose();
+        JFrame jFrame22 = Destino;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Origen");
+
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -2018,38 +2255,37 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton BotonAtrasPAviones;
     private javax.swing.JButton BotonAtrasPCancelar;
     private javax.swing.JButton BotonAtrasPCosto;
-    private javax.swing.JButton BotonAtrasPCosto1;
     private javax.swing.JButton BotonAtrasPDestino;
     private javax.swing.JButton BotonAtrasPFecha;
     private javax.swing.JButton BotonAtrasPSecundaria;
+    private javax.swing.JButton BotonAtrasPagDestino;
     private javax.swing.JButton BotonCancelarPRegistrarse;
     private javax.swing.JButton BotonCancelarPRegistrarse1;
-    private javax.swing.JButton BotonCancelarPRegistrarse2;
     private javax.swing.JButton BotonCancelarViajePCancelar;
     private javax.swing.JButton BotonCancelarViajePSecundaria;
     private javax.swing.JButton BotonComenzar;
     private javax.swing.JButton BotonFinalizarPCosto;
-    private javax.swing.JButton BotonFinalizarPCosto1;
     private javax.swing.JButton BotonGuardarPRegistrarse;
     private javax.swing.JButton BotonRegistrarsePantallaPrincipal;
     private javax.swing.JButton BotonReservarPSecundaria;
     private javax.swing.JButton BotonSiguientePAcompañantes;
     private javax.swing.JButton BotonSiguientePAviones;
+    private javax.swing.JButton BotonSiguientePDestino;
     private javax.swing.JButton BotonSiguientePFecha;
     private javax.swing.JButton BotonSiguientePOrigen;
     private javax.swing.JButton BotonVerContraseñaPantallaPrincipal;
     private javax.swing.JFrame CancelarViaje;
     private javax.swing.JLabel ConfortExcelencia;
     private javax.swing.JFrame CostoVuelo;
+    private javax.swing.JFrame Destino;
     private javax.swing.JFrame Fecha;
     private javax.swing.JLabel LabelAeroTaxiPPrincipal;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse1;
+    private javax.swing.JLabel LabelAeroTaxiPRegistrarse10;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse2;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse3;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse4;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse5;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse6;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse7;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse8;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse9;
@@ -2064,15 +2300,14 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel LabelUsuarioPRegistrarse;
     private javax.swing.JLabel LabelUsuarioPSecundaria;
     private javax.swing.JLabel LabelUsuarioPantallaPrincipal;
-    private javax.swing.JFrame OrigenDestino;
+    private javax.swing.JFrame Origen;
     private javax.swing.JPanel PanelAeroTaxi;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse1;
+    private javax.swing.JPanel PanelAeroTaxiPRegistrarse10;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse2;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse3;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse4;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse5;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse6;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse7;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse8;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse9;
@@ -2085,10 +2320,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel PanelBotonesPRegistrarse2;
     private javax.swing.JPanel PanelBotonesPRegistrarse3;
     private javax.swing.JPanel PanelBotonesPRegistrarse4;
-    private javax.swing.JPanel PanelBotonesPRegistrarse5;
     private javax.swing.JPanel PanelBotonesPRegistrarse6;
     private javax.swing.JPanel PanelBotonesPRegistrarse7;
     private javax.swing.JPanel PanelBotonesPRegistrarse8;
+    private javax.swing.JPanel PanelBotonesPRegistrarse9;
     private javax.swing.JPanel PanelBotonesPantallaPrincipal;
     private javax.swing.JPanel PanelComenzar;
     private javax.swing.JFrame PantallaPrincipal;
@@ -2102,12 +2337,11 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField TextUsuarioPRegistrarse;
     private javax.swing.JTextField TextUsuarioPantallaPrincipal;
     private javax.swing.JTextField TextoNombrePRegistrarse;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBoxDestino1;
+    private javax.swing.JComboBox<String> jComboBoxOrigen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -2116,7 +2350,9 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JLabel labelVerContraseñaPPrincipal;
