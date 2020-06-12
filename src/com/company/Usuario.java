@@ -7,8 +7,9 @@ public class Usuario {
     private String apellido;
     private int dni;
     private int edad;
-    private List<DatosVuelo> vuelosConfirmados;
+    private List<DatosVuelo> vuelosConfirmados; //Listado de vuelos confirmados por el usuario.
 
+    ///Constructor de la clase
     public Usuario(String nombre, String apellido, int dni, int edad, List<DatosVuelo> vuelosConfirmados) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -18,6 +19,7 @@ public class Usuario {
     }
 
 
+    ///Getter y Setter de atributos
     public String getNombre() {
         return nombre;
     }
@@ -58,5 +60,16 @@ public class Usuario {
         this.vuelosConfirmados = vuelosConfirmados;
     }
 
+    ///Muestra usuario con sus atributos
 
+
+    @Override
+    public String toString() {
+        return "nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", dni=" + dni +
+                ", edad=" + edad +
+                ", vuelosConfirmados=" + vuelosConfirmados +
+                '}';
+    }
 }

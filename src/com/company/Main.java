@@ -14,7 +14,7 @@ public class Main {
 	// write your code here
 
         ///Probando clases Usuario y DatosVuelo
-        /*
+     /*
         Date fecha=null;
         Avion avion=new Avion(2);
         List<DatosVuelo>listado=new ArrayList<DatosVuelo>();
@@ -24,14 +24,11 @@ public class Main {
         listado.add(vuelo);
         Usuario usuario=new Usuario("aye","marinoni",1,26,listado);
 
-        for (DatosVuelo list: listado)
-        {
-            System.out.println(list);
-        }*/
+         System.out.println(usuario.toString());*/
 
 
 
-                /* Set the Nimbus look and feel */
+        /* Set the Nimbus look and feel */
                 //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
                 /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
                  * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
@@ -52,9 +49,9 @@ public class Main {
                 } catch (javax.swing.UnsupportedLookAndFeelException ex) {
                     java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
-                //</editor-fold>
+                //</editor-fold>*/
 
-                /* Create and display the form */
+                /* Create and display the form*/
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         new Ventana().setVisible(true);
