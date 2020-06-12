@@ -6,15 +6,15 @@ public class DatosVuelo {
     private Date fecha;
     private String origen;
     private String destino;
-    private int cantidadAcompañantes;
+    private int cantidadPasajeros;
     private Avion avion;
     private double costoDeVuelo;
 
-    public DatosVuelo(Date fecha, String origen, String destino, int cantidadAcompañantes, Avion avion, double costoDeVuelo) {
+    public DatosVuelo(Date fecha, String origen, String destino, int cantidadPasajeros, Avion avion, double costoDeVuelo) {
         this.fecha = fecha;
         this.origen = origen;
         this.destino = destino;
-        this.cantidadAcompañantes = cantidadAcompañantes;
+        this.cantidadPasajeros = cantidadPasajeros;
         this.avion = avion;
         this.costoDeVuelo = costoDeVuelo;
     }
@@ -43,12 +43,12 @@ public class DatosVuelo {
         this.destino = destino;
     }
 
-    public int getCantidadAcompañantes() {
-        return cantidadAcompañantes;
+    public int getCantidadPasajeros() {
+        return cantidadPasajeros;
     }
 
-    public void setCantidadAcompañantes(int cantidadAcompañantes) {
-        this.cantidadAcompañantes = cantidadAcompañantes;
+    public void setCantidadPasajeros(int cantidadPasajeros) {
+        this.cantidadPasajeros = cantidadPasajeros;
     }
 
     public Avion getAvion() {
@@ -72,7 +72,7 @@ public class DatosVuelo {
         return  "fecha=" + fecha +
                 ", origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
-                ", cantidadAcompañantes=" + cantidadAcompañantes +
+                ", cantidadAcompañantes=" + cantidadPasajeros +
                 ", avion=" + avion +
                 ", costoDeVuelo=" + costoDeVuelo;
     }
