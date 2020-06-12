@@ -100,15 +100,13 @@ public class Persona {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
+    ///Comparo si el usuario ingresado en pantalla principal esta registrado, lo utilizo en el boton acepltar de la pantalla principal
 
-    public int hashCode(){
+    public int hashCode() {
 
-        int result=getMiusuario().hashCode();
-        result=31*result+getNombre().hashCode();
-        result=31*result+getContraseña().hashCode();
-        result=31*result+getApellido().hashCode();
-        result=31*result+getEdad().hashCode();
-        result=result*31+getDNI().hashCode();
+        int result = getMiusuario().hashCode();
+
+        result = result * 31 + getContraseña().hashCode();
 
         return result;
     }

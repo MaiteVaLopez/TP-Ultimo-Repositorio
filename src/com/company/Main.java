@@ -1,23 +1,17 @@
 package com.company;
 
+import com.google.gson.Gson;
 import jdk.jfr.DataAmount;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        System.out.println("Hola! Tratando de hacer andar git jeeeeeeejkujkjeeeeeee5345eeeeeeee");
-        System.out.println("Si no anda me muero");
-
-        System.out.println("Tratando de romper git 2");
-
-        System.out.println("Probando la cosnola");
-
-        System.out.println("Tratando de probar cambios");
-
-
         ///Probando clases Usuario y DatosVuelo
         /*
         Date fecha=null;
@@ -65,6 +59,7 @@ public class Main {
                         new Ventana().setVisible(true);
                     }
                 });
+
             }
 
 }

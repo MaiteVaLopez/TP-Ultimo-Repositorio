@@ -35,7 +35,7 @@ public class Archivo {
 
 
 
-    public void EscriboUnArchivo(ArrayList<Persona> usuarios) {
+    public void EscriboUnArchivo() {
 
 
         try {

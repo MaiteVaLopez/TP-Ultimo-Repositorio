@@ -2,27 +2,32 @@ package com.company;
 
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
+import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author Maite Ivan
  */
+
 public class Ventana extends javax.swing.JFrame {
 
-    JFileChooser seleccionar = new JFileChooser();
+
+    ArrayList<Persona> Usuarios = null;
     String path;
     File archivo;
-    FileInputStream entrada;
+
     FileOutputStream salida;
     Persona usuario;
     Persona usuarioPantalla;
     Gson objGson;
-
 
 
     /**
@@ -30,33 +35,38 @@ public class Ventana extends javax.swing.JFrame {
      */
 
 
-
     public Ventana() {
         initComponents();
+
 
     }
 
 ///
 
-    public String GuardarArchivo(File archivo, String documento){
+    public String GuardarArchivo(File archivo, String documento) {
 
-        String mensaje=null;
+        String mensaje = null;
 
-        try{
+        try {
 
 
             salida = new FileOutputStream(archivo);
             byte[] byjson = documento.getBytes();
             salida.write(byjson);
-            mensaje = "Usuario Registrado Con Éxito";
+            mensaje = "Se Registro Con Éxito";
 
 
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         return mensaje;
 
 
     }
+
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,12 +77,14 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
 
+        Usuarios = new ArrayList<Persona>();
         path = "C:\\Maite\\Tec. sup. Programación\\Programacion III\\Archivos TXT\\Usuario.json";
         archivo = new File(path);
         objGson = new Gson();
         usuario = new Persona();
         usuarioPantalla = new Persona();
         Registarse = new javax.swing.JFrame();
+
         PantallaPrincipal = new javax.swing.JFrame();
         PanelBajoPantallaPrincipal = new javax.swing.JPanel();
         PanelAeroTaxiPantallaPrincipal = new javax.swing.JPanel();
@@ -151,6 +163,25 @@ public class Ventana extends javax.swing.JFrame {
         PanelAeroTaxiPRegistrarse7 = new javax.swing.JPanel();
         LabelAeroTaxiPRegistrarse7 = new javax.swing.JLabel();
         jSpinner2 = new javax.swing.JSpinner();
+        ReservarCancelar = new javax.swing.JFrame();
+        PanelAeroTaxiPRegistrarse8 = new javax.swing.JPanel();
+        LabelAeroTaxiPRegistrarse8 = new javax.swing.JLabel();
+        PanelBotonesPRegistrarse7 = new javax.swing.JPanel();
+        BotonReservarPSecundaria = new javax.swing.JButton();
+        BotonCancelarViajePSecundaria = new javax.swing.JButton();
+        BotonAtrasPSecundaria = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        LabelUsuarioPSecundaria = new javax.swing.JLabel();
+        LabelQuedeseahacer = new javax.swing.JLabel();
+        CancelarViaje = new javax.swing.JFrame();
+        PanelAeroTaxiPRegistrarse9 = new javax.swing.JPanel();
+        LabelAeroTaxiPRegistrarse9 = new javax.swing.JLabel();
+        PanelBotonesPRegistrarse8 = new javax.swing.JPanel();
+        BotonCancelarViajePCancelar = new javax.swing.JButton();
+        BotonAtrasPCancelar = new javax.swing.JButton();
+        LabelCancelarViaje = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         PanelBienvenidos = new javax.swing.JPanel();
         ConfortExcelencia = new javax.swing.JLabel();
         Bienvenidos = new javax.swing.JLabel();
@@ -595,9 +626,11 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Fecha de Salida  ");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Fecha del Viaje  ");
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), new java.util.Date(1623446520000L), java.util.Calendar.WEEK_OF_YEAR));
+        jSpinner1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1591945374893L), null, java.util.Calendar.DAY_OF_MONTH));
 
         javax.swing.GroupLayout FechaLayout = new javax.swing.GroupLayout(Fecha.getContentPane());
         Fecha.getContentPane().setLayout(FechaLayout);
@@ -607,10 +640,10 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(FechaLayout.createSequentialGroup()
                                 .addGap(41, 41, 41)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(114, 114, 114)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(42, 42, 42))
         );
         FechaLayout.setVerticalGroup(
                 FechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -851,9 +884,9 @@ public class Ventana extends javax.swing.JFrame {
         PanelAeroTaxiPRegistrarse4Layout.setHorizontalGroup(
                 PanelAeroTaxiPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse4Layout.createSequentialGroup()
-                                .addContainerGap(32, Short.MAX_VALUE)
+                                .addContainerGap(37, Short.MAX_VALUE)
                                 .addComponent(LabelAeroTaxiPRegistrarse4, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23))
+                                .addGap(18, 18, 18))
         );
         PanelAeroTaxiPRegistrarse4Layout.setVerticalGroup(
                 PanelAeroTaxiPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -923,23 +956,23 @@ public class Ventana extends javax.swing.JFrame {
         CostoVueloLayout.setHorizontalGroup(
                 CostoVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(PanelBotonesPRegistrarse4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(CostoVueloLayout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
-                                .addGap(137, 137, 137))
                         .addComponent(PanelAeroTaxiPRegistrarse4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(CostoVueloLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jLabel6)
+                                .addGap(136, 136, 136)
+                                .addComponent(jLabel7)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         CostoVueloLayout.setVerticalGroup(
                 CostoVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(CostoVueloLayout.createSequentialGroup()
                                 .addComponent(PanelAeroTaxiPRegistrarse4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(92, 92, 92)
+                                .addGap(82, 82, 82)
                                 .addGroup(CostoVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel6)
                                         .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
                                 .addComponent(PanelBotonesPRegistrarse4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1041,6 +1074,224 @@ public class Ventana extends javax.swing.JFrame {
                                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
                                 .addComponent(PanelBotonesPRegistrarse6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PanelAeroTaxiPRegistrarse8.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse8.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse8.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse8.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse8Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse8);
+        PanelAeroTaxiPRegistrarse8.setLayout(PanelAeroTaxiPRegistrarse8Layout);
+        PanelAeroTaxiPRegistrarse8Layout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse8Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(LabelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelAeroTaxiPRegistrarse8Layout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelAeroTaxiPRegistrarse8)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        PanelBotonesPRegistrarse7.setBackground(new java.awt.Color(0, 153, 255));
+        PanelBotonesPRegistrarse7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelBotonesPRegistrarse7.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonReservarPSecundaria.setText("Reservar Viaje  ");
+        BotonReservarPSecundaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonReservarPSecundariaActionPerformed(evt);
+            }
+        });
+
+        BotonCancelarViajePSecundaria.setText("Cancelar Viaje");
+        BotonCancelarViajePSecundaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelarViajePSecundariaActionPerformed(evt);
+            }
+        });
+
+        BotonAtrasPSecundaria.setText("Atras");
+        BotonAtrasPSecundaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasPSecundariaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelBotonesPRegistrarse7Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse7);
+        PanelBotonesPRegistrarse7.setLayout(PanelBotonesPRegistrarse7Layout);
+        PanelBotonesPRegistrarse7Layout.setHorizontalGroup(
+                PanelBotonesPRegistrarse7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse7Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(BotonReservarPSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotonAtrasPSecundaria)
+                                .addGap(39, 39, 39)
+                                .addComponent(BotonCancelarViajePSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+        );
+        PanelBotonesPRegistrarse7Layout.setVerticalGroup(
+                PanelBotonesPRegistrarse7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse7Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addGroup(PanelBotonesPRegistrarse7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonReservarPSecundaria)
+                                        .addComponent(BotonCancelarViajePSecundaria)
+                                        .addComponent(BotonAtrasPSecundaria))
+                                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        jLabel10.setFont(new java.awt.Font("Vivaldi", 1, 24)); // NOI18N
+        jLabel10.setText("Bienvenido ");
+
+        LabelUsuarioPSecundaria.setFont(new java.awt.Font("Vivaldi", 0, 18)); // NOI18N
+        LabelUsuarioPSecundaria.setText("                                       ");
+
+        LabelQuedeseahacer.setFont(new java.awt.Font("Viner Hand ITC", 0, 18)); // NOI18N
+        LabelQuedeseahacer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelQuedeseahacer.setText("¿Deseas Reservar un Viaje o Cancelarlo?");
+
+        javax.swing.GroupLayout ReservarCancelarLayout = new javax.swing.GroupLayout(ReservarCancelar.getContentPane());
+        ReservarCancelar.getContentPane().setLayout(ReservarCancelarLayout);
+        ReservarCancelarLayout.setHorizontalGroup(
+                ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelBotonesPRegistrarse7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                                                .addComponent(LabelQuedeseahacer, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(LabelUsuarioPSecundaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addContainerGap())
+        );
+        ReservarCancelarLayout.setVerticalGroup(
+                ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addGroup(ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(LabelUsuarioPSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                                .addComponent(LabelQuedeseahacer, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(86, 86, 86)
+                                .addComponent(PanelBotonesPRegistrarse7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PanelAeroTaxiPRegistrarse9.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse9.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse9.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse9.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse9Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse9);
+        PanelAeroTaxiPRegistrarse9.setLayout(PanelAeroTaxiPRegistrarse9Layout);
+        PanelAeroTaxiPRegistrarse9Layout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse9Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(LabelAeroTaxiPRegistrarse9, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelAeroTaxiPRegistrarse9Layout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse9Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelAeroTaxiPRegistrarse9)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        PanelBotonesPRegistrarse8.setBackground(new java.awt.Color(0, 153, 255));
+        PanelBotonesPRegistrarse8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelBotonesPRegistrarse8.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonCancelarViajePCancelar.setText("Cancelar Viaje");
+        BotonCancelarViajePCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelarViajePCancelarActionPerformed(evt);
+            }
+        });
+
+        BotonAtrasPCancelar.setText("Atras");
+        BotonAtrasPCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasPCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelBotonesPRegistrarse8Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse8);
+        PanelBotonesPRegistrarse8.setLayout(PanelBotonesPRegistrarse8Layout);
+        PanelBotonesPRegistrarse8Layout.setHorizontalGroup(
+                PanelBotonesPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse8Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(BotonCancelarViajePCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotonAtrasPCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+        );
+        PanelBotonesPRegistrarse8Layout.setVerticalGroup(
+                PanelBotonesPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBotonesPRegistrarse8Layout.createSequentialGroup()
+                                .addContainerGap(30, Short.MAX_VALUE)
+                                .addGroup(PanelBotonesPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonCancelarViajePCancelar)
+                                        .addComponent(BotonAtrasPCancelar))
+                                .addGap(19, 19, 19))
+        );
+
+        LabelCancelarViaje.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        LabelCancelarViaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelCancelarViaje.setText("Selecciona el Viaje que deseas Cancelar");
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        javax.swing.GroupLayout CancelarViajeLayout = new javax.swing.GroupLayout(CancelarViaje.getContentPane());
+        CancelarViaje.getContentPane().setLayout(CancelarViajeLayout);
+        CancelarViajeLayout.setHorizontalGroup(
+                CancelarViajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxiPRegistrarse9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelBotonesPRegistrarse8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(CancelarViajeLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelCancelarViaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(CancelarViajeLayout.createSequentialGroup()
+                                .addGap(191, 191, 191)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        CancelarViajeLayout.setVerticalGroup(
+                CancelarViajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(CancelarViajeLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxiPRegistrarse9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addComponent(LabelCancelarViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addComponent(PanelBotonesPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1153,6 +1404,7 @@ public class Ventana extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void BotonComenzarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1161,6 +1413,13 @@ public class Ventana extends javax.swing.JFrame {
         dispose();
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Pantalla Principal");
+
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
 
 
         jFrame22.setVisible(true);
@@ -1194,6 +1453,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Registrandose");
 
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
 
         jFrame11.setVisible(true);
 
@@ -1201,15 +1465,74 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonAceptarPantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = Fecha;
+        JFrame jFrame11 = ReservarCancelar;
         JFrame jFrame22 = PantallaPrincipal;
 
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Fecha");
+        Persona usuarioIngresadoTeclado = new Persona();
+        boolean usuarioEncontrado = false;
+
+        Archivo DAO = new Archivo(path);
+        Constructor constructor = new Constructor(DAO);
+
+        ///Carga la lista del archivo:
+        Usuarios = constructor.pasarUsuariosDeArchivo(DAO);
+
+        ///Usuario Ingresado
+        usuarioIngresadoTeclado.setMiusuario(TextUsuarioPantallaPrincipal.getText());
+        usuarioIngresadoTeclado.setContraseña(TextContraseñaPantallaPrincipal.getText());
+
+        ///Verifico que el usuario esté en la lista de registro
+
+        ///Recorro la lista de usuarios buscando el que se ingreso por teclado
+
+        for (Persona persona : Usuarios) {
+
+///Comparo usuarios y contraseña
+            if (persona.hashCode() == usuarioIngresadoTeclado.hashCode()) {
+//Si lo encuentra
+                usuarioEncontrado = true;
+                ///Para poder utilizar el usuario que ingreso con todos sus datos
+                usuarioIngresadoTeclado = persona;
+            }
+
+        }
+
+        ///Si no lo encontro le pido que se registre o que salga
+
+        if (usuarioEncontrado ==false) {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+
+            jFrame22.setVisible(true);
+            jFrame22.setSize(560, 660);
+            jFrame22.setTitle("Fecha");
 
 
-        jFrame11.setVisible(true);
+//este metodo devuelve el tamaño de la pantalla
+            Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+
+//para centrar la ventana lo hacemos con el siguiente calculo
+            jFrame22.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
+
+
+
+        }
+        else {
+            LabelUsuarioPSecundaria.setText(usuarioIngresadoTeclado.getNombre());
+            jFrame22.setVisible(false);
+            jFrame11.setSize(560, 660);
+            jFrame11.setTitle("Fecha");
+
+
+//este metodo devuelve el tamaño de la pantalla
+            Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+
+//para centrar la ventana lo hacemos con el siguiente calculo
+            jFrame11.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
+
+            jFrame11.setVisible(true);
+
+
+        }
     }
 
     private void BotonGuardarPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1221,11 +1544,11 @@ public class Ventana extends javax.swing.JFrame {
             if (!archivo.exists()) {
 
 
-//                System.out.println("El archivo no existe, Creando uno...");
+                System.out.println("El archivo no existe, Creando uno...");
 
                 archivo.createNewFile();
 
-//                System.out.println("Archivo " + archivo.getName() + " creado con exito");
+                System.out.println("Archivo " + archivo.getName() + " creado con exito");
 
             }
 
@@ -1252,7 +1575,7 @@ public class Ventana extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, mensaje);
                 } else {
 
-                    JOptionPane.showMessageDialog(null, "No es Posible hacer el registro");
+                    JOptionPane.showMessageDialog(null, "Archivo No Compatible");
                 }
             }
 
@@ -1262,6 +1585,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Pantalla Principal");
 
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
 
 
@@ -1276,6 +1604,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Pantalla Principal");
 
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame22.setVisible(true);
     }
@@ -1365,6 +1698,10 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setVisible(true);
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Lugar de Origen y Destino del Viaje");
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
 
         jFrame11.setVisible(false);
@@ -1372,13 +1709,18 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonAtrasPFechaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = PantallaPrincipal;
+        JFrame jFrame11 = ReservarCancelar;
         JFrame jFrame22 = Fecha;
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
-        jFrame11.setTitle("Pantalla Principal");
+        jFrame11.setTitle("Pantalla Secundaria");
 
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(true);
 
@@ -1393,6 +1735,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Fecha Disponible");
 
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(true);
 
@@ -1410,6 +1757,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setTitle("Acompañantes");
 
 
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
         jFrame11.setVisible(true);
 
 
@@ -1425,6 +1777,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Costo");
 
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
 
         jFrame11.setVisible(true);
 
@@ -1439,6 +1796,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Cantidad de Acompañantes");
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
 
         jFrame11.setVisible(true);
@@ -1457,6 +1819,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Pantalla Principal");
 
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
 
         jFrame11.setVisible(true);
     }
@@ -1472,6 +1839,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setTitle("Pantalla Principal");
 
 
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
         jFrame11.setVisible(true);
 
     }
@@ -1485,6 +1857,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Aviones Disponibles");
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
 
         jFrame11.setVisible(true);
@@ -1501,6 +1878,11 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Aviones Disponibles");
 
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
 
         jFrame11.setVisible(true);
     }
@@ -1515,6 +1897,76 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Origen y Destino de viaje");
 
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    private void BotonReservarPSecundariaActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = Fecha;
+        dispose();
+        JFrame jFrame22 = ReservarCancelar;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Fecha");
+
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    private void BotonCancelarViajePSecundariaActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void BotonCancelarViajePCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void BotonAtrasPCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = ReservarCancelar;
+        dispose();
+        JFrame jFrame22 = CancelarViaje;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Pantalla Secundaria");
+
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    private void BotonAtrasPSecundariaActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = PantallaPrincipal;
+        dispose();
+        JFrame jFrame22 = ReservarCancelar;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Pantalla Principal");
+
+
+//este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+//para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(true);
     }
@@ -1564,23 +2016,29 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton BotonAceptarPantallaPrincipal;
     private javax.swing.JButton BotonAtrasPAcompañantes;
     private javax.swing.JButton BotonAtrasPAviones;
+    private javax.swing.JButton BotonAtrasPCancelar;
     private javax.swing.JButton BotonAtrasPCosto;
     private javax.swing.JButton BotonAtrasPCosto1;
     private javax.swing.JButton BotonAtrasPDestino;
     private javax.swing.JButton BotonAtrasPFecha;
+    private javax.swing.JButton BotonAtrasPSecundaria;
     private javax.swing.JButton BotonCancelarPRegistrarse;
     private javax.swing.JButton BotonCancelarPRegistrarse1;
     private javax.swing.JButton BotonCancelarPRegistrarse2;
+    private javax.swing.JButton BotonCancelarViajePCancelar;
+    private javax.swing.JButton BotonCancelarViajePSecundaria;
     private javax.swing.JButton BotonComenzar;
     private javax.swing.JButton BotonFinalizarPCosto;
     private javax.swing.JButton BotonFinalizarPCosto1;
     private javax.swing.JButton BotonGuardarPRegistrarse;
     private javax.swing.JButton BotonRegistrarsePantallaPrincipal;
+    private javax.swing.JButton BotonReservarPSecundaria;
     private javax.swing.JButton BotonSiguientePAcompañantes;
     private javax.swing.JButton BotonSiguientePAviones;
     private javax.swing.JButton BotonSiguientePFecha;
     private javax.swing.JButton BotonSiguientePOrigen;
     private javax.swing.JButton BotonVerContraseñaPantallaPrincipal;
+    private javax.swing.JFrame CancelarViaje;
     private javax.swing.JLabel ConfortExcelencia;
     private javax.swing.JFrame CostoVuelo;
     private javax.swing.JFrame Fecha;
@@ -1593,13 +2051,18 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse5;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse6;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse7;
+    private javax.swing.JLabel LabelAeroTaxiPRegistrarse8;
+    private javax.swing.JLabel LabelAeroTaxiPRegistrarse9;
     private javax.swing.JLabel LabelApellidoPRegistrarse;
+    private javax.swing.JLabel LabelCancelarViaje;
     private javax.swing.JLabel LabelContraseñaPRegistrarse;
     private javax.swing.JLabel LabelContraseñaPantallaPrincipal;
     private javax.swing.JLabel LabelDNIPRegistrarse;
     private javax.swing.JLabel LabelEdadPRegistrarse;
     private javax.swing.JLabel LabelNombrePRegistrarse;
+    private javax.swing.JLabel LabelQuedeseahacer;
     private javax.swing.JLabel LabelUsuarioPRegistrarse;
+    private javax.swing.JLabel LabelUsuarioPSecundaria;
     private javax.swing.JLabel LabelUsuarioPantallaPrincipal;
     private javax.swing.JFrame OrigenDestino;
     private javax.swing.JPanel PanelAeroTaxi;
@@ -1611,6 +2074,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse5;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse6;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse7;
+    private javax.swing.JPanel PanelAeroTaxiPRegistrarse8;
+    private javax.swing.JPanel PanelAeroTaxiPRegistrarse9;
     private javax.swing.JPanel PanelAeroTaxiPantallaPrincipal;
     private javax.swing.JPanel PanelBajoPantallaPrincipal;
     private javax.swing.JPanel PanelBienvenidos;
@@ -1622,10 +2087,13 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel PanelBotonesPRegistrarse4;
     private javax.swing.JPanel PanelBotonesPRegistrarse5;
     private javax.swing.JPanel PanelBotonesPRegistrarse6;
+    private javax.swing.JPanel PanelBotonesPRegistrarse7;
+    private javax.swing.JPanel PanelBotonesPRegistrarse8;
     private javax.swing.JPanel PanelBotonesPantallaPrincipal;
     private javax.swing.JPanel PanelComenzar;
     private javax.swing.JFrame PantallaPrincipal;
     private javax.swing.JFrame Registarse;
+    private javax.swing.JFrame ReservarCancelar;
     private javax.swing.JTextField TextApellidoPRegistrarse;
     private javax.swing.JTextField TextContraseñaPRegistrarse;
     private javax.swing.JPasswordField TextContraseñaPantallaPrincipal;
@@ -1638,6 +2106,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1646,6 +2115,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JLabel labelVerContraseñaPPrincipal;
