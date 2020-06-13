@@ -60,8 +60,18 @@ public class Usuario {
         this.vuelosConfirmados = vuelosConfirmados;
     }
 
-    ///Muestra usuario con sus atributos
 
+    ///Muestra listado de vuelos confirmados
+
+    public void listarVuelosConfirmados()
+    {
+        for(DatosVuelo list: this.vuelosConfirmados)
+        {
+            System.out.println(list.toString());
+        }
+    }
+
+    ///Muestra usuario con sus atributos
 
     @Override
     public String toString() {
