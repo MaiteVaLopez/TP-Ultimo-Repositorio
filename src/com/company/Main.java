@@ -51,12 +51,16 @@ public class Main {
                 }
                 //</editor-fold>*/
 
-                /* Create and display the form*/
+                /* Create and display the form
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         new Ventana().setVisible(true);
                     }
-                });
+                });*/
+
+             /*   Scanner scan=new Scanner(System.in);
+                String  fechaIngresada=scan.nextLine();
+                SimpleDateFormat formatoFecha=new Simple("aaaa/mm/dd");*/
 
             }
 
