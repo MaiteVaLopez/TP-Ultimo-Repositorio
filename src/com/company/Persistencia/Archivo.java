@@ -1,6 +1,8 @@
-package com.company;
+package com.company.Persistencia;
 
 
+import com.company.Persona;
+import com.company.TresAviones;
 import com.google.gson.Gson;
 
 import java.io.*;

@@ -1,10 +1,11 @@
-package com.company;
+package com.company.Modelado_clases;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Avion {
 
+    private String identificador;   //para diferenciar entre aviones
     private int combMax;   //combustible maximo (pueden llegar hasta 200.000 lt)
     private int costo_x_km;  //entre 150 y 300
     private int maxPasajeros;
@@ -12,7 +13,8 @@ public abstract class Avion {
     private Propulsion propulsion; //clase enum
     ArrayList<Date> listadoReservas;  //Listado de las fechas en las que esta reservado el avion
 
-    public Avion(int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, ArrayList<Date> listadoReservas) {
+    public Avion(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, ArrayList<Date> listadoReservas) {
+        this.identificador = identificador;
         this.combMax = combMax;
         this.costo_x_km = costo_x_km;
         this.maxPasajeros = maxPasajeros;
@@ -24,6 +26,10 @@ public abstract class Avion {
     public Avion() {
 
     }
+
+
+    /////////////GETTERS Y SETTERS/////////////////////////////////////////////////////
+
 
     public int getCombMax() {
         return combMax;
@@ -75,4 +81,16 @@ public abstract class Avion {
     }
 
 
+    /////////////////METODOS///////////////////////////////////////////////////////
+
+
+    @Override
+    public String toString() {                      //para mostrar los aviones, sin mostrar el listado de reservas
+        return "Avion: " + identificador + '\'' +
+                ", Combustible maximo: " + combMax +
+                ", Costo por km: " + costo_x_km +
+                ", Capacidad maxima: " + maxPasajeros +
+                " pasajeros, Velocidad max: " + velMax +
+                " km/h, Motor: " + propulsion;
+    }
 }

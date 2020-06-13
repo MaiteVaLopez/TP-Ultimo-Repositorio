@@ -1,6 +1,10 @@
-package com.company;
+package com.company.InterfazGrafica;
 
 
+import com.company.Constructor;
+import com.company.Persistencia.Archivo;
+import com.company.Persona;
+import com.company.TresAviones;
 import com.google.gson.Gson;
 
 import javax.swing.JFrame;

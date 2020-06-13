@@ -1,15 +1,16 @@
-package com.company;
+package com.company.Modelado_clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public final class Gold extends Avion {
+public final class Gold extends Avion implements Serializable {
     private final int tarifa_tipo = 6000;  //tarifa fija por categoria
     private final boolean catering = true;  //todos tienen catering
     private boolean wifi;   //basicamente si o no
 
-    public Gold(int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, ArrayList<Date> listadoReservas, boolean wifi) {
-        super(combMax, costo_x_km, maxPasajeros, velMax, propulsion, listadoReservas);
+    public Gold(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, ArrayList<Date> listadoReservas, boolean wifi) {
+        super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion, listadoReservas);
         this.wifi = wifi;
     }
 

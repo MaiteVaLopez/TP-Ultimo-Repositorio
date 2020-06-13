@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.Persistencia.Archivo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Modelado_clases;
 
 import java.util.*;
 

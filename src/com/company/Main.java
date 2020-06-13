@@ -1,12 +1,6 @@
 package com.company;
 
-import com.google.gson.Gson;
-import jdk.jfr.DataAmount;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.*;
+import com.company.InterfazGrafica.Ventana;
 
 public class Main {
 
