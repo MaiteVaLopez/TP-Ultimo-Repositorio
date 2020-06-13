@@ -14,9 +14,9 @@ public class Main {
 	// write your code here
 
         ///Probando clases Usuario y DatosVuelo
-     /*
-        Date fecha=null;
-        Avion avion=new Avion(2);
+
+        /*Date fecha=null;
+
         List<DatosVuelo>listado=new ArrayList<DatosVuelo>();
 
         DatosVuelo vuelo= new DatosVuelo(fecha,"asia","argentina",2,avion,1500);

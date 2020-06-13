@@ -2,15 +2,18 @@ package com.company;
 
 import java.util.*;
 
+
 public class DatosVuelo {
     private Date fecha;
     private String origen;
     private String destino;
     private int cantidadPasajeros;
-    private Avion avion;
+    private Object avion;
     private double costoDeVuelo;
 
-    public DatosVuelo(Date fecha, String origen, String destino, int cantidadPasajeros, Avion avion, double costoDeVuelo) {
+    //Constructor parametrizable de vuelos
+
+    public DatosVuelo(Date fecha, String origen, String destino, int cantidadPasajeros, Object avion, double costoDeVuelo) {
         this.fecha = fecha;
         this.origen = origen;
         this.destino = destino;
@@ -18,6 +21,9 @@ public class DatosVuelo {
         this.avion = avion;
         this.costoDeVuelo = costoDeVuelo;
     }
+
+
+    ///Getters y setters de los atributos
 
     public Date getFecha() {
         return fecha;
@@ -51,11 +57,11 @@ public class DatosVuelo {
         this.cantidadPasajeros = cantidadPasajeros;
     }
 
-    public Avion getAvion() {
+    public Object getAvion() {
         return avion;
     }
 
-    public void setAvion(Avion avion) {
+    public void setAvion(Object avion) {
         this.avion = avion;
     }
 
@@ -67,13 +73,21 @@ public class DatosVuelo {
         this.costoDeVuelo = costoDeVuelo;
     }
 
+
+
+    ///Metodo para mostrar vuelo
+
+
     @Override
     public String toString() {
-        return  "fecha=" + fecha +
+        return "DatosVuelo{" +
+                "fecha=" + fecha +
                 ", origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
-                ", cantidadAcompañantes=" + cantidadPasajeros +
+                ", cantidadPasajeros=" + cantidadPasajeros +
                 ", avion=" + avion +
-                ", costoDeVuelo=" + costoDeVuelo;
+                ", costoDeVuelo=" + costoDeVuelo +
+                '}';
     }
+
 }

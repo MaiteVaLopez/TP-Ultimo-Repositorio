@@ -19,6 +19,8 @@ public class Usuario {
     }
 
 
+
+
     ///Getter y Setter de atributos
     public String getNombre() {
         return nombre;
@@ -69,6 +71,15 @@ public class Usuario {
         {
             System.out.println(list.toString());
         }
+    }
+
+
+    ///Cancelar vuelo
+
+    public void cancelarVuelo(Usuario usuario,DatosVuelo vueloAcancelar)
+    {
+
+
     }
 
     ///Muestra usuario con sus atributos
