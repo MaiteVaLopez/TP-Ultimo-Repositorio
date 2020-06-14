@@ -85,6 +85,31 @@ public class Usuario {
         }
     }
 
+    ///Recorre el listado de vuelos confirmados y busca el mejor avion, luego devuelve un String como mensaje
+
+    public String mejorAvion() {
+        int condBronze = 0, condSilver = 0, condGold = 0;
+        String mensaje=null;
+
+        for (DatosVuelo list : this.vuelosConfirmados) {
+            if (list.getAvion() instanceof Bronze)
+                condBronze = 1;
+            if (list.getAvion() instanceof Silver)
+                condSilver = 1;
+            if (list.getAvion() instanceof Gold)
+                condGold = 1;
+        }
+
+        if (condGold == 1) {
+            mensaje="El mejor avion fue un GOLD";
+        } else if (condSilver == 1) {
+            mensaje="El mejor avion fue un Silver";
+        }else if(condBronze==1)
+        {
+            mensaje="El mejor avion fue un Bronze";
+        }
+        return mensaje;
+    }
 
     ///Cancelar vuelo
 
