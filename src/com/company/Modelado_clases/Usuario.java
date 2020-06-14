@@ -1,5 +1,7 @@
 package com.company.Modelado_clases;
 
+import com.company.Persistencia.DatosVuelo;
+
 import java.util.*;
 
 public class Usuario {
@@ -7,20 +9,16 @@ public class Usuario {
     private String apellido;
     private int dni;
     private int edad;
-    private List<DatosVuelo> vuelosConfirmados; //Listado de vuelos confirmados por el usuario.
-    private String contraseña;
-
 
     //////////////CONSTRUCTOR///////////////////////////////////////////////
 
-    public Usuario(String nombre, String apellido, int dni, int edad, List<DatosVuelo> vuelosConfirmados, String contraseña) {
+    public Usuario(String nombre, String apellido, int dni, int edad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.edad = edad;
-        this.vuelosConfirmados = vuelosConfirmados;
-        this.contraseña = contraseña;
     }
+
 
     /////////////GETTERS Y SETTERS/////////////////////////////////////////////////////
 
@@ -56,37 +54,21 @@ public class Usuario {
         this.edad = edad;
     }
 
-    public List<DatosVuelo> getVuelosConfirmados() {
-        return vuelosConfirmados;
-    }
-
-    public void setVuelosConfirmados(List<DatosVuelo> vuelosConfirmados) {
-        this.vuelosConfirmados = vuelosConfirmados;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
 
     /////////////////METODOS///////////////////////////////////////////////////////
 
     /////Muestra listado de vuelos confirmados
 
-    public void listarVuelosConfirmados()
+  /*  public void listarVuelosConfirmados()
     {
         for(DatosVuelo list: this.vuelosConfirmados)
         {
             System.out.println(list.toString());
         }
-    }
+    }*/ //Queda deprecado porq ya no hay lista de vuelos dentro del usuario, hay que generar un listado al leer un archivo
 
     ///Recorre el listado de vuelos confirmados y busca el mejor avion, luego devuelve un String como mensaje
-
+   /*
     public String mejorAvion() {
         int condBronze = 0, condSilver = 0, condGold = 0;
         String mensaje=null;
@@ -111,36 +93,32 @@ public class Usuario {
             mensaje = "El usuario no registra vuelos";   //agregué esta linea
         }
         return mensaje;
-    }
+    }*/
 
     ///Cancelar vuelo
 
 
     ///Muestra usuario con sus atributos
 
+
     @Override
     public String toString() {
-        return "nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", dni=" + dni +
-                ", edad=" + edad +
-                ", vuelosConfirmados=" + vuelosConfirmados +
-                '}';
+        return "nombre='" + nombre + '\'' + ", apellido='" + apellido + '\'' + ", dni=" + dni + ", edad=" + edad;
     }
 
-///// Equals and hashcode compara usuarios por su nombre apellido y contraseña
+    ///// Equals and hashcode compara usuarios por su dni considerando que el dni es unico por persona
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Usuario)) return false;
         Usuario usuario = (Usuario) o;
-        return getNombre().equals(usuario.getNombre()) &&
-                getApellido().equals(usuario.getApellido()) &&
-                getContraseña().equals(usuario.getContraseña());
+        return getDni() == usuario.getDni();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNombre(), getApellido(), getContraseña());
+        return Objects.hash(getDni());
     }
 }

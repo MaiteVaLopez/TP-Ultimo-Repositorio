@@ -1,12 +1,16 @@
-package com.company.Modelado_clases;
+package com.company.Persistencia;
+
+import com.company.Modelado_clases.Avion;
+import com.company.Modelado_clases.Usuario;
 
 import java.util.*;
 
 
 public class DatosVuelo {
-    private Date fecha;
     private Ciudad origen;
     private Ciudad destino;
+    private Usuario usuario; //Se asocia el usuario que va a contratar el vuelo que ya se eligio con anterioridad
+    private Date fecha;      //Se guardara la fecha del vuelo aqui y se deberia quitar el listado en la clase vuelos
     private int cantidadPasajeros;
     private Avion avion;
     private double costoDeVuelo;
@@ -23,7 +27,7 @@ public class DatosVuelo {
     }
 
 
-    ///Getters y setters de los atributos
+    //////////////////////GETTERS Y SETTERS ///////////////////////////////////////////
 
     public Date getFecha() {
         return fecha;
@@ -57,7 +61,15 @@ public class DatosVuelo {
         this.cantidadPasajeros = cantidadPasajeros;
     }
 
-    public Object getAvion() {
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Avion getAvion() {
         return avion;
     }
 
@@ -81,13 +93,15 @@ public class DatosVuelo {
         this.kmsRuta = kmsRuta;
     }
 
-///Metodo para mostrar vuelo
+   ////////////////METODOS//////////////////////////////
 
+    ///Metodo para mostrar vuelo
 
     @Override
     public String toString() {
         return "DatosVuelo{" +
-                "fecha=" + fecha +
+                "usuario=" + usuario +
+                ", fecha=" + fecha +
                 ", origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
                 ", cantidadPasajeros=" + cantidadPasajeros +
@@ -139,4 +153,19 @@ public class DatosVuelo {
 
 
 
+    ///Metodo equals y hashcode compara vuelos segun usuario y fecha ya que un usuario no puede hacer dos vuelos en una misma fecha
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DatosVuelo)) return false;
+        DatosVuelo that = (DatosVuelo) o;
+        return getUsuario().equals(that.getUsuario()) &&
+                getFecha().equals(that.getFecha());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsuario(), getFecha());
+    }
 }
