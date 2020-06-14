@@ -1,7 +1,4 @@
-package com.company.Persistencia;
-
-import com.company.Modelado_clases.Avion;
-import com.company.Modelado_clases.Usuario;
+package com.company.Modelado_clases;
 
 import java.util.*;
 

@@ -1,7 +1,5 @@
 package com.company.Modelado_clases;
 
-import com.company.Persistencia.DatosVuelo;
-
 import java.util.*;
 
 public class Usuario {
