@@ -15,7 +15,7 @@ public class DatosVuelo {
     private Avion avion;
     private double costoDeVuelo;
 
-    //Constructor parametrizable de vuelos
+    ////////////////////CONSTRUCTOR PARAMETRIZABLE/////////////////////////////
 
     public DatosVuelo(Usuario usuario, Date fecha, String origen, String destino, int cantidadPasajeros, Avion avion, double costoDeVuelo) {
         this.usuario = usuario;
@@ -28,7 +28,7 @@ public class DatosVuelo {
     }
 
 
-    ///Getters y setters de los atributos
+    //////////////////////GETTERS Y SETTERS ///////////////////////////////////////////
 
     public Date getFecha() {
         return fecha;
@@ -88,13 +88,15 @@ public class DatosVuelo {
 
 
 
-    ///Metodo para mostrar vuelo
+   ////////////////METODOS//////////////////////////////
 
+    ///Metodo para mostrar vuelo
 
     @Override
     public String toString() {
         return "DatosVuelo{" +
-                "fecha=" + fecha +
+                "usuario=" + usuario +
+                ", fecha=" + fecha +
                 ", origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
                 ", cantidadPasajeros=" + cantidadPasajeros +
@@ -103,4 +105,19 @@ public class DatosVuelo {
                 '}';
     }
 
+    ///Metodo equals y hashcode compara vuelos segun usuario y fecha ya que un usuario no puede hacer dos vuelos en una misma fecha
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DatosVuelo)) return false;
+        DatosVuelo that = (DatosVuelo) o;
+        return getUsuario().equals(that.getUsuario()) &&
+                getFecha().equals(that.getFecha());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsuario(), getFecha());
+    }
 }

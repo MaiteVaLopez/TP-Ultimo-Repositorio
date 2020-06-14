@@ -104,6 +104,19 @@ public class Usuario {
         return "nombre='" + nombre + '\'' + ", apellido='" + apellido + '\'' + ", dni=" + dni + ", edad=" + edad;
     }
 
-    ///// Equals and hashcode compara usuarios por su nombre apellido y contraseña
+    ///// Equals and hashcode compara usuarios por su dni considerando que el dni es unico por persona
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return getDni() == usuario.getDni();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDni());
+    }
 }
