@@ -1,19 +1,24 @@
-package com.company.Modelado_clases;
+package com.company.Persistencia;
+
+import com.company.Modelado_clases.Avion;
+import com.company.Modelado_clases.Usuario;
 
 import java.util.*;
 
 
 public class DatosVuelo {
-    private Date fecha;
+    private Usuario usuario; //Se asocia el usuario que va a contratar el vuelo que ya se eligio con anterioridad
+    private Date fecha;      //Se guardara la fecha del vuelo aqui y se deberia quitar el listado en la clase vuelos
     private String origen;
     private String destino;
     private int cantidadPasajeros;
-    private Object avion;
+    private Avion avion;
     private double costoDeVuelo;
 
     //Constructor parametrizable de vuelos
 
-    public DatosVuelo(Date fecha, String origen, String destino, int cantidadPasajeros, Object avion, double costoDeVuelo) {
+    public DatosVuelo(Usuario usuario, Date fecha, String origen, String destino, int cantidadPasajeros, Avion avion, double costoDeVuelo) {
+        this.usuario = usuario;
         this.fecha = fecha;
         this.origen = origen;
         this.destino = destino;
@@ -57,11 +62,19 @@ public class DatosVuelo {
         this.cantidadPasajeros = cantidadPasajeros;
     }
 
-    public Object getAvion() {
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Avion getAvion() {
         return avion;
     }
 
-    public void setAvion(Object avion) {
+    public void setAvion(Avion avion) {
         this.avion = avion;
     }
 
