@@ -5,21 +5,21 @@ import java.util.*;
 
 public class DatosVuelo {
     private Date fecha;
-    private String origen;
-    private String destino;
+    private Ciudad origen;
+    private Ciudad destino;
     private int cantidadPasajeros;
-    private Object avion;
+    private Avion avion;
     private double costoDeVuelo;
+    private int kmsRuta;
 
     //Constructor parametrizable de vuelos
-
-    public DatosVuelo(Date fecha, String origen, String destino, int cantidadPasajeros, Object avion, double costoDeVuelo) {
+    //No es necesario agregar costovuelo ni kmsruta en el constructor
+    public DatosVuelo(Date fecha, Ciudad origen, Ciudad destino, int cantidadPasajeros, Avion avion) {
         this.fecha = fecha;
         this.origen = origen;
         this.destino = destino;
         this.cantidadPasajeros = cantidadPasajeros;
         this.avion = avion;
-        this.costoDeVuelo = costoDeVuelo;
     }
 
 
@@ -33,19 +33,19 @@ public class DatosVuelo {
         this.fecha = fecha;
     }
 
-    public String getOrigen() {
+    public Ciudad getOrigen() {
         return origen;
     }
 
-    public void setOrigen(String origen) {
+    public void setOrigen(Ciudad origen) {
         this.origen = origen;
     }
 
-    public String getDestino() {
+    public Ciudad getDestino() {
         return destino;
     }
 
-    public void setDestino(String destino) {
+    public void setDestino(Ciudad destino) {
         this.destino = destino;
     }
 
@@ -61,7 +61,7 @@ public class DatosVuelo {
         return avion;
     }
 
-    public void setAvion(Object avion) {
+    public void setAvion(Avion avion) {
         this.avion = avion;
     }
 
@@ -73,9 +73,15 @@ public class DatosVuelo {
         this.costoDeVuelo = costoDeVuelo;
     }
 
+    public int getKmsRuta() {
+        return kmsRuta;
+    }
 
+    public void setKmsRuta(int kmsRuta) {
+        this.kmsRuta = kmsRuta;
+    }
 
-    ///Metodo para mostrar vuelo
+///Metodo para mostrar vuelo
 
 
     @Override
@@ -89,5 +95,48 @@ public class DatosVuelo {
                 ", costoDeVuelo=" + costoDeVuelo +
                 '}';
     }
+
+
+    public int calcularKms(){            //calcula los kilometros entre las ciudades.
+        int kmsFinales = 0;
+        if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.CORDOBA)) ||  (this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.BUENOS_AIRES))){
+            kmsFinales = 695;
+        }else if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.SANTIAGO)) ||  (this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.BUENOS_AIRES))){
+            kmsFinales = 1400;
+        }else if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.MONTEVIDEO)) ||  (this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.BUENOS_AIRES))){
+            kmsFinales = 950;
+        }else if((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.MONTEVIDEO)) ||  (this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.CORDOBA))){
+            kmsFinales = 1190;
+        }else if((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.SANTIAGO)) ||  (this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.CORDOBA))){
+            kmsFinales = 1050;
+        }else if((this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.SANTIAGO)) ||  (this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.MONTEVIDEO))){
+            kmsFinales = 2100;
+        }else{
+            System.out.println("No se pudo calcular la distancia del vuelo.");   //hacer exception??????????????????????
+        }
+
+        return kmsFinales;
+    }
+
+
+
+    // TOTALMENTE rustico, si lo quieren cambiar o mejorar para mi esta ok. no sabia como llegar a la variable costoFijo de cada subclase
+    //calcula el costo total del vuelo.
+    public int calcularCostoVuelo() {
+        int costoTotal=0;
+        costoTotal = (kmsRuta * avion.getCosto_x_km()) + (cantidadPasajeros * 3500);
+        if(getAvion() instanceof Bronze){
+            costoTotal = costoTotal + 3000;
+        }else if (getAvion() instanceof Silver){
+            costoTotal = costoTotal + 4000;
+        }else if (getAvion() instanceof Gold){
+            costoTotal = costoTotal + 6000;
+        }
+        return costoTotal;
+    }
+
+
+
+
 
 }

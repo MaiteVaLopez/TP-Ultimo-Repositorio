@@ -11,16 +11,15 @@ public abstract class Avion {
     private int maxPasajeros;
     private int velMax;  //hasta 1000 km/h
     private Propulsion propulsion; //clase enum
-    ArrayList<Date> listadoReservas;  //Listado de las fechas en las que esta reservado el avion
 
-    public Avion(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, ArrayList<Date> listadoReservas) {
+
+    public Avion(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion) {
         this.identificador = identificador;
         this.combMax = combMax;
         this.costo_x_km = costo_x_km;
         this.maxPasajeros = maxPasajeros;
         this.velMax = velMax;
         this.propulsion = propulsion;
-        this.listadoReservas = listadoReservas;
     }
 
     public Avion() {
@@ -30,6 +29,14 @@ public abstract class Avion {
 
     /////////////GETTERS Y SETTERS/////////////////////////////////////////////////////
 
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
 
     public int getCombMax() {
         return combMax;
@@ -72,14 +79,6 @@ public abstract class Avion {
         this.propulsion = propulsion;
     }
 
-    public ArrayList<Date> getListadoReservas() {
-        return listadoReservas;
-    }
-
-    public void setListadoReservas(ArrayList<Date> listadoReservas) {
-        this.listadoReservas = listadoReservas;
-    }
-
 
     /////////////////METODOS///////////////////////////////////////////////////////
 
@@ -93,4 +92,5 @@ public abstract class Avion {
                 " pasajeros, Velocidad max: " + velMax +
                 " km/h, Motor: " + propulsion;
     }
+
 }

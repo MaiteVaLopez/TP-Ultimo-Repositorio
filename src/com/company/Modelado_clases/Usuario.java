@@ -107,6 +107,8 @@ public class Usuario {
         }else if(condBronze==1)
         {
             mensaje="El mejor avion fue un Bronze";
+        }else{
+            mensaje = "El usuario no registra vuelos";   //agregué esta linea
         }
         return mensaje;
     }

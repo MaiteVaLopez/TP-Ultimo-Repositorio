@@ -6,20 +6,28 @@ import java.util.Date;
 
 public final class Silver extends Avion implements Serializable {
 
-    private final int tarifa_tipo = 4000;  //tarifa fija por categoria
+
+    private int costoFijo = 4000;  //tarifa fija por categoria
     private final boolean catering = true;  //todos tienen catering
 
-    public Silver(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, ArrayList<Date> listadoReservas) {
-        super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion, listadoReservas);
+    public Silver(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion) {
+        super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion);
     }
 
     public Silver() {
         super();
     }
 
-    public int getTarifa_tipo() {
-        return tarifa_tipo;
+
+    public int getCostoFijo() {
+        return costoFijo;
     }
 
+
+
+    @Override
+    public String toString() {
+        return "Clase Silver. " + super.toString() + "Catering: Si. El costo fijo es " + costoFijo;
+    }
 
 }
