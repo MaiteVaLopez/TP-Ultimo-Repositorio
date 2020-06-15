@@ -1,100 +1,41 @@
 package com.company.Persistencia;
 
-
-import com.company.Persona;
-import com.company.TresAviones;
+import com.company.Modelado_clases.Usuario;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import javax.naming.Context;
+import javax.swing.*;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Archivo {
 
-    private ArrayList<Persona> usuarios;
+    ///Archivo
+    File myFile;
 
-    private ArrayList<TresAviones> aviones;
-
-    private String datosArchivoJson;
-
-    File myFileUsuarios = null;
-
-
-    File myFileAviones = null;
+    Type type = (Type) new TypeToken<ArrayList<Usuario>>() {}.getType();
 
 
     ///Escribir archivo
 
-    public Archivo(String pathUsuarios, String pathAviones, ArrayList<TresAviones> aviones) {
+    ///path es la direccion de la carpeta que contiene el archivo
 
+    public Archivo(String path) {
 
-        this.usuarios = usuarios;
-
-        myFileUsuarios = new File(pathUsuarios);
-
-        myFileAviones = new File(pathAviones);
-
-        this.aviones=aviones;
-
+        myFile = new File(path);
 
     }
 
-    public void agregarPersona(Persona usuario){this.usuarios.add(usuario);}
 
-///Escribo Archivo usuario(no lo usamos porque lo escribimos directamente en la ventana)
-
-    public void EscriboUnArchivoUsuarios() {
+    public String LeoUnArchivo() {
 
 
-        try {
-
-            if (!myFileUsuarios.exists()) {
-
-
-                System.out.println("El archivo no existe, Creando uno...");
-
-                myFileUsuarios.createNewFile();
-
-                System.out.println("Archivo " + myFileUsuarios.getName() + " creado con exito");
-
-            }
-
-            if (!myFileUsuarios.isDirectory()) {
-
-
-                ///Convierto de java a Json
-
-                Gson objGson = new Gson();
-
-                String s = objGson.toJson(usuarios);
-
-                ///Escritura general
-
-                FileOutputStream fOut = new FileOutputStream(myFileUsuarios);
-
-                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-
-                myOutWriter.append(s);
-
-
-                myOutWriter.close();
-
-                fOut.close();
-
-
-            }
-
-        } catch (IOException e) {
-
-            System.out.println("Debe ingresar un nombre sin numeros");
-        }
-    }
-///Leo archivo usuario
-
-    public String LeoUnArchivoUsuarios() {
-
+        String datosArchivoJson= null;
 
         try {
-            if (!myFileUsuarios.exists()) {
+            if (!myFile.exists()) {
 
 
                 System.out.println("El archivo no existe");
@@ -102,10 +43,10 @@ public class Archivo {
 
             }
 
-            if (!myFileUsuarios.isDirectory()) {
+            if (!myFile.isDirectory()) {
 
 
-                FileInputStream fIn = new FileInputStream(myFileUsuarios);
+                FileInputStream fIn = new FileInputStream(myFile);
 
                 BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
 
@@ -122,7 +63,7 @@ public class Archivo {
 
                 myReader.close();
 
-                datosArchivoJson=aBuffer;
+                datosArchivoJson = aBuffer;
             }
         } catch (IOException e) {
 
@@ -131,119 +72,55 @@ public class Archivo {
 
         }
 
+        ///Devuelve un String con datos . json
         return datosArchivoJson;
     }
 
-///Cargo el listado de aviones
+    ///Devuelvo una lista de usuarios leida del archivo
+    public ArrayList<Usuario> DevuelvoListaDeUsuariosGuardada() {
 
-    public ArrayList<TresAviones> CargarListadoAviones(){
+        ///Aca guarda los usuarios
+        ArrayList<Usuario> ListaUsuarios=null;
+        ///Aca deberia abrir y Leer el archivo de usuario para poder ver si el usuario y contraseña ingresados son validos
 
+        ///Guardo los datos .json del archivo
+        String datosArchivo = LeoUnArchivo();
 
+        if (datosArchivo!=null) {
 
-        TresAviones Gold = new TresAviones("Gold",300,20,null);
-        TresAviones Silver = new TresAviones("Silver",220,15,null);
-        TresAviones Bronze = new TresAviones("Bronze",150,10,null);
-        aviones.add(Gold);
-        aviones.add(Silver);
-        aviones.add(Bronze);
+            Gson gson = new Gson();
 
+            ///Paso los datos del archivo . json a lista de usuarios
 
+            ListaUsuarios = gson.fromJson(datosArchivo, (java.lang.reflect.Type)type);//Es para que pueda leer el arreglo de usuarios
 
-        return aviones;
-    }
-
-///Escribo archivo aviones
-
-    public void EscriboUnArchivoAviones() {
-
-
-        try {
-
-            if (!myFileAviones.exists()) {
-
-
-                System.out.println("El archivo no existe, Creando uno...");
-
-                myFileAviones.createNewFile();
-
-                System.out.println("Archivo " + myFileAviones.getName() + " creado con exito");
-
-            }
-
-            if (!myFileAviones.isDirectory()) {
-
-
-                ///Convierto de java a Json
-
-                Gson objGson = new Gson();
-
-                String s = objGson.toJson(aviones);
-
-                ///Escritura general
-
-                FileOutputStream fOut = new FileOutputStream(myFileAviones);
-
-                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-
-                myOutWriter.append(s);
-
-
-                myOutWriter.close();
-
-                fOut.close();
-
-
-            }
-
-        } catch (IOException e) {
-
-            System.out.println("Debe ingresar un nombre sin numeros");
-        }
-    }
-
-    ///Leo Archivo Aviones
-
-    public String LeoUnArchivoAviones() {
-
-
-        try {
-            if (!myFileAviones.exists()) {
-
-
-                System.out.println("El archivo no existe");
-
-
-            }
-
-            if (!myFileAviones.isDirectory()) {
-
-
-                FileInputStream fIn = new FileInputStream(myFileAviones);
-
-                BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
-
-
-                String aDataRow = "";
-
-                String aBuffer = ""; //Holds the text
-
-                while ((aDataRow = myReader.readLine()) != null) {
-                    aBuffer += aDataRow;
-
-                }
-
-
-                myReader.close();
-
-                datosArchivoJson=aBuffer;
-            }
-        } catch (IOException e) {
-
-            System.out.println("No se pudo leer");
 
 
         }
 
-        return datosArchivoJson;
+        return ListaUsuarios;
+
+    }
+
+    ///Metodo utilizado en ventana para guardar una lista .json en un archivo, el mensaje devuelve si se pudo guardar con exito o no
+    public String GuardarArchivo(File archivo, String documento,FileOutputStream salida) {
+
+        String mensaje = null;
+
+        try {
+
+
+            salida = new FileOutputStream(archivo);
+            byte[] byjson = documento.getBytes();
+            salida.write(byjson);
+            mensaje = "Usuario Registrado Con Éxito";
+
+
+        } catch (Exception e) {
+        }
+
+        return mensaje;
+
+
     }
 }

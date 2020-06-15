@@ -1,47 +1,48 @@
 package com.company.InterfazGrafica;
 
 
-import com.company.Constructor;
-import com.company.Persistencia.Archivo;
-import com.company.Persona;
-import com.company.TresAviones;
-import com.google.gson.Gson;
 
+
+import com.company.Modelado_clases.Usuario;
+import com.company.Persistencia.Archivo;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 import java.awt.*;
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author Maite Ivan
- */
 
 public class Ventana extends javax.swing.JFrame {
 
+    ///Direccion donde se gurada el archivo
+    String path;
 
-    ArrayList<Persona> Usuarios = null;
-    ArrayList<TresAviones> ListaAvionesPosibles = null;
-    ArrayList<TresAviones> Aviones ;
-    ArrayList<Date> FechasAviones= null;
-
-
-    String pathUsuarios;
-    File archivoUsuarios;
-    File archivoAviones;
-    String pathAviones;
+    ///Archivo donde se guradan los usuarios
+    File archivoUsuario;
 
     FileOutputStream salida;
-    Persona usuario;
-    Persona usuarioPantalla;
+    ///Instancia de usuario donde se gurada el usuario ingresado por pantalla
+    Usuario usuario;
+
     Gson objGson;
 
-    Date fechaElegida;
+    ///Para poder acceder a la lectura y escritura de archivos
 
-    String origen;
-    String destino;
+    Archivo archivo;
+
+    ///Guarda la lista de usuarios que lee de archivo y a la que le agrega un nuevo usuario para agreagrlo al archivo
+    ArrayList<Usuario> ListaUsuario=null;
+
+    ///Guardo la fecha del vuelo
+
+    Date FechaElegida;
 
 
     /**
@@ -52,33 +53,9 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
         initComponents();
 
-
     }
 
 ///
-
-    public String GuardarArchivo(File archivo, String documento) {
-
-        String mensaje = null;
-
-        try {
-
-
-            salida = new FileOutputStream(archivo);
-            byte[] byjson = documento.getBytes();
-            salida.write(byjson);
-            mensaje = "Se Registro Con Éxito";
-
-
-        } catch (Exception e) {
-        }
-
-        return mensaje;
-
-
-    }
-
-
 
 
     /**
@@ -91,124 +68,98 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
 
-        origen = new String("");
-        destino = new String("");
-        fechaElegida = new Date();
-        Usuarios = new ArrayList<Persona>();
-        ListaAvionesPosibles = new ArrayList<TresAviones>();
-        Aviones= new ArrayList<TresAviones>();
-        pathUsuarios = "C:\\Maite\\Tec. sup. Programación\\Programacion III\\Archivos TXT\\Usuario.json";
-        pathAviones="C:\\Maite\\Tec. sup. Programación\\Programacion III\\Archivos TXT\\Aviones.json";
-        archivoUsuarios = new File(pathUsuarios);
-        archivoAviones = new File(pathAviones);
+        FechaElegida = new Date();
+        path = "Usuarios.json";
+        archivo= new Archivo(path);
+        ListaUsuario = new ArrayList<Usuario>();
+        archivoUsuario = new File(path);
         objGson = new Gson();
-        usuario = new Persona();
-        usuarioPantalla = new Persona();
-        Registarse = new javax.swing.JFrame();
+        usuario = new Usuario();
+        Registrarse = new javax.swing.JFrame();
         PantallaPrincipal = new javax.swing.JFrame();
-        PanelBajoPantallaPrincipal = new javax.swing.JPanel();
         PanelAeroTaxiPantallaPrincipal = new javax.swing.JPanel();
         LabelAeroTaxiPPrincipal = new javax.swing.JLabel();
-        TextUsuarioPantallaPrincipal = new javax.swing.JTextField();
-        BotonVerContraseñaPantallaPrincipal = new javax.swing.JButton();
-        LabelUsuarioPantallaPrincipal = new javax.swing.JLabel();
-        LabelContraseñaPantallaPrincipal = new javax.swing.JLabel();
-        TextContraseñaPantallaPrincipal = new javax.swing.JPasswordField();
+        LabelDNIPantallaPrincipal = new javax.swing.JLabel();
         PanelBotonesPantallaPrincipal = new javax.swing.JPanel();
         BotonAceptarPantallaPrincipal = new javax.swing.JButton();
         BotonRegistrarsePantallaPrincipal = new javax.swing.JButton();
-        labelVerContraseñaPPrincipal = new javax.swing.JLabel();
-        Registarse = new javax.swing.JFrame();
-        PanelBienvenidos1 = new javax.swing.JPanel();
+        TextDNIPPrincipal = new javax.swing.JTextField();
+        BotonListas = new javax.swing.JButton();
+        Registrarse = new javax.swing.JFrame();
+        TextoNombrePRegistrarse = new javax.swing.JTextField();
         PanelAeroTaxiPRegistrarse = new javax.swing.JPanel();
         LabelAeroTaxiPRegistrarse = new javax.swing.JLabel();
-        LabelUsuarioPRegistrarse = new javax.swing.JLabel();
-        LabelContraseñaPRegistrarse = new javax.swing.JLabel();
-        TextContraseñaPRegistrarse = new javax.swing.JTextField();
-        LabelNombrePRegistrarse = new javax.swing.JLabel();
-        LabelApellidoPRegistrarse = new javax.swing.JLabel();
-        LabelDNIPRegistrarse = new javax.swing.JLabel();
-        LabelEdadPRegistrarse = new javax.swing.JLabel();
-        TextUsuarioPRegistrarse = new javax.swing.JTextField();
-        TextoNombrePRegistrarse = new javax.swing.JTextField();
         TextApellidoPRegistrarse = new javax.swing.JTextField();
         TextDNIPRegistrarse = new javax.swing.JTextField();
         TextEdadPRegistrarse = new javax.swing.JTextField();
         PanelBotonesPRegistrarse = new javax.swing.JPanel();
         BotonGuardarPRegistrarse = new javax.swing.JButton();
         BotonCancelarPRegistrarse = new javax.swing.JButton();
-        Administrador = new javax.swing.JFrame();
-        Fecha = new javax.swing.JFrame();
-        PanelAeroTaxiPRegistrarse1 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse1 = new javax.swing.JLabel();
-        PanelBotonesPRegistrarse1 = new javax.swing.JPanel();
-        BotonSiguientePFecha = new javax.swing.JButton();
-        BotonAtrasPFecha = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        Origen = new javax.swing.JFrame();
-        PanelAeroTaxiPRegistrarse2 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse2 = new javax.swing.JLabel();
-        PanelBotonesPRegistrarse2 = new javax.swing.JPanel();
-        BotonSiguientePOrigen = new javax.swing.JButton();
-        BotonAtrasPDestino = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBoxOrigen = new javax.swing.JComboBox<>();
-        AvionesDisponibles = new javax.swing.JFrame();
-        PanelAeroTaxiPRegistrarse3 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse3 = new javax.swing.JLabel();
-        PanelBotonesPRegistrarse3 = new javax.swing.JPanel();
-        BotonSiguientePAviones = new javax.swing.JButton();
-        BotonAtrasPAviones = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        CostoVuelo = new javax.swing.JFrame();
-        PanelAeroTaxiPRegistrarse4 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse4 = new javax.swing.JLabel();
-        PanelBotonesPRegistrarse4 = new javax.swing.JPanel();
-        BotonFinalizarPCosto = new javax.swing.JButton();
-        BotonCancelarPRegistrarse1 = new javax.swing.JButton();
-        BotonAtrasPCosto = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        Acompañantes = new javax.swing.JFrame();
-        jLabel8 = new javax.swing.JLabel();
-        PanelBotonesPRegistrarse6 = new javax.swing.JPanel();
-        BotonSiguientePAcompañantes = new javax.swing.JButton();
-        BotonAtrasPAcompañantes = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        PanelAeroTaxiPRegistrarse7 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse7 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
-        ReservarCancelar = new javax.swing.JFrame();
-        PanelAeroTaxiPRegistrarse8 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse8 = new javax.swing.JLabel();
+        LabelNombrePRegistrarse = new javax.swing.JLabel();
+        LabelApellidoPRegistrarse = new javax.swing.JLabel();
+        LabelDNIPRegistrarse = new javax.swing.JLabel();
+        LabelEdadPRegistrarse = new javax.swing.JLabel();
+        ReservarCancelarVuelo = new javax.swing.JFrame();
         PanelBotonesPRegistrarse7 = new javax.swing.JPanel();
         BotonReservarPSecundaria = new javax.swing.JButton();
         BotonCancelarViajePSecundaria = new javax.swing.JButton();
         BotonAtrasPSecundaria = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        LabelUsuarioPSecundaria = new javax.swing.JLabel();
+        LabelNombrePReservarCancelarVuelo = new javax.swing.JLabel();
         LabelQuedeseahacer = new javax.swing.JLabel();
-        CancelarViaje = new javax.swing.JFrame();
-        PanelAeroTaxiPRegistrarse9 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse9 = new javax.swing.JLabel();
-        PanelBotonesPRegistrarse8 = new javax.swing.JPanel();
-        BotonCancelarViajePCancelar = new javax.swing.JButton();
-        BotonAtrasPCancelar = new javax.swing.JButton();
-        LabelCancelarViaje = new javax.swing.JLabel();
+        PanelAeroTaxiPRegistrarse8 = new javax.swing.JPanel();
+        LabelAeroTaxiPRegistrarse8 = new javax.swing.JLabel();
+        CancelarVuelo = new javax.swing.JFrame();
+        PanelAeroTaxi1 = new javax.swing.JPanel();
+        AeroTaxi1 = new javax.swing.JLabel();
+        PanelComenzar1 = new javax.swing.JPanel();
+        BotonConfirmarCancelarVuelo = new javax.swing.JButton();
+        BotonAtrasPCancelarVuelo = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        ReservarVuelo = new javax.swing.JFrame();
+        PanelBotonesPRegistrarse1 = new javax.swing.JPanel();
+        BotonConfirmarViaje = new javax.swing.JButton();
+        BotonAtrasPFecha = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        ElegirFecha = new javax.swing.JSpinner();
+        TiposAvionesDisponibles = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        CostoTotal = new javax.swing.JLabel();
+        ListaOrigen = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        ListaDestino = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        CantidadAcompañantes = new javax.swing.JSpinner();
+        jLabel15 = new javax.swing.JLabel();
+        PanelAeroTaxiPRegistrarse1 = new javax.swing.JPanel();
+        LabelAeroTaxiPRegistrarse1 = new javax.swing.JLabel();
+        Listas = new javax.swing.JFrame();
+        PanelAeroTaxi2 = new javax.swing.JPanel();
+        AeroTaxi2 = new javax.swing.JLabel();
+        PanelComenzar2 = new javax.swing.JPanel();
+        BotonListaVuelos = new javax.swing.JButton();
+        BotonListaUusarios = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        ListaVuelos = new javax.swing.JFrame();
+        jLabel6 = new javax.swing.JLabel();
+        FechaListaVuelos = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        PanelAeroTaxi3 = new javax.swing.JPanel();
+        AeroTaxi3 = new javax.swing.JLabel();
+        PanelComenzar3 = new javax.swing.JPanel();
+        BotonListaVuelosFecha = new javax.swing.JButton();
+        BotonAtrasListaVuelo = new javax.swing.JButton();
+        ListaUsuarios = new javax.swing.JFrame();
+        PanelBotonesPRegistrarse2 = new javax.swing.JPanel();
+        BotonAtrasListaUsuarios = new javax.swing.JButton();
+        PanelAeroTaxiPRegistrarse2 = new javax.swing.JPanel();
+        LabelAeroTaxiPRegistrarse2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        Destino = new javax.swing.JFrame();
-        PanelBotonesPRegistrarse9 = new javax.swing.JPanel();
-        BotonSiguientePDestino = new javax.swing.JButton();
-        BotonAtrasPagDestino = new javax.swing.JButton();
-        PanelAeroTaxiPRegistrarse10 = new javax.swing.JPanel();
-        LabelAeroTaxiPRegistrarse10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jComboBoxDestino1 = new javax.swing.JComboBox<>();
+        TablaListaUsuario = new javax.swing.JTable();
         PanelBienvenidos = new javax.swing.JPanel();
         ConfortExcelencia = new javax.swing.JLabel();
         Bienvenidos = new javax.swing.JLabel();
@@ -217,15 +168,12 @@ public class Ventana extends javax.swing.JFrame {
         PanelComenzar = new javax.swing.JPanel();
         BotonComenzar = new javax.swing.JButton();
 
-        PanelBajoPantallaPrincipal.setBackground(new java.awt.Color(255, 255, 204));
-        PanelBajoPantallaPrincipal.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 153)));
-        PanelBajoPantallaPrincipal.setForeground(new java.awt.Color(0, 153, 255));
-
         PanelAeroTaxiPantallaPrincipal.setBackground(new java.awt.Color(51, 153, 255));
         PanelAeroTaxiPantallaPrincipal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
         PanelAeroTaxiPantallaPrincipal.setForeground(new java.awt.Color(0, 153, 204));
 
         LabelAeroTaxiPPrincipal.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelAeroTaxiPPrincipal.setText("A E R O T A X I   ");
         LabelAeroTaxiPPrincipal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -233,10 +181,7 @@ public class Ventana extends javax.swing.JFrame {
         PanelAeroTaxiPantallaPrincipal.setLayout(PanelAeroTaxiPantallaPrincipalLayout);
         PanelAeroTaxiPantallaPrincipalLayout.setHorizontalGroup(
                 PanelAeroTaxiPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPantallaPrincipalLayout.createSequentialGroup()
-                                .addContainerGap(75, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))
+                        .addComponent(LabelAeroTaxiPPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
         PanelAeroTaxiPantallaPrincipalLayout.setVerticalGroup(
                 PanelAeroTaxiPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,32 +191,8 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        TextUsuarioPantallaPrincipal.setText("Ingrese su Usuario");
-        TextUsuarioPantallaPrincipal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextUsuarioPantallaPrincipalActionPerformed(evt);
-            }
-        });
-
-        BotonVerContraseñaPantallaPrincipal.setText("Ver Contraseña");
-        BotonVerContraseñaPantallaPrincipal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonVerContraseñaPantallaPrincipalActionPerformed(evt);
-            }
-        });
-
-        LabelUsuarioPantallaPrincipal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelUsuarioPantallaPrincipal.setText("Usuario:");
-
-        LabelContraseñaPantallaPrincipal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelContraseñaPantallaPrincipal.setText("Contraseña:");
-
-        TextContraseñaPantallaPrincipal.setText("Ingrese su Contraseña");
-        TextContraseñaPantallaPrincipal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextContraseñaPantallaPrincipalActionPerformed(evt);
-            }
-        });
+        LabelDNIPantallaPrincipal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LabelDNIPantallaPrincipal.setText("DNI");
 
         PanelBotonesPantallaPrincipal.setBackground(new java.awt.Color(0, 153, 255));
         PanelBotonesPantallaPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
@@ -300,7 +221,7 @@ public class Ventana extends javax.swing.JFrame {
                                 .addComponent(BotonAceptarPantallaPrincipal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotonRegistrarsePantallaPrincipal)
-                                .addGap(128, 128, 128))
+                                .addGap(54, 54, 54))
         );
         PanelBotonesPantallaPrincipalLayout.setVerticalGroup(
                 PanelBotonesPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,113 +230,58 @@ public class Ventana extends javax.swing.JFrame {
                                 .addGroup(PanelBotonesPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(BotonAceptarPantallaPrincipal)
                                         .addComponent(BotonRegistrarsePantallaPrincipal))
-                                .addContainerGap(25, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout PanelBajoPantallaPrincipalLayout = new javax.swing.GroupLayout(PanelBajoPantallaPrincipal);
-        PanelBajoPantallaPrincipal.setLayout(PanelBajoPantallaPrincipalLayout);
-        PanelBajoPantallaPrincipalLayout.setHorizontalGroup(
-                PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBajoPantallaPrincipalLayout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addGroup(PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(LabelContraseñaPantallaPrincipal)
-                                        .addComponent(BotonVerContraseñaPantallaPrincipal)
-                                        .addComponent(LabelUsuarioPantallaPrincipal))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(TextContraseñaPantallaPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TextUsuarioPantallaPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelVerContraseñaPPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(94, 94, 94))
-                        .addComponent(PanelAeroTaxiPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        PanelBajoPantallaPrincipalLayout.setVerticalGroup(
-                PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBajoPantallaPrincipalLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(62, 62, 62)
-                                .addGroup(PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(LabelUsuarioPantallaPrincipal)
-                                        .addComponent(TextUsuarioPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(LabelContraseñaPantallaPrincipal)
-                                        .addComponent(TextContraseñaPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(PanelBajoPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(BotonVerContraseñaPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(labelVerContraseñaPPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        TextDNIPPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextDNIPPrincipalActionPerformed(evt);
+            }
+        });
+        TextDNIPPrincipal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextDNIPPrincipalKeyTyped(evt);
+            }
+        });
+
+        BotonListas.setText("Listas");
+        BotonListas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonListasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PantallaPrincipalLayout = new javax.swing.GroupLayout(PantallaPrincipal.getContentPane());
         PantallaPrincipal.getContentPane().setLayout(PantallaPrincipalLayout);
         PantallaPrincipalLayout.setHorizontalGroup(
                 PantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelBajoPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelBotonesPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PantallaPrincipalLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(PantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(PantallaPrincipalLayout.createSequentialGroup()
+                                                .addComponent(BotonListas)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(PantallaPrincipalLayout.createSequentialGroup()
+                                                .addComponent(LabelDNIPantallaPrincipal)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(TextDNIPPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(45, 45, 45))))
+                        .addComponent(PanelAeroTaxiPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PantallaPrincipalLayout.setVerticalGroup(
                 PantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelBajoPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PantallaPrincipalLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxiPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addGroup(PantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(LabelDNIPantallaPrincipal)
+                                        .addComponent(TextDNIPPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(52, 52, 52)
+                                .addComponent(BotonListas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                                .addComponent(PanelBotonesPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        Registarse.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        PanelBienvenidos1.setBackground(new java.awt.Color(255, 255, 204));
-        PanelBienvenidos1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 153)));
-        PanelBienvenidos1.setForeground(new java.awt.Color(0, 153, 255));
-
-        PanelAeroTaxiPRegistrarse.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarseLayout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse);
-        PanelAeroTaxiPRegistrarse.setLayout(PanelAeroTaxiPRegistrarseLayout);
-        PanelAeroTaxiPRegistrarseLayout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarseLayout.createSequentialGroup()
-                                .addContainerGap(70, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63))
-        );
-        PanelAeroTaxiPRegistrarseLayout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarseLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(LabelAeroTaxiPRegistrarse)
-                                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        LabelUsuarioPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelUsuarioPRegistrarse.setText("Usuario:");
-
-        LabelContraseñaPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelContraseñaPRegistrarse.setText("Contraseña:");
-
-        LabelNombrePRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelNombrePRegistrarse.setText("Nombre");
-
-        LabelApellidoPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelApellidoPRegistrarse.setText("Apellido");
-
-        LabelDNIPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelDNIPRegistrarse.setText("DNI");
-
-        LabelEdadPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        LabelEdadPRegistrarse.setText("Edad");
-
-        TextUsuarioPRegistrarse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextUsuarioPRegistrarseActionPerformed(evt);
-            }
-        });
 
         TextoNombrePRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,6 +293,31 @@ public class Ventana extends javax.swing.JFrame {
                 TextoNombrePRegistrarseKeyTyped(evt);
             }
         });
+
+        PanelAeroTaxiPRegistrarse.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelAeroTaxiPRegistrarse.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarseLayout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse);
+        PanelAeroTaxiPRegistrarse.setLayout(PanelAeroTaxiPRegistrarseLayout);
+        PanelAeroTaxiPRegistrarseLayout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarseLayout.createSequentialGroup()
+                                .addComponent(LabelAeroTaxiPRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        PanelAeroTaxiPRegistrarseLayout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarseLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelAeroTaxiPRegistrarse)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
 
         TextApellidoPRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -488,7 +379,7 @@ public class Ventana extends javax.swing.JFrame {
                                 .addComponent(BotonGuardarPRegistrarse)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotonCancelarPRegistrarse)
-                                .addGap(148, 148, 148))
+                                .addGap(37, 37, 37))
         );
         PanelBotonesPRegistrarseLayout.setVerticalGroup(
                 PanelBotonesPRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,655 +388,84 @@ public class Ventana extends javax.swing.JFrame {
                                 .addGroup(PanelBotonesPRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(BotonGuardarPRegistrarse)
                                         .addComponent(BotonCancelarPRegistrarse))
-                                .addContainerGap(22, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout PanelBienvenidos1Layout = new javax.swing.GroupLayout(PanelBienvenidos1);
-        PanelBienvenidos1.setLayout(PanelBienvenidos1Layout);
-        PanelBienvenidos1Layout.setHorizontalGroup(
-                PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        LabelNombrePRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LabelNombrePRegistrarse.setText("Nombre");
+
+        LabelApellidoPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LabelApellidoPRegistrarse.setText("Apellido");
+
+        LabelDNIPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LabelDNIPRegistrarse.setText("DNI");
+
+        LabelEdadPRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        LabelEdadPRegistrarse.setText("Edad");
+
+        javax.swing.GroupLayout RegistrarseLayout = new javax.swing.GroupLayout(Registrarse.getContentPane());
+        Registrarse.getContentPane().setLayout(RegistrarseLayout);
+        RegistrarseLayout.setHorizontalGroup(
+                RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(PanelAeroTaxiPRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
+                        .addGroup(RegistrarseLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
+                                .addGroup(RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(RegistrarseLayout.createSequentialGroup()
                                                 .addComponent(LabelEdadPRegistrarse)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(TextEdadPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
+                                        .addGroup(RegistrarseLayout.createSequentialGroup()
                                                 .addComponent(LabelDNIPRegistrarse)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(TextDNIPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
+                                        .addGroup(RegistrarseLayout.createSequentialGroup()
                                                 .addComponent(LabelApellidoPRegistrarse)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(TextApellidoPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
+                                        .addGroup(RegistrarseLayout.createSequentialGroup()
                                                 .addComponent(LabelNombrePRegistrarse)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(TextoNombrePRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
-                                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(LabelUsuarioPRegistrarse)
-                                                        .addComponent(LabelContraseñaPRegistrarse))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(TextUsuarioPRegistrarse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(TextContraseñaPRegistrarse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(TextoNombrePRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(40, 40, 40))
                         .addComponent(PanelBotonesPRegistrarse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        PanelBienvenidos1Layout.setVerticalGroup(
-                PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBienvenidos1Layout.createSequentialGroup()
+        RegistrarseLayout.setVerticalGroup(
+                RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(RegistrarseLayout.createSequentialGroup()
                                 .addComponent(PanelAeroTaxiPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(LabelUsuarioPRegistrarse)
-                                        .addComponent(TextUsuarioPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(LabelContraseñaPRegistrarse)
-                                        .addComponent(TextContraseñaPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGap(84, 84, 84)
+                                .addGroup(RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(LabelNombrePRegistrarse)
                                         .addComponent(TextoNombrePRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(32, 32, 32)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(LabelApellidoPRegistrarse)
                                         .addComponent(TextApellidoPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(26, 26, 26)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(LabelDNIPRegistrarse)
                                         .addComponent(TextDNIPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
-                                .addGroup(PanelBienvenidos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(RegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(LabelEdadPRegistrarse)
                                         .addComponent(TextEdadPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(97, 97, 97)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                                 .addComponent(PanelBotonesPRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        javax.swing.GroupLayout RegistarseLayout = new javax.swing.GroupLayout(Registarse.getContentPane());
-        Registarse.getContentPane().setLayout(RegistarseLayout);
-        RegistarseLayout.setHorizontalGroup(
-                RegistarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelBienvenidos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        RegistarseLayout.setVerticalGroup(
-                RegistarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelBienvenidos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout AdministradorLayout = new javax.swing.GroupLayout(Administrador.getContentPane());
-        Administrador.getContentPane().setLayout(AdministradorLayout);
-        AdministradorLayout.setHorizontalGroup(
-                AdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 400, Short.MAX_VALUE)
-        );
-        AdministradorLayout.setVerticalGroup(
-                AdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        PanelAeroTaxiPRegistrarse1.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse1.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse1.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse1.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse1Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse1);
-        PanelAeroTaxiPRegistrarse1.setLayout(PanelAeroTaxiPRegistrarse1Layout);
-        PanelAeroTaxiPRegistrarse1Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse1Layout.createSequentialGroup()
-                                .addContainerGap(32, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23))
-        );
-        PanelAeroTaxiPRegistrarse1Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse1Layout.createSequentialGroup()
-                                .addContainerGap(13, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse1)
-                                .addContainerGap())
-        );
-
-        PanelBotonesPRegistrarse1.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse1.setForeground(new java.awt.Color(0, 153, 153));
-
-        BotonSiguientePFecha.setText("Siguiente");
-        BotonSiguientePFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonSiguientePFechaActionPerformed(evt);
-            }
-        });
-
-        BotonAtrasPFecha.setText("Atras");
-        BotonAtrasPFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPFechaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelBotonesPRegistrarse1Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse1);
-        PanelBotonesPRegistrarse1.setLayout(PanelBotonesPRegistrarse1Layout);
-        PanelBotonesPRegistrarse1Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse1Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(BotonSiguientePFecha)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPFecha)
-                                .addGap(148, 148, 148))
-        );
-        PanelBotonesPRegistrarse1Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse1Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(PanelBotonesPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonSiguientePFecha)
-                                        .addComponent(BotonAtrasPFecha))
-                                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Fecha del Viaje  ");
-
-        jSpinner1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1591945374893L), null, java.util.Calendar.DAY_OF_MONTH));
-
-        javax.swing.GroupLayout FechaLayout = new javax.swing.GroupLayout(Fecha.getContentPane());
-        Fecha.getContentPane().setLayout(FechaLayout);
-        FechaLayout.setHorizontalGroup(
-                FechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(FechaLayout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42))
-        );
-        FechaLayout.setVerticalGroup(
-                FechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(FechaLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(146, 146, 146)
-                                .addGroup(FechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        PanelAeroTaxiPRegistrarse2.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse2.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse2.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse2.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse2Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse2);
-        PanelAeroTaxiPRegistrarse2.setLayout(PanelAeroTaxiPRegistrarse2Layout);
-        PanelAeroTaxiPRegistrarse2Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse2Layout.createSequentialGroup()
-                                .addContainerGap(53, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse2)
-                                .addGap(31, 31, 31))
-        );
-        PanelAeroTaxiPRegistrarse2Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(LabelAeroTaxiPRegistrarse2)
-                                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        PanelBotonesPRegistrarse2.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse2.setForeground(new java.awt.Color(0, 153, 153));
-
-        BotonSiguientePOrigen.setText("Siguiente");
-        BotonSiguientePOrigen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonSiguientePOrigenActionPerformed(evt);
-            }
-        });
-
-        BotonAtrasPDestino.setText("Atras");
-        BotonAtrasPDestino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPDestinoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelBotonesPRegistrarse2Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse2);
-        PanelBotonesPRegistrarse2.setLayout(PanelBotonesPRegistrarse2Layout);
-        PanelBotonesPRegistrarse2Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse2Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(BotonSiguientePOrigen)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPDestino)
-                                .addGap(148, 148, 148))
-        );
-        PanelBotonesPRegistrarse2Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse2Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(PanelBotonesPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonSiguientePOrigen)
-                                        .addComponent(BotonAtrasPDestino))
-                                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        jLabel3.setText("Origen");
-
-        jComboBoxOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bs As", "Córdoba", "Montevideo" }));
-        jComboBoxOrigen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxOrigenActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout OrigenLayout = new javax.swing.GroupLayout(Origen.getContentPane());
-        Origen.getContentPane().setLayout(OrigenLayout);
-        OrigenLayout.setHorizontalGroup(
-                OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelBotonesPRegistrarse2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OrigenLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBoxOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(140, 140, 140))
-                        .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(OrigenLayout.createSequentialGroup()
-                                        .addGap(81, 81, 81)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(335, Short.MAX_VALUE)))
-        );
-        OrigenLayout.setVerticalGroup(
-                OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(OrigenLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(89, 89, 89)
-                                .addComponent(jComboBoxOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPRegistrarse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(OrigenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(OrigenLayout.createSequentialGroup()
-                                        .addGap(158, 158, 158)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(356, Short.MAX_VALUE)))
-        );
-
-        PanelAeroTaxiPRegistrarse3.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse3.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse3.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse3.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse3Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse3);
-        PanelAeroTaxiPRegistrarse3.setLayout(PanelAeroTaxiPRegistrarse3Layout);
-        PanelAeroTaxiPRegistrarse3Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse3Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(LabelAeroTaxiPRegistrarse3, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelAeroTaxiPRegistrarse3Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse3Layout.createSequentialGroup()
-                                .addContainerGap(13, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse3)
-                                .addContainerGap())
-        );
-
-        PanelBotonesPRegistrarse3.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse3.setForeground(new java.awt.Color(0, 153, 153));
-
-        BotonSiguientePAviones.setText("Siguiente");
-        BotonSiguientePAviones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonSiguientePAvionesActionPerformed(evt);
-            }
-        });
-
-        BotonAtrasPAviones.setText("Atras");
-        BotonAtrasPAviones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPAvionesActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelBotonesPRegistrarse3Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse3);
-        PanelBotonesPRegistrarse3.setLayout(PanelBotonesPRegistrarse3Layout);
-        PanelBotonesPRegistrarse3Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse3Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(BotonSiguientePAviones)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPAviones)
-                                .addGap(148, 148, 148))
-        );
-        PanelBotonesPRegistrarse3Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse3Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(PanelBotonesPRegistrarse3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonSiguientePAviones)
-                                        .addComponent(BotonAtrasPAviones))
-                                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        jLabel4.setFont(new java.awt.Font("Vivaldi", 1, 24)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Aviones Disponibles Para La Fecha Elegida");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Aviones Disponibles-> ");
-
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList2);
-
-        javax.swing.GroupLayout AvionesDisponiblesLayout = new javax.swing.GroupLayout(AvionesDisponibles.getContentPane());
-        AvionesDisponibles.getContentPane().setLayout(AvionesDisponiblesLayout);
-        AvionesDisponiblesLayout.setHorizontalGroup(
-                AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPRegistrarse3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(23, Short.MAX_VALUE))
-                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(59, 59, 59)
-                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(105, 105, 105))))
-        );
-        AvionesDisponiblesLayout.setVerticalGroup(
-                AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                .addGroup(AvionesDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                                .addComponent(PanelAeroTaxiPRegistrarse3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(46, 46, 46)
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(90, 90, 90)
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 48, Short.MAX_VALUE))
-                                        .addGroup(AvionesDisponiblesLayout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(140, 140, 140)
-                                .addComponent(PanelBotonesPRegistrarse3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        PanelAeroTaxiPRegistrarse4.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse4.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse4.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse4.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse4Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse4);
-        PanelAeroTaxiPRegistrarse4.setLayout(PanelAeroTaxiPRegistrarse4Layout);
-        PanelAeroTaxiPRegistrarse4Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse4Layout.createSequentialGroup()
-                                .addContainerGap(37, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse4, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-        );
-        PanelAeroTaxiPRegistrarse4Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse4Layout.createSequentialGroup()
-                                .addContainerGap(13, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse4)
-                                .addContainerGap())
-        );
-
-        PanelBotonesPRegistrarse4.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse4.setForeground(new java.awt.Color(0, 153, 153));
-
-        BotonFinalizarPCosto.setText("Finalizar");
-        BotonFinalizarPCosto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonFinalizarPCostoActionPerformed(evt);
-            }
-        });
-
-        BotonCancelarPRegistrarse1.setText("Cancelar");
-        BotonCancelarPRegistrarse1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonCancelarPRegistrarse1ActionPerformed(evt);
-            }
-        });
-
-        BotonAtrasPCosto.setText("Atras");
-        BotonAtrasPCosto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPCostoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelBotonesPRegistrarse4Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse4);
-        PanelBotonesPRegistrarse4.setLayout(PanelBotonesPRegistrarse4Layout);
-        PanelBotonesPRegistrarse4Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse4Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(BotonFinalizarPCosto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPCosto)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotonCancelarPRegistrarse1)
-                                .addGap(72, 72, 72))
-        );
-        PanelBotonesPRegistrarse4Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse4Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(PanelBotonesPRegistrarse4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonFinalizarPCosto)
-                                        .addComponent(BotonCancelarPRegistrarse1)
-                                        .addComponent(BotonAtrasPCosto))
-                                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setText("Costo del Viaje");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("$");
-
-        javax.swing.GroupLayout CostoVueloLayout = new javax.swing.GroupLayout(CostoVuelo.getContentPane());
-        CostoVuelo.getContentPane().setLayout(CostoVueloLayout);
-        CostoVueloLayout.setHorizontalGroup(
-                CostoVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelBotonesPRegistrarse4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelAeroTaxiPRegistrarse4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(CostoVueloLayout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel6)
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel7)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        CostoVueloLayout.setVerticalGroup(
-                CostoVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(CostoVueloLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(82, 82, 82)
-                                .addGroup(CostoVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPRegistrarse4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jLabel8.setFont(new java.awt.Font("Vivaldi", 1, 24)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Cantidad de acompañantes");
-
-        PanelBotonesPRegistrarse6.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse6.setForeground(new java.awt.Color(0, 153, 153));
-
-        BotonSiguientePAcompañantes.setText("Siguiente");
-        BotonSiguientePAcompañantes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonSiguientePAcompañantesActionPerformed(evt);
-            }
-        });
-
-        BotonAtrasPAcompañantes.setText("Atras");
-        BotonAtrasPAcompañantes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPAcompañantesActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelBotonesPRegistrarse6Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse6);
-        PanelBotonesPRegistrarse6.setLayout(PanelBotonesPRegistrarse6Layout);
-        PanelBotonesPRegistrarse6Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse6Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(BotonSiguientePAcompañantes)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPAcompañantes)
-                                .addGap(148, 148, 148))
-        );
-        PanelBotonesPRegistrarse6Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse6Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(PanelBotonesPRegistrarse6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonSiguientePAcompañantes)
-                                        .addComponent(BotonAtrasPAcompañantes))
-                                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        jLabel9.setText("Acompañantes");
-
-        PanelAeroTaxiPRegistrarse7.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse7.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse7.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse7.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse7Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse7);
-        PanelAeroTaxiPRegistrarse7.setLayout(PanelAeroTaxiPRegistrarse7Layout);
-        PanelAeroTaxiPRegistrarse7Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse7Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(LabelAeroTaxiPRegistrarse7, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(15, Short.MAX_VALUE))
-        );
-        PanelAeroTaxiPRegistrarse7Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse7Layout.createSequentialGroup()
-                                .addContainerGap(13, Short.MAX_VALUE)
-                                .addComponent(LabelAeroTaxiPRegistrarse7)
-                                .addContainerGap())
-        );
-
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-
-        javax.swing.GroupLayout AcompañantesLayout = new javax.swing.GroupLayout(Acompañantes.getContentPane());
-        Acompañantes.getContentPane().setLayout(AcompañantesLayout);
-        AcompañantesLayout.setHorizontalGroup(
-                AcompañantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPRegistrarse6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(AcompañantesLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(147, 147, 147)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(AcompañantesLayout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        AcompañantesLayout.setVerticalGroup(
-                AcompañantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(AcompañantesLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
-                                .addGroup(AcompañantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPRegistrarse6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        PanelAeroTaxiPRegistrarse8.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse8.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse8.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse8.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse8Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse8);
-        PanelAeroTaxiPRegistrarse8.setLayout(PanelAeroTaxiPRegistrarse8Layout);
-        PanelAeroTaxiPRegistrarse8Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse8Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(LabelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelAeroTaxiPRegistrarse8Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse8Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(LabelAeroTaxiPRegistrarse8)
-                                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         PanelBotonesPRegistrarse7.setBackground(new java.awt.Color(0, 153, 255));
         PanelBotonesPRegistrarse7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
         PanelBotonesPRegistrarse7.setForeground(new java.awt.Color(0, 153, 153));
 
-        BotonReservarPSecundaria.setText("Reservar Viaje  ");
+        BotonReservarPSecundaria.setText("Reservar Vuelo ");
         BotonReservarPSecundaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonReservarPSecundariaActionPerformed(evt);
             }
         });
 
-        BotonCancelarViajePSecundaria.setText("Cancelar Viaje");
+        BotonCancelarViajePSecundaria.setText("Cancelar Vuelo");
         BotonCancelarViajePSecundaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonCancelarViajePSecundariaActionPerformed(evt);
@@ -1180,244 +500,655 @@ public class Ventana extends javax.swing.JFrame {
                                         .addComponent(BotonReservarPSecundaria)
                                         .addComponent(BotonCancelarViajePSecundaria)
                                         .addComponent(BotonAtrasPSecundaria))
-                                .addContainerGap(22, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Vivaldi", 1, 24)); // NOI18N
         jLabel10.setText("Bienvenido ");
 
-        LabelUsuarioPSecundaria.setFont(new java.awt.Font("Vivaldi", 0, 18)); // NOI18N
-        LabelUsuarioPSecundaria.setText("                                       ");
+        LabelNombrePReservarCancelarVuelo.setFont(new java.awt.Font("Vivaldi", 0, 18)); // NOI18N
+        LabelNombrePReservarCancelarVuelo.setText("                                       ");
 
         LabelQuedeseahacer.setFont(new java.awt.Font("Viner Hand ITC", 0, 18)); // NOI18N
         LabelQuedeseahacer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelQuedeseahacer.setText("¿Deseas Reservar un Viaje o Cancelarlo?");
 
-        javax.swing.GroupLayout ReservarCancelarLayout = new javax.swing.GroupLayout(ReservarCancelar.getContentPane());
-        ReservarCancelar.getContentPane().setLayout(ReservarCancelarLayout);
-        ReservarCancelarLayout.setHorizontalGroup(
-                ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PanelAeroTaxiPRegistrarse8.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse8.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse8.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelAeroTaxiPRegistrarse8.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse8Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse8);
+        PanelAeroTaxiPRegistrarse8.setLayout(PanelAeroTaxiPRegistrarse8Layout);
+        PanelAeroTaxiPRegistrarse8Layout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(LabelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelAeroTaxiPRegistrarse8Layout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelAeroTaxiPRegistrarse8)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout ReservarCancelarVueloLayout = new javax.swing.GroupLayout(ReservarCancelarVuelo.getContentPane());
+        ReservarCancelarVuelo.getContentPane().setLayout(ReservarCancelarVueloLayout);
+        ReservarCancelarVueloLayout.setHorizontalGroup(
+                ReservarCancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(PanelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PanelBotonesPRegistrarse7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                        .addGroup(ReservarCancelarVueloLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                                .addGroup(ReservarCancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(ReservarCancelarVueloLayout.createSequentialGroup()
                                                 .addComponent(LabelQuedeseahacer, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+                                                .addGap(0, 46, Short.MAX_VALUE))
+                                        .addGroup(ReservarCancelarVueloLayout.createSequentialGroup()
                                                 .addGap(22, 22, 22)
                                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(LabelUsuarioPSecundaria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addComponent(LabelNombrePReservarCancelarVuelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addContainerGap())
         );
-        ReservarCancelarLayout.setVerticalGroup(
-                ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(ReservarCancelarLayout.createSequentialGroup()
+        ReservarCancelarVueloLayout.setVerticalGroup(
+                ReservarCancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ReservarCancelarVueloLayout.createSequentialGroup()
                                 .addComponent(PanelAeroTaxiPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(76, 76, 76)
-                                .addGroup(ReservarCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(ReservarCancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(LabelUsuarioPSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                                        .addComponent(LabelNombrePReservarCancelarVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                                 .addComponent(LabelQuedeseahacer, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(86, 86, 86)
+                                .addGap(97, 97, 97)
                                 .addComponent(PanelBotonesPRegistrarse7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        PanelAeroTaxiPRegistrarse9.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse9.setForeground(new java.awt.Color(0, 153, 204));
+        PanelAeroTaxi1.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxi1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxi1.setForeground(new java.awt.Color(0, 153, 204));
 
-        LabelAeroTaxiPRegistrarse9.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse9.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        AeroTaxi1.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        AeroTaxi1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AeroTaxi1.setText("A E R O T A X I ");
+        AeroTaxi1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse9Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse9);
-        PanelAeroTaxiPRegistrarse9.setLayout(PanelAeroTaxiPRegistrarse9Layout);
-        PanelAeroTaxiPRegistrarse9Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse9Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(LabelAeroTaxiPRegistrarse9, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout PanelAeroTaxi1Layout = new javax.swing.GroupLayout(PanelAeroTaxi1);
+        PanelAeroTaxi1.setLayout(PanelAeroTaxi1Layout);
+        PanelAeroTaxi1Layout.setHorizontalGroup(
+                PanelAeroTaxi1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(AeroTaxi1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        PanelAeroTaxiPRegistrarse9Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse9Layout.createSequentialGroup()
+        PanelAeroTaxi1Layout.setVerticalGroup(
+                PanelAeroTaxi1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxi1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(LabelAeroTaxiPRegistrarse9)
+                                .addComponent(AeroTaxi1)
                                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        PanelBotonesPRegistrarse8.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse8.setForeground(new java.awt.Color(0, 153, 153));
+        PanelComenzar1.setBackground(new java.awt.Color(0, 153, 255));
+        PanelComenzar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelComenzar1.setForeground(new java.awt.Color(0, 153, 153));
 
-        BotonCancelarViajePCancelar.setText("Cancelar Viaje");
-        BotonCancelarViajePCancelar.addActionListener(new java.awt.event.ActionListener() {
+        BotonConfirmarCancelarVuelo.setText("Cancelar Vuelo");
+        BotonConfirmarCancelarVuelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonCancelarViajePCancelarActionPerformed(evt);
+                BotonConfirmarCancelarVueloActionPerformed(evt);
             }
         });
 
-        BotonAtrasPCancelar.setText("Atras");
-        BotonAtrasPCancelar.addActionListener(new java.awt.event.ActionListener() {
+        BotonAtrasPCancelarVuelo.setText("Atras");
+        BotonAtrasPCancelarVuelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPCancelarActionPerformed(evt);
+                BotonAtrasPCancelarVueloActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout PanelBotonesPRegistrarse8Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse8);
-        PanelBotonesPRegistrarse8.setLayout(PanelBotonesPRegistrarse8Layout);
-        PanelBotonesPRegistrarse8Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse8Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(BotonCancelarViajePCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout PanelComenzar1Layout = new javax.swing.GroupLayout(PanelComenzar1);
+        PanelComenzar1.setLayout(PanelComenzar1Layout);
+        PanelComenzar1Layout.setHorizontalGroup(
+                PanelComenzar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelComenzar1Layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(BotonConfirmarCancelarVuelo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
+                                .addComponent(BotonAtrasPCancelarVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51))
         );
-        PanelBotonesPRegistrarse8Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBotonesPRegistrarse8Layout.createSequentialGroup()
+        PanelComenzar1Layout.setVerticalGroup(
+                PanelComenzar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelComenzar1Layout.createSequentialGroup()
                                 .addContainerGap(30, Short.MAX_VALUE)
-                                .addGroup(PanelBotonesPRegistrarse8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonCancelarViajePCancelar)
-                                        .addComponent(BotonAtrasPCancelar))
-                                .addGap(19, 19, 19))
+                                .addGroup(PanelComenzar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonConfirmarCancelarVuelo)
+                                        .addComponent(BotonAtrasPCancelarVuelo))
+                                .addContainerGap())
         );
 
-        LabelCancelarViaje.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        LabelCancelarViaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelCancelarViaje.setText("Selecciona el Viaje que deseas Cancelar");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Fecha");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        jSpinner1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
+
+        jLabel2.setFont(new java.awt.Font("Vladimir Script", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Ingrese La Fecha Del Vuelo ");
+
+        javax.swing.GroupLayout CancelarVueloLayout = new javax.swing.GroupLayout(CancelarVuelo.getContentPane());
+        CancelarVuelo.getContentPane().setLayout(CancelarVueloLayout);
+        CancelarVueloLayout.setHorizontalGroup(
+                CancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxi1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelComenzar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(CancelarVueloLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(45, Short.MAX_VALUE))
+                        .addGroup(CancelarVueloLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55))
+        );
+        CancelarVueloLayout.setVerticalGroup(
+                CancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(CancelarVueloLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(CancelarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                                .addComponent(PanelComenzar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PanelBotonesPRegistrarse1.setBackground(new java.awt.Color(0, 153, 255));
+        PanelBotonesPRegistrarse1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelBotonesPRegistrarse1.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonConfirmarViaje.setText("Confirmar Viaje");
+        BotonConfirmarViaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonConfirmarViajeActionPerformed(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
 
-        javax.swing.GroupLayout CancelarViajeLayout = new javax.swing.GroupLayout(CancelarViaje.getContentPane());
-        CancelarViaje.getContentPane().setLayout(CancelarViajeLayout);
-        CancelarViajeLayout.setHorizontalGroup(
-                CancelarViajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPRegistrarse8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(CancelarViajeLayout.createSequentialGroup()
+        BotonAtrasPFecha.setText("Atras");
+        BotonAtrasPFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasPFechaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelBotonesPRegistrarse1Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse1);
+        PanelBotonesPRegistrarse1.setLayout(PanelBotonesPRegistrarse1Layout);
+        PanelBotonesPRegistrarse1Layout.setHorizontalGroup(
+                PanelBotonesPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse1Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(BotonConfirmarViaje)
+                                .addGap(137, 137, 137)
+                                .addComponent(BotonAtrasPFecha)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelBotonesPRegistrarse1Layout.setVerticalGroup(
+                PanelBotonesPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse1Layout.createSequentialGroup()
+                                .addContainerGap(30, Short.MAX_VALUE)
+                                .addGroup(PanelBotonesPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonConfirmarViaje)
+                                        .addComponent(BotonAtrasPFecha))
+                                .addContainerGap())
+        );
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Fecha del Viaje  ");
+
+        ElegirFecha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ElegirFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1592196214970L), new java.util.Date(1623732120000L), java.util.Calendar.DAY_OF_WEEK));
+
+        TiposAvionesDisponibles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        TiposAvionesDisponibles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TiposAvionesDisponiblesActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setText("Costo del Viaje");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("Origen");
+
+        CostoTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        CostoTotal.setText("$");
+
+        ListaOrigen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ListaOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bs As", "Córdoba", "Montevideo", "Santiago" }));
+        ListaOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListaOrigenActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setText("Destino");
+
+        ListaDestino.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setText("Acompañantes");
+
+        CantidadAcompañantes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        CantidadAcompañantes.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setText("Aviones Disponibles");
+
+        PanelAeroTaxiPRegistrarse1.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse1.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse1.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelAeroTaxiPRegistrarse1.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse1Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse1);
+        PanelAeroTaxiPRegistrarse1.setLayout(PanelAeroTaxiPRegistrarse1Layout);
+        PanelAeroTaxiPRegistrarse1Layout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(LabelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelAeroTaxiPRegistrarse1Layout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarse1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiPRegistrarse1Layout.createSequentialGroup()
+                                .addContainerGap(13, Short.MAX_VALUE)
+                                .addComponent(LabelAeroTaxiPRegistrarse1)
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout ReservarVueloLayout = new javax.swing.GroupLayout(ReservarVuelo.getContentPane());
+        ReservarVuelo.getContentPane().setLayout(ReservarVueloLayout);
+        ReservarVueloLayout.setHorizontalGroup(
+                ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(ReservarVueloLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel16))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ListaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ElegirFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ListaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(CantidadAcompañantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TiposAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(CostoTotal))
+                                .addGap(18, 18, 18))
+        );
+        ReservarVueloLayout.setVerticalGroup(
+                ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ReservarVueloLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ElegirFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ListaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ListaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(CantidadAcompañantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(32, 32, 32)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TiposAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(36, 36, 36)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel16)
+                                        .addComponent(CostoTotal))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PanelAeroTaxi2.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxi2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxi2.setForeground(new java.awt.Color(0, 153, 204));
+
+        AeroTaxi2.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        AeroTaxi2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AeroTaxi2.setText("A E R O T A X I     ");
+        AeroTaxi2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxi2Layout = new javax.swing.GroupLayout(PanelAeroTaxi2);
+        PanelAeroTaxi2.setLayout(PanelAeroTaxi2Layout);
+        PanelAeroTaxi2Layout.setHorizontalGroup(
+                PanelAeroTaxi2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(AeroTaxi2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+        );
+        PanelAeroTaxi2Layout.setVerticalGroup(
+                PanelAeroTaxi2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxi2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(LabelCancelarViaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(CancelarViajeLayout.createSequentialGroup()
-                                .addGap(191, 191, 191)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AeroTaxi2)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        PanelComenzar2.setBackground(new java.awt.Color(0, 153, 255));
+        PanelComenzar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelComenzar2.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonListaVuelos.setText("Lista Vuelos");
+        BotonListaVuelos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonListaVuelosActionPerformed(evt);
+            }
+        });
+
+        BotonListaUusarios.setText("Lista Usuarios");
+        BotonListaUusarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonListaUusariosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelComenzar2Layout = new javax.swing.GroupLayout(PanelComenzar2);
+        PanelComenzar2.setLayout(PanelComenzar2Layout);
+        PanelComenzar2Layout.setHorizontalGroup(
+                PanelComenzar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelComenzar2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(BotonListaVuelos, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotonListaUusarios, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+        );
+        PanelComenzar2Layout.setVerticalGroup(
+                PanelComenzar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelComenzar2Layout.createSequentialGroup()
+                                .addContainerGap(30, Short.MAX_VALUE)
+                                .addGroup(PanelComenzar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonListaVuelos)
+                                        .addComponent(BotonListaUusarios))
+                                .addContainerGap())
+        );
+
+        jLabel4.setFont(new java.awt.Font("Vivaldi", 1, 36)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Bienvenido  ");
+
+        jLabel5.setFont(new java.awt.Font("Vivaldi", 1, 36)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Administrador  ");
+
+        javax.swing.GroupLayout ListasLayout = new javax.swing.GroupLayout(Listas.getContentPane());
+        Listas.getContentPane().setLayout(ListasLayout);
+        ListasLayout.setHorizontalGroup(
+                ListasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxi2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelComenzar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(ListasLayout.createSequentialGroup()
+                                .addGap(115, 115, 115)
+                                .addGroup(ListasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        ListasLayout.setVerticalGroup(
+                ListasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ListasLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxi2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(67, 67, 67)
+                                .addComponent(jLabel4)
+                                .addGap(64, 64, 64)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                                .addComponent(PanelComenzar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Fecha");
+
+        FechaListaVuelos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        FechaListaVuelos.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
+
+        jLabel7.setFont(new java.awt.Font("Vladimir Script", 1, 24)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Ingrese La Fecha Del Vuelo ");
+
+        PanelAeroTaxi3.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxi3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxi3.setForeground(new java.awt.Color(0, 153, 204));
+
+        AeroTaxi3.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        AeroTaxi3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AeroTaxi3.setText("A E R O T A X I ");
+        AeroTaxi3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxi3Layout = new javax.swing.GroupLayout(PanelAeroTaxi3);
+        PanelAeroTaxi3.setLayout(PanelAeroTaxi3Layout);
+        PanelAeroTaxi3Layout.setHorizontalGroup(
+                PanelAeroTaxi3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(AeroTaxi3, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+        );
+        PanelAeroTaxi3Layout.setVerticalGroup(
+                PanelAeroTaxi3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxi3Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AeroTaxi3)
+                                .addContainerGap())
+        );
+
+        PanelComenzar3.setBackground(new java.awt.Color(0, 153, 255));
+        PanelComenzar3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelComenzar3.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonListaVuelosFecha.setText("Lista de Vuelos");
+        BotonListaVuelosFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonListaVuelosFechaActionPerformed(evt);
+            }
+        });
+
+        BotonAtrasListaVuelo.setText("Atras");
+        BotonAtrasListaVuelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasListaVueloActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelComenzar3Layout = new javax.swing.GroupLayout(PanelComenzar3);
+        PanelComenzar3.setLayout(PanelComenzar3Layout);
+        PanelComenzar3Layout.setHorizontalGroup(
+                PanelComenzar3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelComenzar3Layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(BotonListaVuelosFecha)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotonAtrasListaVuelo)
+                                .addGap(62, 62, 62))
+        );
+        PanelComenzar3Layout.setVerticalGroup(
+                PanelComenzar3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelComenzar3Layout.createSequentialGroup()
+                                .addContainerGap(30, Short.MAX_VALUE)
+                                .addGroup(PanelComenzar3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(BotonListaVuelosFecha)
+                                        .addComponent(BotonAtrasListaVuelo))
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout ListaVuelosLayout = new javax.swing.GroupLayout(ListaVuelos.getContentPane());
+        ListaVuelos.getContentPane().setLayout(ListaVuelosLayout);
+        ListaVuelosLayout.setHorizontalGroup(
+                ListaVuelosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelComenzar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelAeroTaxi3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(ListaVuelosLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ListaVuelosLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(FechaListaVuelos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(67, 67, 67))
+        );
+        ListaVuelosLayout.setVerticalGroup(
+                ListaVuelosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ListaVuelosLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxi3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addGroup(ListaVuelosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(FechaListaVuelos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                                .addComponent(PanelComenzar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PanelBotonesPRegistrarse2.setBackground(new java.awt.Color(0, 153, 255));
+        PanelBotonesPRegistrarse2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
+        PanelBotonesPRegistrarse2.setForeground(new java.awt.Color(0, 153, 153));
+
+        BotonAtrasListaUsuarios.setText("Atras");
+        BotonAtrasListaUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasListaUsuariosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelBotonesPRegistrarse2Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse2);
+        PanelBotonesPRegistrarse2.setLayout(PanelBotonesPRegistrarse2Layout);
+        PanelBotonesPRegistrarse2Layout.setHorizontalGroup(
+                PanelBotonesPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse2Layout.createSequentialGroup()
+                                .addGap(210, 210, 210)
+                                .addComponent(BotonAtrasListaUsuarios)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelBotonesPRegistrarse2Layout.setVerticalGroup(
+                PanelBotonesPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelBotonesPRegistrarse2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(BotonAtrasListaUsuarios)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PanelAeroTaxiPRegistrarse2.setBackground(new java.awt.Color(51, 153, 255));
+        PanelAeroTaxiPRegistrarse2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
+        PanelAeroTaxiPRegistrarse2.setForeground(new java.awt.Color(0, 153, 204));
+
+        LabelAeroTaxiPRegistrarse2.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
+        LabelAeroTaxiPRegistrarse2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelAeroTaxiPRegistrarse2.setText("A E R O T A X I  ");
+        LabelAeroTaxiPRegistrarse2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse2Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse2);
+        PanelAeroTaxiPRegistrarse2.setLayout(PanelAeroTaxiPRegistrarse2Layout);
+        PanelAeroTaxiPRegistrarse2Layout.setHorizontalGroup(
+                PanelAeroTaxiPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(LabelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelAeroTaxiPRegistrarse2Layout.setVerticalGroup(
+                PanelAeroTaxiPRegistrarse2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelAeroTaxiPRegistrarse2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(LabelAeroTaxiPRegistrarse2)
+                                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        TablaListaUsuario.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null}
+                },
+                new String [] {
+                        "Nombre", "Apellido", "DNI", "Edad", "Mejor Avion", "Costo Total"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TablaListaUsuario);
+
+        javax.swing.GroupLayout ListaUsuariosLayout = new javax.swing.GroupLayout(ListaUsuarios.getContentPane());
+        ListaUsuarios.getContentPane().setLayout(ListaUsuariosLayout);
+        ListaUsuariosLayout.setHorizontalGroup(
+                ListaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(ListaUsuariosLayout.createSequentialGroup()
+                                .addGroup(ListaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(PanelBotonesPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        CancelarViajeLayout.setVerticalGroup(
-                CancelarViajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(CancelarViajeLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(LabelCancelarViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPRegistrarse8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        PanelBotonesPRegistrarse9.setBackground(new java.awt.Color(0, 153, 255));
-        PanelBotonesPRegistrarse9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
-        PanelBotonesPRegistrarse9.setForeground(new java.awt.Color(0, 153, 153));
-
-        BotonSiguientePDestino.setText("Siguiente");
-        BotonSiguientePDestino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonSiguientePDestinoActionPerformed(evt);
-            }
-        });
-
-        BotonAtrasPagDestino.setText("Atras");
-        BotonAtrasPagDestino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonAtrasPagDestinoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelBotonesPRegistrarse9Layout = new javax.swing.GroupLayout(PanelBotonesPRegistrarse9);
-        PanelBotonesPRegistrarse9.setLayout(PanelBotonesPRegistrarse9Layout);
-        PanelBotonesPRegistrarse9Layout.setHorizontalGroup(
-                PanelBotonesPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBotonesPRegistrarse9Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(BotonSiguientePDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonAtrasPagDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
-        );
-        PanelBotonesPRegistrarse9Layout.setVerticalGroup(
-                PanelBotonesPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBotonesPRegistrarse9Layout.createSequentialGroup()
-                                .addContainerGap(30, Short.MAX_VALUE)
-                                .addGroup(PanelBotonesPRegistrarse9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(BotonSiguientePDestino)
-                                        .addComponent(BotonAtrasPagDestino))
-                                .addGap(19, 19, 19))
-        );
-
-        PanelAeroTaxiPRegistrarse10.setBackground(new java.awt.Color(51, 153, 255));
-        PanelAeroTaxiPRegistrarse10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
-        PanelAeroTaxiPRegistrarse10.setForeground(new java.awt.Color(0, 153, 204));
-
-        LabelAeroTaxiPRegistrarse10.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        LabelAeroTaxiPRegistrarse10.setText("A E R O T A X I  ");
-        LabelAeroTaxiPRegistrarse10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout PanelAeroTaxiPRegistrarse10Layout = new javax.swing.GroupLayout(PanelAeroTaxiPRegistrarse10);
-        PanelAeroTaxiPRegistrarse10.setLayout(PanelAeroTaxiPRegistrarse10Layout);
-        PanelAeroTaxiPRegistrarse10Layout.setHorizontalGroup(
-                PanelAeroTaxiPRegistrarse10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse10Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(LabelAeroTaxiPRegistrarse10, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelAeroTaxiPRegistrarse10Layout.setVerticalGroup(
-                PanelAeroTaxiPRegistrarse10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelAeroTaxiPRegistrarse10Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(LabelAeroTaxiPRegistrarse10)
-                                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        jLabel11.setText("Destino");
-
-        jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Córdoba ", "Santiago", "Montevideo" }));
-
-        javax.swing.GroupLayout DestinoLayout = new javax.swing.GroupLayout(Destino.getContentPane());
-        Destino.getContentPane().setLayout(DestinoLayout);
-        DestinoLayout.setHorizontalGroup(
-                DestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPRegistrarse9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DestinoLayout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBoxDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(122, 122, 122))
-        );
-        DestinoLayout.setVerticalGroup(
-                DestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(DestinoLayout.createSequentialGroup()
-                                .addComponent(PanelAeroTaxiPRegistrarse10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
-                                .addGroup(DestinoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBoxDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
-                                .addComponent(PanelBotonesPRegistrarse9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        ListaUsuariosLayout.setVerticalGroup(
+                ListaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ListaUsuariosLayout.createSequentialGroup()
+                                .addComponent(PanelAeroTaxiPRegistrarse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(PanelBotonesPRegistrarse2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -1440,16 +1171,15 @@ public class Ventana extends javax.swing.JFrame {
         PanelAeroTaxi.setForeground(new java.awt.Color(0, 153, 204));
 
         AeroTaxi.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
-        AeroTaxi.setText("A E R O T A X I     ");
+        AeroTaxi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AeroTaxi.setText("A E R O T A X I ");
         AeroTaxi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout PanelAeroTaxiLayout = new javax.swing.GroupLayout(PanelAeroTaxi);
         PanelAeroTaxi.setLayout(PanelAeroTaxiLayout);
         PanelAeroTaxiLayout.setHorizontalGroup(
                 PanelAeroTaxiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAeroTaxiLayout.createSequentialGroup()
-                                .addGap(0, 18, Short.MAX_VALUE)
-                                .addComponent(AeroTaxi, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(AeroTaxi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PanelAeroTaxiLayout.setVerticalGroup(
                 PanelAeroTaxiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1463,7 +1193,7 @@ public class Ventana extends javax.swing.JFrame {
         PanelComenzar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255), 4));
         PanelComenzar.setForeground(new java.awt.Color(0, 153, 153));
 
-        BotonComenzar.setBackground(new java.awt.Color(255, 255, 255));
+        BotonComenzar.setBackground(new java.awt.Color(255, 255, 204));
         BotonComenzar.setFont(new java.awt.Font("Viner Hand ITC", 1, 36)); // NOI18N
         BotonComenzar.setText("Comenzar");
         BotonComenzar.addActionListener(new java.awt.event.ActionListener() {
@@ -1477,7 +1207,7 @@ public class Ventana extends javax.swing.JFrame {
         PanelComenzarLayout.setHorizontalGroup(
                 PanelComenzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(PanelComenzarLayout.createSequentialGroup()
-                                .addGap(79, 79, 79)
+                                .addGap(120, 120, 120)
                                 .addComponent(BotonComenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1493,26 +1223,26 @@ public class Ventana extends javax.swing.JFrame {
         PanelBienvenidos.setLayout(PanelBienvenidosLayout);
         PanelBienvenidosLayout.setHorizontalGroup(
                 PanelBienvenidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBienvenidosLayout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(Bienvenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(PanelAeroTaxi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(PanelComenzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBienvenidosLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ConfortExcelencia, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33))
+                        .addGroup(PanelBienvenidosLayout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addGroup(PanelBienvenidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ConfortExcelencia, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(PanelBienvenidosLayout.createSequentialGroup()
+                                                .addGap(36, 36, 36)
+                                                .addComponent(Bienvenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(99, Short.MAX_VALUE))
         );
         PanelBienvenidosLayout.setVerticalGroup(
                 PanelBienvenidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(PanelBienvenidosLayout.createSequentialGroup()
                                 .addComponent(PanelAeroTaxi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
+                                .addGap(34, 34, 34)
                                 .addComponent(ConfortExcelencia)
-                                .addGap(71, 71, 71)
+                                .addGap(74, 74, 74)
                                 .addComponent(Bienvenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
+                                .addGap(89, 89, 89)
                                 .addComponent(PanelComenzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1524,105 +1254,54 @@ public class Ventana extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(PanelBienvenidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(PanelBienvenidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>
 
-    private void BotonComenzarActionPerformed(java.awt.event.ActionEvent evt) {
-
-        JFrame jFrame22 = PantallaPrincipal;
-        dispose();
-        jFrame22.setSize(560,660);
-        jFrame22.setTitle("Pantalla Principal");
-
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-
-        jFrame22.setVisible(true);
-
-    }
-
-    private void TextUsuarioPantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void BotonVerContraseñaPantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        String contraseña = TextContraseñaPantallaPrincipal.getText();
-        labelVerContraseñaPPrincipal.setText(contraseña);
-
-
-    }
-
-    private void TextContraseñaPantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-
-    }
-
-    private void BotonRegistrarsePantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = Registarse;
-        dispose();
-        JFrame jFrame22 = PantallaPrincipal;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Registrandose");
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-        jFrame11.setVisible(true);
-
-    }
-
     private void BotonAceptarPantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = ReservarCancelar;
+
+        JFrame jFrame11 = ReservarCancelarVuelo;
         JFrame jFrame22 = PantallaPrincipal;
-///Aqui se guardara el usuario ingresado por pantalla
-        Persona usuarioIngresadoTeclado = new Persona();
-///Si el usuario esta en la lista de archivo devuelve true
+
+        ///Instancia que guarda el DNI del usuario ingresado por pantalla
+        int DNIIngresadoPantalla=0;
+        String DNIPantalla;
+
+        ///Se convierte en true si el DNI coincide con algun usuario ingresado
         boolean usuarioEncontrado = false;
 
-        ///Instancia un archivo enviando las direcciones donde se guardan los usuarios y los aviones
-        Archivo DAOUsuarios = new Archivo(pathUsuarios,pathAviones,Aviones);
-
-        ///Deberia manejar los datos
-        Constructor constructor = new Constructor(DAOUsuarios);
+///Instancio archivo para poder leer el listado de usuarios
 
         ///Carga la lista del archivo:
-       // Usuarios = constructor.pasarUsuariosDeArchivo(DAOUsuarios);
+        ListaUsuario = archivo.DevuelvoListaDeUsuariosGuardada();
 
-        ///Usuario Ingresado
-        usuarioIngresadoTeclado.setMiusuario(TextUsuarioPantallaPrincipal.getText());
-        usuarioIngresadoTeclado.setContraseña(TextContraseñaPantallaPrincipal.getText());
+        ///DNI Ingresado por pantalla
+        // DNIIngresadoPantalla= );
+
+        DNIPantalla=TextDNIPPrincipal.getText();
+
+        DNIIngresadoPantalla=Integer.parseInt(DNIPantalla);
+
+///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
 
         ///Verifico que el usuario esté en la lista de registro
 
         ///Recorro la lista de usuarios buscando el que se ingreso por teclado
 
-        for (Persona persona : Usuarios) {
 
-///Comparo usuarios y contraseña
-            if (persona.hashCode() == usuarioIngresadoTeclado.hashCode()) {
-//Si lo encuentra
+
+        for (Usuario usuarioListado: ListaUsuario) {
+
+            ///Comparo usuarios y contraseña
+            if (DNIIngresadoPantalla == usuarioListado.getDni()) {
+                //Si lo encuentra
                 usuarioEncontrado = true;
                 ///Para poder utilizar el usuario que ingreso con todos sus datos
-                usuarioIngresadoTeclado = persona;
+                usuario = usuarioListado;
             }
 
         }
@@ -1636,27 +1315,23 @@ public class Ventana extends javax.swing.JFrame {
             jFrame22.setSize(560, 660);
             jFrame22.setTitle("Fecha");
 
-
-//este metodo devuelve el tamaño de la pantalla
+            //este metodo devuelve el tamaño de la pantalla
             Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 
-//para centrar la ventana lo hacemos con el siguiente calculo
+            //para centrar la ventana lo hacemos con el siguiente calculo
             jFrame22.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
-
-
 
         }
         else {
-            LabelUsuarioPSecundaria.setText(usuarioIngresadoTeclado.getNombre());
+            LabelNombrePReservarCancelarVuelo.setText(usuario.getNombre());
             jFrame22.setVisible(false);
             jFrame11.setSize(560, 660);
-            jFrame11.setTitle("Fecha");
+            jFrame11.setTitle("Reservar o Cancelar");
 
-
-//este metodo devuelve el tamaño de la pantalla
+            //este metodo devuelve el tamaño de la pantalla
             Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
 
-//para centrar la ventana lo hacemos con el siguiente calculo
+            //para centrar la ventana lo hacemos con el siguiente calculo
             jFrame11.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
 
             jFrame11.setVisible(true);
@@ -1665,141 +1340,27 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
-    private void BotonGuardarPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
+    private void BotonRegistrarsePantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        JFrame jFrame11 = Registrarse;
+        dispose();
         JFrame jFrame22 = PantallaPrincipal;
-        JFrame jFrame11= Registarse;
 
-        try {
-            if (!archivoUsuarios.exists()) {
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560, 660);
+        jFrame11.setTitle("Registrandose");
 
-
-                System.out.println("El archivo no existe, Creando uno...");
-
-                archivoUsuarios.createNewFile();
-
-                System.out.println("Archivo " + archivoUsuarios.getName() + " creado con exito");
-
-            }
-
-
-
-
-            if (archivoUsuarios.getName().endsWith("json")) {
-
-
-                usuario.setMiusuario(TextUsuarioPRegistrarse.getText());
-                usuario.setContraseña(TextContraseñaPRegistrarse.getText());
-                usuario.setNombre(TextoNombrePRegistrarse.getText());
-                usuario.setApellido(TextApellidoPRegistrarse.getText());
-                usuario.setDNI(TextDNIPRegistrarse.getText());
-                usuario.setEdad(TextEdadPRegistrarse.getText());
-
-                Usuarios.add(usuario);
-
-                String s = objGson.toJson(Usuarios);
-
-
-                String mensaje = GuardarArchivo(archivoUsuarios, s);
-
-                if (mensaje != null) {
-                    JOptionPane.showMessageDialog(null, mensaje);
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "Archivo No Compatible");
-                }
-            }
-
-
-        }catch (IOException e){};
-        jFrame11.setVisible(false);
-        jFrame22.setSize(560,660);
-        jFrame22.setTitle("Pantalla Principal");
-
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
 
+        jFrame11.setVisible(true);
 
-
-        jFrame22.setVisible(true);
-    }
-
-    private void BotonCancelarPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame22 = PantallaPrincipal;
-        JFrame jFrame11= Registarse;
-        jFrame11.setVisible(false);
-        jFrame22.setSize(560,660);
-        jFrame22.setTitle("Pantalla Principal");
-
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        jFrame22.setVisible(true);
-    }
-
-    private void TextUsuarioPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     private void TextoNombrePRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }
-
-    private void TextApellidoPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void TextEdadPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void TextDNIPRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
-        ///Para no permitir ingresar letras
-        char validar  = evt.getKeyChar();
-
-        if(Character.isLetter(validar)){
-
-            getToolkit().beep();
-            evt.consume();
-
-            JOptionPane.showMessageDialog (rootPane, "Ingresar Solo Numeros");
-        }
-    }
-
-    private void TextEdadPRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
-
-        char validar = evt.getKeyChar();
-
-        if(Character.isLetter(validar)){
-
-            getToolkit().beep();
-            evt.consume();
-
-            JOptionPane.showMessageDialog (rootPane , "Ingresar Solo Numeros");
-        }
-    }
-
-    private void TextApellidoPRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
-
-        char validar = evt.getKeyChar();
-
-        if(Character.isDigit(validar)){
-
-            getToolkit().beep();
-            evt.consume();
-
-            JOptionPane.showMessageDialog(rootPane, "Ingresar Solo Letras");
-        }
     }
 
     private void TextoNombrePRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
@@ -1817,303 +1378,170 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
 
+    private void TextApellidoPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void TextApellidoPRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
+        // TODO add your handling code here:
+
+        char validar = evt.getKeyChar();
+
+        if(Character.isDigit(validar)){
+
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog(rootPane, "Ingresar Solo Letras");
+        }
+    }
+
     private void TextDNIPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void BotonSiguientePFechaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void TextDNIPRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = Fecha;
-        JFrame jFrame22 = Origen;
+        ///Para no permitir ingresar letras
+        char validar  = evt.getKeyChar();
 
+        if(Character.isLetter(validar)){
 
-        ///Guardo la fecha elegida para utilizarla luego
+            getToolkit().beep();
+            evt.consume();
 
-        fechaElegida= (Date) jSpinner1.getValue();
-
-        jFrame22.setVisible(true);
-        jFrame22.setSize(560,660);
-        jFrame22.setTitle("Lugar de Origen y Destino del Viaje");
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-        jFrame11.setVisible(false);
-    }
-
-    private void BotonAtrasPFechaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = ReservarCancelar;
-        JFrame jFrame22 = Fecha;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Pantalla Secundaria");
-
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        jFrame11.setVisible(true);
-
-    }
-
-    private void BotonAtrasPDestinoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = Fecha;
-        JFrame jFrame22 = Origen;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Fecha Disponible");
-
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        jFrame11.setVisible(true);
-
-
-    }
-
-    private void BotonSiguientePOrigenActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = Destino;
-
-        JFrame jFrame22 = Origen;
-
-        ///guardo la posicion elegida
-        int indexCiudadOrigen = jComboBoxOrigen.getSelectedIndex();
-
-        ///Guardo origen
-        origen=jComboBoxOrigen.getItemAt(indexCiudadOrigen);
-
-        //Comparo para indicar los valores de Destino
-
-        if(indexCiudadOrigen==0) {
-
-
-            jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago", "Montevideo","Cordoba"}));
+            JOptionPane.showMessageDialog (rootPane, "Ingresar Solo Numeros");
         }
-        else{
-            if (indexCiudadOrigen == 1) {
+    }
 
-                jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago", "Montevideo"}));
+    private void TextEdadPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
-            } else {
+    private void TextEdadPRegistrarseKeyTyped(java.awt.event.KeyEvent evt) {
+        // TODO add your handling code here:
 
-                if (indexCiudadOrigen == 2) {
+        char validar = evt.getKeyChar();
 
-                    jComboBoxDestino1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago"}));
+        if(Character.isLetter(validar)){
 
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog (rootPane , "Ingresar Solo Numeros");
+        }
+    }
+
+    private void BotonGuardarPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame22 = PantallaPrincipal;
+        JFrame jFrame11 = Registrarse;
+
+        ///Si El Archivo No Existe Lo Crea
+
+
+        try {
+
+            ///Si El Archivo No Existe Lo Crea
+
+            if (!archivoUsuario.exists()) {
+
+                JOptionPane.showMessageDialog(null, "Creando Archivo");
+
+                archivoUsuario.createNewFile();
+
+            }
+
+            ///Si Archivo Es .json :
+
+            if (archivoUsuario.getName().endsWith("json")) {
+
+
+
+///PROBLEMA SI NO INGRESA NADA EN dni O edad SALTA UN ERROR, NO PUEDO SOLUCIONARLO
+
+
+                ///Guarda en la instancia usuario el usuario ingresado por pantalla
+                usuario.setNombre(TextoNombrePRegistrarse.getText());
+                usuario.setApellido(TextApellidoPRegistrarse.getText());
+                usuario.setDni((int) Integer.parseInt(TextDNIPRegistrarse.getText()));
+                usuario.setEdad( (int)Integer.parseInt(TextEdadPRegistrarse.getText()));
+
+
+                if(archivo.DevuelvoListaDeUsuariosGuardada()!=null){
+
+
+                    ListaUsuario= archivo.DevuelvoListaDeUsuariosGuardada();
 
                 }
+
+
+                ///Agrega al usuario a la lista de usuarios
+                ListaUsuario.add(usuario);
+
+
+
+                ///Pasa La lista de usuarios a .json
+                String s = objGson.toJson(ListaUsuario);
+
+
+                ///Guarda la lista con el nuevo usuario en el archivo
+                String mensaje = archivo.GuardarArchivo(archivoUsuario,s,salida);
+
+                ///Se devuelve un mensaje al guardar, indicando si se guardó con éxito o no se pudo guradar
+                if (mensaje != null) {
+                    JOptionPane.showMessageDialog(null, mensaje);
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Archivo No Compatible");
+                }
+
             }
+        } catch (IOException e) {
         }
 
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Destino");
+        ///Vuelve a la pantalla principal luego de guardar el usuario
+        jFrame11.setVisible(false);
+        jFrame22.setSize(560, 660);
+        jFrame22.setTitle("Pantalla Principal");
 
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
 
-        jFrame11.setVisible(true);
-
-
+        jFrame22.setVisible(true);
     }
 
-    private void BotonSiguientePAvionesActionPerformed(java.awt.event.ActionEvent evt) {
+    private void BotonCancelarPRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame22 = AvionesDisponibles;
-        dispose();
-        JFrame jFrame11 = CostoVuelo;
+        JFrame jFrame22 = PantallaPrincipal;
+        JFrame jFrame11= Registrarse;
+        jFrame11.setVisible(false);
+        jFrame22.setSize(560,660);
+        jFrame22.setTitle("Pantalla Principal");
 
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Costo");
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
-
-        jFrame11.setVisible(true);
-
-    }
-
-    private void BotonAtrasPAvionesActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame22 = AvionesDisponibles;
-        dispose();
-        JFrame jFrame11 = Acompañantes;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Cantidad de Acompañantes");
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-        jFrame11.setVisible(true);
-
-    }
-
-    private void BotonFinalizarPCostoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-
-        JOptionPane.showMessageDialog(rootPane, "El Vuelo Fue Reservado Con Éxito");
-        JFrame jFrame22 = CostoVuelo;
-        dispose();
-        JFrame jFrame11 = PantallaPrincipal;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Pantalla Principal");
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-        jFrame11.setVisible(true);
-    }
-
-    private void BotonCancelarPRegistrarse1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame22 = CostoVuelo;
-        dispose();
-        JFrame jFrame11 = PantallaPrincipal;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Pantalla Principal");
-
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        jFrame11.setVisible(true);
-
-    }
-
-    private void BotonAtrasPCostoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame22 = CostoVuelo;
-        dispose();
-        JFrame jFrame11 = AvionesDisponibles;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Aviones Disponibles");
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-        jFrame11.setVisible(true);
-
-    }
-
-    private void BotonSiguientePAcompañantesActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = AvionesDisponibles;
-        dispose();
-        JFrame jFrame22 = Acompañantes;
-
-
-///Hay que ver que aviones están disponibles para la fecha pedida
-
-        ///traer el listado de aviones
-        ArrayList<TresAviones> Aviones = null;
-        Archivo DAOAviones = new Archivo(pathUsuarios,pathAviones,Aviones);
-        Constructor constructor = new Constructor(DAOAviones);
-        Aviones = constructor.ListaAvionesDeArchivo(DAOAviones);
-//
-//        ///Verificar los aviones para la fecha que quiero
-//
-//        for(TresAviones avion: Aviones){
-//
-//            ///TAMBIEN TRNDRIA QUE RECORRER TODA LA LISTA DE LISTADO DE RESERVAS
-//            for(Date fecha : avion.listadoReservas){
-//
-//                ///Comparo que la fecha no coincida para guardar el avion en una lista de aviones posibles
-//                if(fecha!=fechaElegida){
-//
-//                    ListaAvionesPosibles.add(avion);
-//                }
-//
-//            }
-//
-//        }
-//
-
-
-        
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Aviones Disponibles");
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-
-        jFrame11.setVisible(true);
-    }
-
-    private void BotonAtrasPAcompañantesActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = Destino;
-        dispose();
-        JFrame jFrame22 = Acompañantes;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Origen y Destino de viaje");
-
-
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        jFrame11.setVisible(true);
+        jFrame22.setVisible(true);
     }
 
     private void BotonReservarPSecundariaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = Fecha;
+        JFrame jFrame11 = ReservarVuelo;
         dispose();
-        JFrame jFrame22 = ReservarCancelar;
+        JFrame jFrame22 = ReservarCancelarVuelo;
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
-        jFrame11.setTitle("Fecha");
+        jFrame11.setTitle("Reservar Vuelo");
 
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
+        //para centrar la ventana lo hacemos con el siguiente calculo
         jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(true);
@@ -2121,210 +1549,421 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonCancelarViajePSecundariaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }
+        JFrame jFrame11 = ReservarCancelarVuelo;
+        JFrame jFrame22 = CancelarVuelo;
 
-    private void BotonCancelarViajePCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+        jFrame11.setVisible(false);
+        jFrame22.setSize(560,660);
+        jFrame22.setTitle("Cancelar Vuelo");
 
-    private void BotonAtrasPCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = ReservarCancelar;
-        dispose();
-        JFrame jFrame22 = CancelarViaje;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Pantalla Secundaria");
-
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
-        jFrame11.setVisible(true);
+        jFrame22.setVisible(true);
     }
 
     private void BotonAtrasPSecundariaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         JFrame jFrame11 = PantallaPrincipal;
         dispose();
-        JFrame jFrame22 = ReservarCancelar;
+        JFrame jFrame22 = ReservarCancelarVuelo;
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
         jFrame11.setTitle("Pantalla Principal");
 
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
+        //para centrar la ventana lo hacemos con el siguiente calculo
         jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(true);
     }
 
-    private void jComboBoxOrigenActionPerformed(java.awt.event.ActionEvent evt) {
+    private void BotonConfirmarCancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        JFrame jFrame11 = ReservarCancelarVuelo;
+        dispose();
+        JFrame jFrame22 = CancelarVuelo;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Reservar o Cancelar Vuelo");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
     }
 
-    private void BotonSiguientePDestinoActionPerformed(java.awt.event.ActionEvent evt) {
+    private void BotonAtrasPCancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = Acompañantes;
-        dispose();
-        JFrame jFrame22 = Destino;
+        JFrame jFrame11 = CancelarVuelo;
+        JFrame jFrame22 = ReservarCancelarVuelo;
+
+        jFrame22.setVisible(true);
+        jFrame22.setSize(560,660);
+        jFrame22.setTitle("Pantalla Principal");
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(false);
+    }
+
+    private void BotonConfirmarViajeActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = ReservarVuelo;
+        JFrame jFrame22 = PantallaPrincipal;
+
+        jFrame22.setVisible(true);
+        jFrame22.setSize(560,660);
+        jFrame22.setTitle("Pantalla Principal");
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(false);
+    }
+
+    private void BotonAtrasPFechaActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = ReservarCancelarVuelo;
+        JFrame jFrame22 = ReservarVuelo;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Reservar o Cancelar Vuelo");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+
+    }
+
+    private void ListaOrigenActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = ReservarVuelo;
+        jFrame11.setVisible(true);
+
+
+        ///Guardo el origen del vuelo elegido
+        String origen;
+
         ///guardo la posicion elegida
-        int indexCiudadOrigen = jComboBoxOrigen.getSelectedIndex();
+        int indexCiudadOrigen = ListaOrigen.getSelectedIndex();
 
-        ///Guardo destino
-        destino=jComboBoxOrigen.getItemAt(indexCiudadOrigen);
+        ///Guardo origen
+        origen=ListaOrigen.getItemAt(indexCiudadOrigen);
 
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Acompañantes");
+        //Comparo para indicar los valores de Destino
+
+        if(indexCiudadOrigen==0) {
 
 
-//este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+            ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago", "Montevideo","Cordoba"}));
 
-        jFrame11.setVisible(true);
+
+        }
+        else{
+            if (indexCiudadOrigen == 1) {
+
+                ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bs As","Santiago", "Montevideo"}));
+
+            } else {
+
+                if (indexCiudadOrigen == 2) {
+
+                    ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bs As","Cordoba","Santiago"}));
+
+
+                }
+
+                else {
+
+                    if(indexCiudadOrigen == 3){
+
+                        ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bs As","Cordoba","Montevideo"}));
+                    }
+                }
+            }
+        }
+
     }
 
-    private void BotonAtrasPagDestinoActionPerformed(java.awt.event.ActionEvent evt) {
+    private void BotonListaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        JFrame jFrame11 = Origen;
-        dispose();
-        JFrame jFrame22 = Destino;
+        JFrame jFrame11 = ListaVuelos;
+        JFrame jFrame22 = Listas;
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
-        jFrame11.setTitle("Origen");
+        jFrame11.setTitle("Lista Vuelos");
 
-
-//este metodo devuelve el tamaño de la pantalla
+        //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-//para centrar la ventana lo hacemos con el siguiente calculo
+        //para centrar la ventana lo hacemos con el siguiente calculo
         jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(true);
     }
 
+    private void BotonListaUusariosActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = ListaUsuarios;
+        JFrame jFrame22 = Listas;
 
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Lista Usuarios");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    private void BotonListaVuelosFechaActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void BotonAtrasListaVueloActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = Listas;
+        JFrame jFrame22 = ListaVuelos;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Lista Usuarios");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    private void TextDNIPPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+
+
+    }
+
+    private void TextDNIPPrincipalKeyTyped(java.awt.event.KeyEvent evt) {
+        // TODO add your handling code here:
+        ///Para no permitir ingresar letras
+        char validar  = evt.getKeyChar();
+
+        if(Character.isLetter(validar)){
+
+            getToolkit().beep();
+            evt.consume();
+
+            JOptionPane.showMessageDialog (rootPane, "Ingresar Solo Numeros");
+        }
+    }
+
+    private void BotonListasActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = Listas;
+        JFrame jFrame22 = PantallaPrincipal;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Lista");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+
+    }
+
+    private void BotonComenzarActionPerformed(java.awt.event.ActionEvent evt) {
+
+        JFrame jFrame22 = PantallaPrincipal;
+        dispose();
+        jFrame22.setSize(560,660);
+        jFrame22.setTitle("Pantalla Principal");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame22.setVisible(true);
+    }
+
+    private void BotonAtrasListaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        JFrame jFrame11 = Listas;
+        JFrame jFrame22 = ListaUsuarios;
+
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Listas");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        jFrame11.setVisible(true);
+    }
+
+    ///Combo Box lista aviones disponobles
+
+    private void TiposAvionesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+
+
+        ///Guardo La fecha ingresada por pantalla
+        FechaElegida = (Date) ElegirFecha.getValue();
+
+
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Ventana().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify
-    private javax.swing.JFrame Acompañantes;
-    private javax.swing.JFrame Administrador;
     private javax.swing.JLabel AeroTaxi;
-    private javax.swing.JFrame AvionesDisponibles;
+    private javax.swing.JLabel AeroTaxi1;
+    private javax.swing.JLabel AeroTaxi2;
+    private javax.swing.JLabel AeroTaxi3;
     private javax.swing.JLabel Bienvenidos;
     private javax.swing.JButton BotonAceptarPantallaPrincipal;
-    private javax.swing.JButton BotonAtrasPAcompañantes;
-    private javax.swing.JButton BotonAtrasPAviones;
-    private javax.swing.JButton BotonAtrasPCancelar;
-    private javax.swing.JButton BotonAtrasPCosto;
-    private javax.swing.JButton BotonAtrasPDestino;
+    private javax.swing.JButton BotonAtrasListaUsuarios;
+    private javax.swing.JButton BotonAtrasListaVuelo;
+    private javax.swing.JButton BotonAtrasPCancelarVuelo;
     private javax.swing.JButton BotonAtrasPFecha;
     private javax.swing.JButton BotonAtrasPSecundaria;
-    private javax.swing.JButton BotonAtrasPagDestino;
     private javax.swing.JButton BotonCancelarPRegistrarse;
-    private javax.swing.JButton BotonCancelarPRegistrarse1;
-    private javax.swing.JButton BotonCancelarViajePCancelar;
     private javax.swing.JButton BotonCancelarViajePSecundaria;
     private javax.swing.JButton BotonComenzar;
-    private javax.swing.JButton BotonFinalizarPCosto;
+    private javax.swing.JButton BotonConfirmarCancelarVuelo;
+    private javax.swing.JButton BotonConfirmarViaje;
     private javax.swing.JButton BotonGuardarPRegistrarse;
+    private javax.swing.JButton BotonListaUusarios;
+    private javax.swing.JButton BotonListaVuelos;
+    private javax.swing.JButton BotonListaVuelosFecha;
+    private javax.swing.JButton BotonListas;
     private javax.swing.JButton BotonRegistrarsePantallaPrincipal;
     private javax.swing.JButton BotonReservarPSecundaria;
-    private javax.swing.JButton BotonSiguientePAcompañantes;
-    private javax.swing.JButton BotonSiguientePAviones;
-    private javax.swing.JButton BotonSiguientePDestino;
-    private javax.swing.JButton BotonSiguientePFecha;
-    private javax.swing.JButton BotonSiguientePOrigen;
-    private javax.swing.JButton BotonVerContraseñaPantallaPrincipal;
-    private javax.swing.JFrame CancelarViaje;
+    private javax.swing.JFrame CancelarVuelo;
+    private javax.swing.JSpinner CantidadAcompañantes;
     private javax.swing.JLabel ConfortExcelencia;
-    private javax.swing.JFrame CostoVuelo;
-    private javax.swing.JFrame Destino;
-    private javax.swing.JFrame Fecha;
+    private javax.swing.JLabel CostoTotal;
+    private javax.swing.JSpinner ElegirFecha;
+    private javax.swing.JSpinner FechaListaVuelos;
     private javax.swing.JLabel LabelAeroTaxiPPrincipal;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse1;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse10;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse2;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse3;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse4;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse7;
     private javax.swing.JLabel LabelAeroTaxiPRegistrarse8;
-    private javax.swing.JLabel LabelAeroTaxiPRegistrarse9;
     private javax.swing.JLabel LabelApellidoPRegistrarse;
-    private javax.swing.JLabel LabelCancelarViaje;
-    private javax.swing.JLabel LabelContraseñaPRegistrarse;
-    private javax.swing.JLabel LabelContraseñaPantallaPrincipal;
     private javax.swing.JLabel LabelDNIPRegistrarse;
+    private javax.swing.JLabel LabelDNIPantallaPrincipal;
     private javax.swing.JLabel LabelEdadPRegistrarse;
     private javax.swing.JLabel LabelNombrePRegistrarse;
+    private javax.swing.JLabel LabelNombrePReservarCancelarVuelo;
     private javax.swing.JLabel LabelQuedeseahacer;
-    private javax.swing.JLabel LabelUsuarioPRegistrarse;
-    private javax.swing.JLabel LabelUsuarioPSecundaria;
-    private javax.swing.JLabel LabelUsuarioPantallaPrincipal;
-    private javax.swing.JFrame Origen;
+    private javax.swing.JComboBox<String> ListaDestino;
+    private javax.swing.JComboBox<String> ListaOrigen;
+    private javax.swing.JFrame ListaUsuarios;
+    private javax.swing.JFrame ListaVuelos;
+    private javax.swing.JFrame Listas;
     private javax.swing.JPanel PanelAeroTaxi;
+    private javax.swing.JPanel PanelAeroTaxi1;
+    private javax.swing.JPanel PanelAeroTaxi2;
+    private javax.swing.JPanel PanelAeroTaxi3;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse1;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse10;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse2;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse3;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse4;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse7;
     private javax.swing.JPanel PanelAeroTaxiPRegistrarse8;
-    private javax.swing.JPanel PanelAeroTaxiPRegistrarse9;
     private javax.swing.JPanel PanelAeroTaxiPantallaPrincipal;
-    private javax.swing.JPanel PanelBajoPantallaPrincipal;
     private javax.swing.JPanel PanelBienvenidos;
-    private javax.swing.JPanel PanelBienvenidos1;
     private javax.swing.JPanel PanelBotonesPRegistrarse;
     private javax.swing.JPanel PanelBotonesPRegistrarse1;
     private javax.swing.JPanel PanelBotonesPRegistrarse2;
-    private javax.swing.JPanel PanelBotonesPRegistrarse3;
-    private javax.swing.JPanel PanelBotonesPRegistrarse4;
-    private javax.swing.JPanel PanelBotonesPRegistrarse6;
     private javax.swing.JPanel PanelBotonesPRegistrarse7;
-    private javax.swing.JPanel PanelBotonesPRegistrarse8;
-    private javax.swing.JPanel PanelBotonesPRegistrarse9;
     private javax.swing.JPanel PanelBotonesPantallaPrincipal;
     private javax.swing.JPanel PanelComenzar;
+    private javax.swing.JPanel PanelComenzar1;
+    private javax.swing.JPanel PanelComenzar2;
+    private javax.swing.JPanel PanelComenzar3;
     private javax.swing.JFrame PantallaPrincipal;
-    private javax.swing.JFrame Registarse;
-    private javax.swing.JFrame ReservarCancelar;
+    private javax.swing.JFrame Registrarse;
+    private javax.swing.JFrame ReservarCancelarVuelo;
+    private javax.swing.JFrame ReservarVuelo;
+    private javax.swing.JTable TablaListaUsuario;
     private javax.swing.JTextField TextApellidoPRegistrarse;
-    private javax.swing.JTextField TextContraseñaPRegistrarse;
-    private javax.swing.JPasswordField TextContraseñaPantallaPrincipal;
+    private javax.swing.JTextField TextDNIPPrincipal;
     private javax.swing.JTextField TextDNIPRegistrarse;
     private javax.swing.JTextField TextEdadPRegistrarse;
-    private javax.swing.JTextField TextUsuarioPRegistrarse;
-    private javax.swing.JTextField TextUsuarioPantallaPrincipal;
     private javax.swing.JTextField TextoNombrePRegistrarse;
-    private javax.swing.JComboBox<String> jComboBoxDestino1;
-    private javax.swing.JComboBox<String> jComboBoxOrigen;
+    private javax.swing.JComboBox<String> TiposAvionesDisponibles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JLabel labelVerContraseñaPPrincipal;
     // End of variables declaration
 }

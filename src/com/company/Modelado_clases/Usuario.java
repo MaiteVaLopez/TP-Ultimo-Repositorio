@@ -18,6 +18,9 @@ public class Usuario {
     }
 
 
+///Constructor Default
+    public Usuario(){};
+
     /////////////GETTERS Y SETTERS/////////////////////////////////////////////////////
 
     public String getNombre() {
