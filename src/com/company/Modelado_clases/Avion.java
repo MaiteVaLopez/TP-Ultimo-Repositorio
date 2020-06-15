@@ -3,7 +3,7 @@ package com.company.Modelado_clases;
 import java.util.ArrayList;
 import java.util.Date;
 
-public abstract class Avion {
+public class Avion {
 
     private String identificador;   //para diferenciar entre aviones
     private int combMax;   //combustible maximo (pueden llegar hasta 200.000 lt)

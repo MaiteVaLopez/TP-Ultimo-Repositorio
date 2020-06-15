@@ -3,20 +3,20 @@ package com.company.InterfazGrafica;
 
 
 
+import com.company.Modelado_clases.Avion;
+import com.company.Modelado_clases.Ciudad;
+import com.company.Persistencia.DatosVuelo;
 import com.company.Modelado_clases.Usuario;
 import com.company.Persistencia.Archivo;
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.company.Modelado_clases.Ciudad.*;
 
 
 public class Ventana extends javax.swing.JFrame {
@@ -41,9 +41,26 @@ public class Ventana extends javax.swing.JFrame {
     ArrayList<Usuario> ListaUsuario=null;
 
     ///Guardo la fecha del vuelo
-
     Date FechaElegida;
 
+    ///Guardo el numero acompañantes
+    int nroAcompañantes;
+
+    ///Guardo el origen
+    Ciudad origen;
+
+    ///Guardo el destino
+    Ciudad destino;
+
+    ///Lista de Datos Vuelo en la que guardo lo del archivo .json
+    ArrayList<DatosVuelo> ListaDatos = null;
+
+    ///Guardo el nuevo avion elegido
+    Avion nuevoAvion;
+
+    ///Guardo el nuevo Dato
+
+    DatosVuelo nuevoDato;
 
     /**
      * Creates new form ventana
@@ -68,10 +85,12 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
 
+        nroAcompañantes=0;
         FechaElegida = new Date();
         path = "Usuarios.json";
         archivo= new Archivo(path);
         ListaUsuario = new ArrayList<Usuario>();
+        ListaDatos = new ArrayList<DatosVuelo>();
         archivoUsuario = new File(path);
         objGson = new Gson();
         usuario = new Usuario();
@@ -130,7 +149,7 @@ public class Ventana extends javax.swing.JFrame {
         CostoTotal = new javax.swing.JLabel();
         ListaOrigen = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
-        ListaDestino = new javax.swing.JComboBox<>();
+        ListaDestino = new javax.swing.JComboBox<Ciudad>();
         jLabel14 = new javax.swing.JLabel();
         CantidadAcompañantes = new javax.swing.JSpinner();
         jLabel15 = new javax.swing.JLabel();
@@ -718,7 +737,8 @@ public class Ventana extends javax.swing.JFrame {
         ElegirFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1592196214970L), new java.util.Date(1623732120000L), java.util.Calendar.DAY_OF_WEEK));
 
         TiposAvionesDisponibles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1","Bronze2", "Bronze3"}));
+
         TiposAvionesDisponibles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TiposAvionesDisponiblesActionPerformed(evt);
@@ -735,7 +755,7 @@ public class Ventana extends javax.swing.JFrame {
         CostoTotal.setText("$");
 
         ListaOrigen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        ListaOrigen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bs As", "Córdoba", "Montevideo", "Santiago" }));
+        ListaOrigen.setModel(new javax.swing.DefaultComboBoxModel<Ciudad>(new Ciudad[] { BUENOS_AIRES, CORDOBA, MONTEVIDEO, SANTIAGO }));
         ListaOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ListaOrigenActionPerformed(evt);
@@ -1486,7 +1506,7 @@ public class Ventana extends javax.swing.JFrame {
 
 
                 ///Guarda la lista con el nuevo usuario en el archivo
-                String mensaje = archivo.GuardarArchivo(archivoUsuario,s,salida);
+                String mensaje = archivo.GuardarArchivoUsuario(archivoUsuario,s,salida);
 
                 ///Se devuelve un mensaje al guardar, indicando si se guardó con éxito o no se pudo guradar
                 if (mensaje != null) {
@@ -1621,6 +1641,10 @@ public class Ventana extends javax.swing.JFrame {
         JFrame jFrame11 = ReservarVuelo;
         JFrame jFrame22 = PantallaPrincipal;
 
+
+        DatosVuelo nuevoDato1 = new DatosVuelo(FechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+
+        archivo.GuardarDatosVueloEnLista(nuevoDato1);
         jFrame22.setVisible(true);
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Pantalla Principal");
@@ -1656,34 +1680,31 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setVisible(true);
 
 
-        ///Guardo el origen del vuelo elegido
-        String origen;
-
         ///guardo la posicion elegida
         int indexCiudadOrigen = ListaOrigen.getSelectedIndex();
 
         ///Guardo origen
-        origen=ListaOrigen.getItemAt(indexCiudadOrigen);
+        origen= ListaOrigen.getItemAt(indexCiudadOrigen);
 
         //Comparo para indicar los valores de Destino
 
         if(indexCiudadOrigen==0) {
 
 
-            ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Santiago", "Montevideo","Cordoba"}));
+            ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<Ciudad>(new Ciudad[]{SANTIAGO, MONTEVIDEO,CORDOBA}));
 
 
         }
         else{
             if (indexCiudadOrigen == 1) {
 
-                ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bs As","Santiago", "Montevideo"}));
+                ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<Ciudad>(new Ciudad[]{BUENOS_AIRES,SANTIAGO, MONTEVIDEO}));
 
             } else {
 
                 if (indexCiudadOrigen == 2) {
 
-                    ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bs As","Cordoba","Santiago"}));
+                    ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<Ciudad>(new Ciudad[]{BUENOS_AIRES,CORDOBA,SANTIAGO}));
 
 
                 }
@@ -1692,11 +1713,12 @@ public class Ventana extends javax.swing.JFrame {
 
                     if(indexCiudadOrigen == 3){
 
-                        ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bs As","Cordoba","Montevideo"}));
+                        ListaDestino.setModel(new javax.swing.DefaultComboBoxModel<Ciudad>(new Ciudad[]{BUENOS_AIRES,CORDOBA,MONTEVIDEO}));
                     }
                 }
             }
         }
+
 
     }
 
@@ -1831,8 +1853,104 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
 
 
+        ///Guardo la lista de aviones o la cargo
+        ArrayList<Avion> ListaAviones = new ArrayList<>();
+
+        archivo.GuardarAvionesEnLista();
+
+        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+
         ///Guardo La fecha ingresada por pantalla
         FechaElegida = (Date) ElegirFecha.getValue();
+
+        ///Guardo el nro de acompañantes elegido por pantalla
+        nroAcompañantes = (int) CantidadAcompañantes.getValue();
+
+
+
+        ///Me fijo si hay reservas
+        if (ListaDatos != null) {
+
+            for (DatosVuelo dato : ListaDatos) {
+
+                ///Habria que comparar con hash cod¿?
+                if (FechaElegida == dato.getFecha()) {
+
+                    //Esto Tmb habria que hacerlo con un hashcode o equals
+                    if (dato.getAvion().getIdentificador().equals("Bronze3")) {
+
+                        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze2"}));
+
+                    } else {
+
+                        if (dato.getAvion().getIdentificador().equals("Bronze2")) {
+
+                            TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
+
+                        } else {
+
+                            if (dato.getAvion().getIdentificador().equals("Bronze1")) {
+
+                                TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze2", "Bronze3"}));
+
+                            } else {
+
+                                if (dato.getAvion().getIdentificador().equals("Silver3")) {
+
+                                    TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Bronze2", "Bronze1", "Bronze3"}));
+
+                                } else {
+
+                                    if (dato.getAvion().getIdentificador().equals("Silver2")) {
+
+                                        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Bronze2", "Silver3", "Bronze1", "Bronze3"}));
+
+                                    } else {
+
+                                        if (dato.getAvion().getIdentificador().equals("Silver1")) {
+
+                                            TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Bronze", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
+
+                                        } else {
+
+                                            if (dato.getAvion().getIdentificador().equals("Gold3")) {
+
+                                                TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Bronze2", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
+
+                                            } else {
+
+                                                if (dato.getAvion().getIdentificador().equals("Gold2")) {
+
+                                                    TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Bronze2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
+
+                                                } else {
+
+                                                    if (dato.getAvion().getIdentificador().equals("Gold1")) {
+
+                                                        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bronze1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+
+
+
+
+
+
+
 
 
 
@@ -1915,8 +2033,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNombrePRegistrarse;
     private javax.swing.JLabel LabelNombrePReservarCancelarVuelo;
     private javax.swing.JLabel LabelQuedeseahacer;
-    private javax.swing.JComboBox<String> ListaDestino;
-    private javax.swing.JComboBox<String> ListaOrigen;
+    private JComboBox<Ciudad> ListaDestino;
+    private javax.swing.JComboBox<Ciudad> ListaOrigen;
     private javax.swing.JFrame ListaUsuarios;
     private javax.swing.JFrame ListaVuelos;
     private javax.swing.JFrame Listas;

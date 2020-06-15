@@ -1,4 +1,6 @@
-package com.company.Modelado_clases;
+package com.company.Persistencia;
+
+import com.company.Modelado_clases.*;
 
 import java.util.*;
 

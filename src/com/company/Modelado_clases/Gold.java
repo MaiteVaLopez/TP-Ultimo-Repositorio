@@ -15,9 +15,9 @@ public final class Gold extends Avion implements Serializable {
         this.wifi = wifi;
     }
 
-    public Gold() {
-        super();
-    }
+//    public Gold() {
+//        super();
+//    }
 
 
     public boolean isCatering() {

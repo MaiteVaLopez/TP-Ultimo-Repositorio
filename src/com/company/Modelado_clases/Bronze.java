@@ -11,9 +11,9 @@ public final class Bronze extends Avion implements Serializable {
         super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion);
     }
 
-    public Bronze() {
-        super();
-    }
+//    public Bronze() {
+//        super();
+//    }
 
 
     public int getCostoFijo() {
