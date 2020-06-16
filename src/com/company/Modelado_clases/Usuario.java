@@ -1,5 +1,7 @@
 package com.company.Modelado_clases;
 
+import com.company.Persistencia.DatosVuelo;
+
 import java.util.*;
 
 public class Usuario {
@@ -58,45 +60,49 @@ public class Usuario {
 
     /////////////////METODOS///////////////////////////////////////////////////////
 
-    /////Muestra listado de vuelos confirmados
-
-  /*  public void listarVuelosConfirmados()
-    {
-        for(DatosVuelo list: this.vuelosConfirmados)
-        {
-            System.out.println(list.toString());
-        }
-    }*/ //Queda deprecado porq ya no hay lista de vuelos dentro del usuario, hay que generar un listado al leer un archivo
-
     ///Recorre el listado de vuelos confirmados y busca el mejor avion, luego devuelve un String como mensaje
-   /*
-    public String mejorAvion() {
+
+   public String mejorAvion(ArrayList<DatosVuelo> vuelosConfirmados) {
         int condBronze = 0, condSilver = 0, condGold = 0;
         String mensaje=null;
 
-        for (DatosVuelo list : this.vuelosConfirmados) {
-            if (list.getAvion() instanceof Bronze)
-                condBronze = 1;
-            if (list.getAvion() instanceof Silver)
-                condSilver = 1;
-            if (list.getAvion() instanceof Gold)
-                condGold = 1;
-        }
+        if(vuelosConfirmados !=null) {
+            for (DatosVuelo list : vuelosConfirmados) {
+                if (list.getAvion() instanceof Bronze)
+                    condBronze = 1;
+                if (list.getAvion() instanceof Silver)
+                    condSilver = 1;
+                if (list.getAvion() instanceof Gold)
+                    condGold = 1;
+            }
 
-        if (condGold == 1) {
-            mensaje="El mejor avion fue un GOLD";
-        } else if (condSilver == 1) {
-            mensaje="El mejor avion fue un Silver";
-        }else if(condBronze==1)
-        {
-            mensaje="El mejor avion fue un Bronze";
-        }else{
-            mensaje = "El usuario no registra vuelos";   //agregué esta linea
+            if (condGold == 1) {
+                mensaje = "El mejor avion fue un GOLD";
+            } else if (condSilver == 1) {
+                mensaje = "El mejor avion fue un Silver";
+            } else if (condBronze == 1) {
+                mensaje = "El mejor avion fue un Bronze";
+            }
         }
+        else
+            mensaje="El usuario no registra vuelos";
         return mensaje;
-    }*/
+    }
 
-    ///Cancelar vuelo
+    ///Recorre la lista de vuelos confirmados por el usuario y suma sus costos de vuelo
+    public int costoTotalDeVuelos(ArrayList<DatosVuelo> vuelosConfirmados)
+    {
+        int costoTotalVuelos=0;
+        if(vuelosConfirmados!=null)
+        {
+            for(DatosVuelo list: vuelosConfirmados)
+            {
+                costoTotalVuelos+=list.calcularCostoVuelo();
+            }
+        }
+        return costoTotalVuelos;
+    }
+
 
 
     ///Muestra usuario con sus atributos
