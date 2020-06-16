@@ -17,12 +17,14 @@ public class DatosVuelo {
 
     //Constructor parametrizable de vuelos
     //No es necesario agregar costovuelo ni kmsruta en el constructor
-    public DatosVuelo(Date fecha, Ciudad origen, Ciudad destino, int cantidadPasajeros, Avion avion) {
+    public DatosVuelo(Usuario usuario,Date fecha, Ciudad origen, Ciudad destino, int cantidadPasajeros, Avion avion) {
         this.fecha = fecha;
         this.origen = origen;
         this.destino = destino;
         this.cantidadPasajeros = cantidadPasajeros;
         this.avion = avion;
+        this.usuario=usuario;
+        this.avion=avion;
     }
 
 

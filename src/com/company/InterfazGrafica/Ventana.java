@@ -11,6 +11,7 @@ import com.company.Persistencia.Archivo;
 import com.google.gson.Gson;
 
 import javax.swing.*;
+import javax.swing.text.html.Option;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -143,18 +144,21 @@ public class Ventana extends javax.swing.JFrame {
         BotonAtrasPFecha = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         ElegirFecha = new javax.swing.JSpinner();
-        TiposAvionesDisponibles = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         CostoTotal = new javax.swing.JLabel();
-        ListaOrigen = new javax.swing.JComboBox<>();
+        ListaOrigen = new JComboBox<Ciudad>();
         jLabel13 = new javax.swing.JLabel();
-        ListaDestino = new javax.swing.JComboBox<Ciudad>();
+        ListaDestino = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         CantidadAcompañantes = new javax.swing.JSpinner();
-        jLabel15 = new javax.swing.JLabel();
         PanelAeroTaxiPRegistrarse1 = new javax.swing.JPanel();
         LabelAeroTaxiPRegistrarse1 = new javax.swing.JLabel();
+        LabelEscribaAvion = new javax.swing.JLabel();
+        TextElegirAvion = new javax.swing.JTextField();
+        BotonVerAvionesDisponibles = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         Listas = new javax.swing.JFrame();
         PanelAeroTaxi2 = new javax.swing.JPanel();
         AeroTaxi2 = new javax.swing.JLabel();
@@ -736,15 +740,6 @@ public class Ventana extends javax.swing.JFrame {
         ElegirFecha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         ElegirFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1592196214970L), new java.util.Date(1623732120000L), java.util.Calendar.DAY_OF_WEEK));
 
-        TiposAvionesDisponibles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1","Bronze2", "Bronze3"}));
-
-        TiposAvionesDisponibles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TiposAvionesDisponiblesActionPerformed(evt);
-            }
-        });
-
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setText("Costo del Viaje");
 
@@ -773,9 +768,6 @@ public class Ventana extends javax.swing.JFrame {
         CantidadAcompañantes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CantidadAcompañantes.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setText("Aviones Disponibles");
-
         PanelAeroTaxiPRegistrarse1.setBackground(new java.awt.Color(51, 153, 255));
         PanelAeroTaxiPRegistrarse1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
         PanelAeroTaxiPRegistrarse1.setForeground(new java.awt.Color(0, 153, 204));
@@ -799,12 +791,25 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap())
         );
 
+        LabelEscribaAvion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        LabelEscribaAvion.setText("Escriba el Avion elegido");
+
+        BotonVerAvionesDisponibles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        BotonVerAvionesDisponibles.setText("Ver Aviones Disponibles");
+        BotonVerAvionesDisponibles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonVerAvionesDisponiblesActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout ReservarVueloLayout = new javax.swing.GroupLayout(ReservarVuelo.getContentPane());
         ReservarVuelo.getContentPane().setLayout(ReservarVueloLayout);
         ReservarVueloLayout.setHorizontalGroup(
                 ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PanelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(ReservarVueloLayout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -813,17 +818,21 @@ public class Ventana extends javax.swing.JFrame {
                                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel16))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                        .addComponent(jLabel16)
+                                        .addComponent(LabelEscribaAvion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(BotonVerAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(ListaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(ElegirFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(ListaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(CantidadAcompañantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TiposAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TextElegirAvion, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(CostoTotal))
-                                .addGap(18, 18, 18))
+                                .addContainerGap(31, Short.MAX_VALUE))
+                        .addComponent(PanelAeroTaxiPRegistrarse1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ReservarVueloLayout.setVerticalGroup(
                 ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -838,22 +847,26 @@ public class Ventana extends javax.swing.JFrame {
                                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(ListaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(ListaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ListaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(20, 20, 20)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(CantidadAcompañantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
+                                .addGap(28, 28, 28)
+                                .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(BotonVerAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TiposAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(36, 36, 36)
+                                        .addComponent(LabelEscribaAvion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TextElegirAvion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(38, 38, 38)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel16)
                                         .addComponent(CostoTotal))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addGap(26, 26, 26)
                                 .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1640,11 +1653,62 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFrame jFrame11 = ReservarVuelo;
         JFrame jFrame22 = PantallaPrincipal;
+        ///Guardo la posicion destino elegida
+        int indexCiudadDestino = ListaDestino.getSelectedIndex();
+
+        ///Lista de aviones
 
 
-        DatosVuelo nuevoDato1 = new DatosVuelo(FechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+        ArrayList<Avion> ListaAviones = new ArrayList<>();
 
-        archivo.GuardarDatosVueloEnLista(nuevoDato1);
+        archivo.GuardarAvionesEnLista();
+
+        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+
+
+        boolean ingresoTextoCorrecto=false;
+
+        ///Guardo el avion nombre del seleccionado
+        //String nombreAvion = jList1.getSelectedValue();
+        //System.out.println(nombreAvion);
+
+        ///Guardo destino
+        destino= ListaDestino.getItemAt(indexCiudadDestino);
+
+        for (Avion avion : ListaAviones){
+
+            if(avion.getIdentificador().equals(TextElegirAvion.getText())){
+
+                nuevoAvion=avion;
+                ingresoTextoCorrecto=true;
+            }
+
+
+        }
+
+        if(!ingresoTextoCorrecto){
+
+            JOptionPane.showMessageDialog(null,"Ingrese uno de los aviones disponibles");
+
+        }
+
+        if(nuevoAvion!=null){
+
+            DatosVuelo nuevoDato1 = new DatosVuelo(usuario,FechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+
+            archivo.GuardarDatosVueloEnLista(nuevoDato1);
+
+
+            System.out.println(nuevoDato1.toString());
+
+        }
+        else{
+
+            JOptionPane.showMessageDialog(null,"No se pudo cargar el viaje intente mas tarde o escriba bien lo pedido");
+
+
+        }
+
         jFrame22.setVisible(true);
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Pantalla Principal");
@@ -1654,6 +1718,7 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(false);
+
     }
 
     private void BotonAtrasPFechaActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1680,8 +1745,19 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setVisible(true);
 
 
+        ///Guardo La fecha ingresada por pantalla
+        Date fechaElegida = (Date) ElegirFecha.getValue();
+
+
+        ///Guardo el origen del vuelo elegido
+        Ciudad origen;
+
         ///guardo la posicion elegida
         int indexCiudadOrigen = ListaOrigen.getSelectedIndex();
+
+        String[] strings= new String[]{ };
+
+        int i=0;
 
         ///Guardo origen
         origen= ListaOrigen.getItemAt(indexCiudadOrigen);
@@ -1717,6 +1793,60 @@ public class Ventana extends javax.swing.JFrame {
                     }
                 }
             }
+        }
+
+
+        ///Cambio los aviones que se muestran segun la fecha que se elige
+
+        ///Si ya borre el avion en fecha no lo puedo volver a borrar en acompañante de la lista de aviones disponible
+        boolean datoEliminado= false;
+
+        ///Guardo los nombres de los aviones disponibles para la fecha elegida
+        ArrayList<String> AvionesDisponibles = new ArrayList<>();
+
+        ///Lista de aviones
+
+        ArrayList<Avion> ListaAviones = new ArrayList<>();
+
+        archivo.GuardarAvionesEnLista();
+
+        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+
+
+        ///Guardo la lista de vuelos reservados
+        ArrayList<DatosVuelo> ListaVuelos = new ArrayList<>();
+
+        archivo.GuardarAvionesEnLista();
+
+        ListaVuelos = archivo.DevuelvoListaDeDatosVueloGuardada();
+
+        ///Guardo La fecha ingresada por pantalla
+        FechaElegida = (Date) ElegirFecha.getValue();
+
+        ///Guardo el nro de acompañantes elegido por pantalla
+        nroAcompañantes = (int) CantidadAcompañantes.getValue();
+
+
+        ///Me fijo si hay reservas
+        if (ListaVuelos != null) {
+
+            for (DatosVuelo dato : ListaVuelos) {
+
+                ///Guardo los nombres de los aviones disponibles para la fecha y nro de acompañantes
+                for (Avion avion : ListaAviones){
+
+                    if(!FechaElegida.equals(dato.getFecha())&&nroAcompañantes < dato.getCantidadPasajeros()){
+
+
+                        AvionesDisponibles.add(avion.getIdentificador());
+
+
+                    }
+                }
+
+            }
+
+
         }
 
 
@@ -1847,111 +1977,76 @@ public class Ventana extends javax.swing.JFrame {
         jFrame11.setVisible(true);
     }
 
-    ///Combo Box lista aviones disponobles
-
-    private void TiposAvionesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {
+    private void BotonVerAvionesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
 
+        nroAcompañantes = (int) CantidadAcompañantes.getValue();
+        FechaElegida = (Date) ElegirFecha.getValue();
 
-        ///Guardo la lista de aviones o la cargo
+        boolean ingresoTextoCorrecto = false;
+        boolean DatoEliminado = false;
+
+        String avionesLista;
+
+        ///Guardo los nombres de los aviones disponibles para la fecha elegida
+        ArrayList<String> AvionesDisponibles = new ArrayList<>();
+
+        ///Lista de aviones
+
+
         ArrayList<Avion> ListaAviones = new ArrayList<>();
 
         archivo.GuardarAvionesEnLista();
 
         ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
 
-        ///Guardo La fecha ingresada por pantalla
-        FechaElegida = (Date) ElegirFecha.getValue();
+        ///Guardo los nombres de los aviones en lista disponioble
+        for (Avion avion : ListaAviones) {
 
-        ///Guardo el nro de acompañantes elegido por pantalla
-        nroAcompañantes = (int) CantidadAcompañantes.getValue();
+            AvionesDisponibles.add(avion.getIdentificador());
+        }
+
+        ///Guardo la lista de vuek¿los reservados
+        ArrayList<DatosVuelo> ListaVuelos = new ArrayList<>();
+
+        archivo.GuardarAvionesEnLista();
+
+        ListaVuelos = archivo.DevuelvoListaDeDatosVueloGuardada();
 
 
 
         ///Me fijo si hay reservas
-        if (ListaDatos != null) {
+        if (ListaVuelos != null) {
 
-            for (DatosVuelo dato : ListaDatos) {
+            for (DatosVuelo datosVuelo : ListaVuelos) {
 
-                ///Habria que comparar con hash cod¿?
-                if (FechaElegida == dato.getFecha()) {
-
-                    //Esto Tmb habria que hacerlo con un hashcode o equals
-                    if (dato.getAvion().getIdentificador().equals("Bronze3")) {
-
-                        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze2"}));
-
-                    } else {
-
-                        if (dato.getAvion().getIdentificador().equals("Bronze2")) {
-
-                            TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
-
-                        } else {
-
-                            if (dato.getAvion().getIdentificador().equals("Bronze1")) {
-
-                                TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze2", "Bronze3"}));
-
-                            } else {
-
-                                if (dato.getAvion().getIdentificador().equals("Silver3")) {
-
-                                    TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Silver2", "Bronze2", "Bronze1", "Bronze3"}));
-
-                                } else {
-
-                                    if (dato.getAvion().getIdentificador().equals("Silver2")) {
-
-                                        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Silver1", "Bronze2", "Silver3", "Bronze1", "Bronze3"}));
-
-                                    } else {
-
-                                        if (dato.getAvion().getIdentificador().equals("Silver1")) {
-
-                                            TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Gold3", "Bronze", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
-
-                                        } else {
-
-                                            if (dato.getAvion().getIdentificador().equals("Gold3")) {
-
-                                                TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Gold2", "Bronze2", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
-
-                                            } else {
-
-                                                if (dato.getAvion().getIdentificador().equals("Gold2")) {
-
-                                                    TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Gold1", "Bronze2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
-
-                                                } else {
-
-                                                    if (dato.getAvion().getIdentificador().equals("Gold1")) {
-
-                                                        TiposAvionesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Bronze1", "Gold2", "Gold3", "Silver1", "Silver2", "Silver3", "Bronze1", "Bronze3"}));
-
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                    }
+                System.out.println(datosVuelo.getAvion().getMaxPasajeros());
+                ///Si hay una fecha ya reservada
+                if (FechaElegida.getDate() == (datosVuelo.getFecha().getDate())) {
+                    ///Borro de aviones disponibles ese nombre
+                    AvionesDisponibles.remove(datosVuelo.getAvion().getIdentificador());
+                    DatoEliminado = true;
                 }
 
-
+                DatoEliminado=false;
             }
         }
 
 
 
+        for (Avion avion : ListaAviones){
+
+            if(nroAcompañantes>avion.getMaxPasajeros()){
+
+                AvionesDisponibles.remove(avion.getIdentificador());
+            }
 
 
+        }
 
 
-
+        ///Guardo en Text area los aviones disponibles
+        jTextArea1.setText(AvionesDisponibles.toString());
 
 
     }
@@ -2015,6 +2110,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton BotonListas;
     private javax.swing.JButton BotonRegistrarsePantallaPrincipal;
     private javax.swing.JButton BotonReservarPSecundaria;
+    private javax.swing.JButton BotonVerAvionesDisponibles;
     private javax.swing.JFrame CancelarVuelo;
     private javax.swing.JSpinner CantidadAcompañantes;
     private javax.swing.JLabel ConfortExcelencia;
@@ -2030,11 +2126,12 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel LabelDNIPRegistrarse;
     private javax.swing.JLabel LabelDNIPantallaPrincipal;
     private javax.swing.JLabel LabelEdadPRegistrarse;
+    private javax.swing.JLabel LabelEscribaAvion;
     private javax.swing.JLabel LabelNombrePRegistrarse;
     private javax.swing.JLabel LabelNombrePReservarCancelarVuelo;
     private javax.swing.JLabel LabelQuedeseahacer;
-    private JComboBox<Ciudad> ListaDestino;
-    private javax.swing.JComboBox<Ciudad> ListaOrigen;
+    private javax.swing.JComboBox<Ciudad> ListaDestino;
+    private JComboBox<Ciudad> ListaOrigen;
     private javax.swing.JFrame ListaUsuarios;
     private javax.swing.JFrame ListaVuelos;
     private javax.swing.JFrame Listas;
@@ -2066,14 +2163,13 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField TextDNIPPrincipal;
     private javax.swing.JTextField TextDNIPRegistrarse;
     private javax.swing.JTextField TextEdadPRegistrarse;
+    private javax.swing.JTextField TextElegirAvion;
     private javax.swing.JTextField TextoNombrePRegistrarse;
-    private javax.swing.JComboBox<String> TiposAvionesDisponibles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -2082,6 +2178,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration
 }
