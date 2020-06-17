@@ -110,7 +110,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "nombre='" + nombre + '\'' + ", apellido='" + apellido + '\'' + ", dni=" + dni + ", edad=" + edad;
+        return "Nombre: '" + nombre + '\'' + ", Apellido: " + apellido + '\'' + ", DNI: " + dni + ", Edad: " + edad;
     }
 
     ///// Equals and hashcode compara usuarios por su dni considerando que el dni es unico por persona

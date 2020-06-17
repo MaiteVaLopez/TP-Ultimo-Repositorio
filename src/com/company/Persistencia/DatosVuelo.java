@@ -114,17 +114,17 @@ public class DatosVuelo {
 
     public int calcularKms(){            //calcula los kilometros entre las ciudades.
         int kmsFinales = 0;
-        if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.CORDOBA)) ||  (this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.BUENOS_AIRES))){
+        if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.CORDOBA)) || ((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.BUENOS_AIRES)))){
             kmsFinales = 695;
-        }else if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.SANTIAGO)) ||  (this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.BUENOS_AIRES))){
+        }else if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.SANTIAGO)) ||  ((this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.BUENOS_AIRES)))){
             kmsFinales = 1400;
-        }else if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.MONTEVIDEO)) ||  (this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.BUENOS_AIRES))){
+        }else if((this.origen.equals(Ciudad.BUENOS_AIRES) && this.destino.equals(Ciudad.MONTEVIDEO)) ||  ((this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.BUENOS_AIRES)))){
             kmsFinales = 950;
-        }else if((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.MONTEVIDEO)) ||  (this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.CORDOBA))){
+        }else if((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.MONTEVIDEO)) ||  ((this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.CORDOBA)))){
             kmsFinales = 1190;
-        }else if((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.SANTIAGO)) ||  (this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.CORDOBA))){
+        }else if((this.origen.equals(Ciudad.CORDOBA) && this.destino.equals(Ciudad.SANTIAGO)) ||  ((this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.CORDOBA)))){
             kmsFinales = 1050;
-        }else if((this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.SANTIAGO)) ||  (this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.MONTEVIDEO))){
+        }else if((this.origen.equals(Ciudad.MONTEVIDEO) && this.destino.equals(Ciudad.SANTIAGO)) ||  ((this.origen.equals(Ciudad.SANTIAGO) && this.destino.equals(Ciudad.MONTEVIDEO)))){
             kmsFinales = 2100;
         }else{
             System.out.println("No se pudo calcular la distancia del vuelo.");   //hacer exception??????????????????????
@@ -135,8 +135,7 @@ public class DatosVuelo {
 
 
 
-    // TOTALMENTE rustico, si lo quieren cambiar o mejorar para mi esta ok. no sabia como llegar a la variable costoFijo de cada subclase
-    //calcula el costo total del vuelo.
+    //calcula el costo total del vuelo. Funciona bien
     public int calcularCostoVuelo() {
         int costoTotal=0;
         costoTotal = (kmsRuta * avion.getCosto_x_km()) + (cantidadPasajeros * 3500);

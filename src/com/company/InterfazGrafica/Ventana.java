@@ -535,7 +535,7 @@ public class Ventana extends javax.swing.JFrame {
 
         LabelQuedeseahacer.setFont(new java.awt.Font("Viner Hand ITC", 0, 18)); // NOI18N
         LabelQuedeseahacer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelQuedeseahacer.setText("¿Deseas Reservar un Viaje o Cancelarlo?");
+        LabelQuedeseahacer.setText("¿Deseas Reservar un Vuelo o Cancelarlo?");
 
         PanelAeroTaxiPRegistrarse8.setBackground(new java.awt.Color(51, 153, 255));
         PanelAeroTaxiPRegistrarse8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
@@ -2078,13 +2078,15 @@ public class Ventana extends javax.swing.JFrame {
         if(nuevoAvion!=null){
 
             DatosVuelo nuevoDato1 = new DatosVuelo(usuario,FechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+            int kilometros = nuevoDato1.calcularKms();
+            nuevoDato1.setKmsRuta(kilometros);
             CostoTotal.setText(String.valueOf(nuevoDato1.calcularCostoVuelo()));
 
 
         }
         else{
 
-            JOptionPane.showMessageDialog(null,"No se pudo cargar el viaje intente mas tarde ");
+            JOptionPane.showMessageDialog(null,"No se pudo cargar el vuelo. Intente mas tarde ");
 
 
         }

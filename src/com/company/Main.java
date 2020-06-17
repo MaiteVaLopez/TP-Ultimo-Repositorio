@@ -1,17 +1,30 @@
 package com.company;
 
 import com.company.InterfazGrafica.Ventana;
-import com.company.Modelado_clases.Avion;
-import com.company.Modelado_clases.Bronze;
+import com.company.Modelado_clases.*;
+import com.company.Persistencia.DatosVuelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.company.Modelado_clases.Ciudad.*;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
 
+        Usuario user = new Usuario("Pedro", "Perez", 1234, 21);
+        Date fecha = new Date();
+        Avion bronce = new Bronze("avion1", 300, 100, 20, 500, Propulsion.A_REACCION);
+
+        DatosVuelo datos = new DatosVuelo (user, fecha, MONTEVIDEO, BUENOS_AIRES, 2, bronce);
+
+        int kms = datos.calcularKms();
+        datos.setKmsRuta(kms);
+
+        System.out.println(datos.getKmsRuta());
 
         ///Probando clases Usuario y DatosVuelo
 
@@ -52,7 +65,7 @@ public class Main {
         //</editor-fold>*/
 
         // Create and display the form
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Ventana().setVisible(true);
             }

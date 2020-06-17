@@ -27,7 +27,7 @@ public class Archivo {
 
     String pathAvion = "Aviones.json";
 
-    String pathDatosVuelo = "DatosVyelo.json";
+    String pathDatosVuelo = "DatosVuelo.json";
 
     ///Escribir archivo
 
