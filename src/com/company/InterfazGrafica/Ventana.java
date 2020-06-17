@@ -144,10 +144,9 @@ public class Ventana extends javax.swing.JFrame {
         BotonAtrasPFecha = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         ElegirFecha = new javax.swing.JSpinner();
-        jLabel16 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         CostoTotal = new javax.swing.JLabel();
-        ListaOrigen = new JComboBox<Ciudad>();
+        ListaOrigen = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         ListaDestino = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
@@ -159,12 +158,14 @@ public class Ventana extends javax.swing.JFrame {
         BotonVerAvionesDisponibles = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        BotonCalcularCosto = new javax.swing.JButton();
         Listas = new javax.swing.JFrame();
         PanelAeroTaxi2 = new javax.swing.JPanel();
         AeroTaxi2 = new javax.swing.JLabel();
         PanelComenzar2 = new javax.swing.JPanel();
         BotonListaVuelos = new javax.swing.JButton();
         BotonListaUusarios = new javax.swing.JButton();
+        BotonAtrasListas = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         ListaVuelos = new javax.swing.JFrame();
@@ -658,7 +659,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel1.setText("Fecha");
 
         jSpinner1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
+        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1592279491481L), new java.util.Date(1623815460000L), java.util.Calendar.DAY_OF_MONTH));
 
         jLabel2.setFont(new java.awt.Font("Vladimir Script", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -740,9 +741,6 @@ public class Ventana extends javax.swing.JFrame {
         ElegirFecha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         ElegirFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1592196214970L), new java.util.Date(1623732120000L), java.util.Calendar.DAY_OF_WEEK));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel16.setText("Costo del Viaje");
-
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("Origen");
 
@@ -806,6 +804,14 @@ public class Ventana extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        BotonCalcularCosto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        BotonCalcularCosto.setText("Calcular Costo");
+        BotonCalcularCosto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCalcularCostoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ReservarVueloLayout = new javax.swing.GroupLayout(ReservarVuelo.getContentPane());
         ReservarVuelo.getContentPane().setLayout(ReservarVueloLayout);
         ReservarVueloLayout.setHorizontalGroup(
@@ -818,9 +824,10 @@ public class Ventana extends javax.swing.JFrame {
                                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(jLabel16)
-                                        .addComponent(LabelEscribaAvion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(BotonVerAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(BotonVerAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(BotonCalcularCosto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(LabelEscribaAvion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
                                 .addGap(27, 27, 27)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(ListaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -858,15 +865,15 @@ public class Ventana extends javax.swing.JFrame {
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(BotonVerAvionesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(LabelEscribaAvion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(TextElegirAvion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(38, 38, 38)
+                                .addGap(37, 37, 37)
                                 .addGroup(ReservarVueloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel16)
-                                        .addComponent(CostoTotal))
-                                .addGap(26, 26, 26)
+                                        .addComponent(CostoTotal)
+                                        .addComponent(BotonCalcularCosto))
+                                .addGap(21, 21, 21)
                                 .addComponent(PanelBotonesPRegistrarse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -911,6 +918,13 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        BotonAtrasListas.setText("Atras");
+        BotonAtrasListas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAtrasListasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelComenzar2Layout = new javax.swing.GroupLayout(PanelComenzar2);
         PanelComenzar2.setLayout(PanelComenzar2Layout);
         PanelComenzar2Layout.setHorizontalGroup(
@@ -918,6 +932,8 @@ public class Ventana extends javax.swing.JFrame {
                         .addGroup(PanelComenzar2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(BotonListaVuelos, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(74, 74, 74)
+                                .addComponent(BotonAtrasListas)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotonListaUusarios, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
@@ -928,7 +944,8 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap(30, Short.MAX_VALUE)
                                 .addGroup(PanelComenzar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(BotonListaVuelos)
-                                        .addComponent(BotonListaUusarios))
+                                        .addComponent(BotonListaUusarios)
+                                        .addComponent(BotonAtrasListas))
                                 .addContainerGap())
         );
 
@@ -1315,8 +1332,10 @@ public class Ventana extends javax.swing.JFrame {
         ///DNI Ingresado por pantalla
         // DNIIngresadoPantalla= );
 
+        ///Devuelve String ingresado
         DNIPantalla=TextDNIPPrincipal.getText();
 
+        ///Convierte el string en int
         DNIIngresadoPantalla=Integer.parseInt(DNIPantalla);
 
 ///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
@@ -1355,9 +1374,10 @@ public class Ventana extends javax.swing.JFrame {
             jFrame22.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
 
         }
-        else {
+        else {///Bienvenido usurio
             LabelNombrePReservarCancelarVuelo.setText(usuario.getNombre());
             jFrame22.setVisible(false);
+
             jFrame11.setSize(560, 660);
             jFrame11.setTitle("Reservar o Cancelar");
 
@@ -1376,7 +1396,7 @@ public class Ventana extends javax.swing.JFrame {
     private void BotonRegistrarsePantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         JFrame jFrame11 = Registrarse;
-        dispose();
+
         JFrame jFrame22 = PantallaPrincipal;
 
         jFrame22.setVisible(false);
@@ -1531,6 +1551,7 @@ public class Ventana extends javax.swing.JFrame {
 
             }
         } catch (IOException e) {
+
         }
 
         ///Vuelve a la pantalla principal luego de guardar el usuario
@@ -1617,9 +1638,46 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonConfirmarCancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
+      ///Guarda la fecha
+        java.util.Date fechaHoy = new Date();
+
+        ArrayList<DatosVuelo> ListaVuelos = archivo.DevuelvoListaDeDatosVueloGuardada();
+
+        ///Guarda la fecha ingresada por pantalla
+        Date FechaCancelar= (Date) jSpinner1.getValue();
         JFrame jFrame11 = ReservarCancelarVuelo;
         dispose();
         JFrame jFrame22 = CancelarVuelo;
+
+
+        System.out.println(ListaVuelos.toString());
+
+        ///Verifico que el vuelo no tenga fecha hoy
+        if(fechaHoy.getDate()==FechaCancelar.getDate()){
+
+            JOptionPane.showMessageDialog(null,"Solo es posible cancelar con 24hs de anticipacion");
+
+            JOptionPane.showMessageDialog(null,"Su vuelo NO fue cancelado");
+        }
+
+        else{
+
+            for (DatosVuelo dato : ListaVuelos){
+
+                if(dato.getFecha().getDate()==FechaCancelar.getDate()&&usuario.equals(dato.getUsuario())){
+
+                    ListaVuelos.remove(dato);
+
+                    archivo.GuardarDatosVueloEnArchivo();
+
+                    JOptionPane.showMessageDialog(null,"Su vuelo fue cancelado con exito");
+
+                    System.out.println(ListaVuelos.toString());
+                }
+            }
+
+        }
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
@@ -1640,7 +1698,7 @@ public class Ventana extends javax.swing.JFrame {
 
         jFrame22.setVisible(true);
         jFrame22.setSize(560,660);
-        jFrame22.setTitle("Pantalla Principal");
+        jFrame22.setTitle("Reservar o Cancelar vuelo");
         //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         //para centrar la ventana lo hacemos con el siguiente calculo
@@ -1656,6 +1714,7 @@ public class Ventana extends javax.swing.JFrame {
         ///Guardo la posicion destino elegida
         int indexCiudadDestino = ListaDestino.getSelectedIndex();
 
+        int indexCiudadOrigen = ListaOrigen.getSelectedIndex();
         ///Lista de aviones
 
 
@@ -1668,10 +1727,8 @@ public class Ventana extends javax.swing.JFrame {
 
         boolean ingresoTextoCorrecto=false;
 
-        ///Guardo el avion nombre del seleccionado
-        //String nombreAvion = jList1.getSelectedValue();
-        //System.out.println(nombreAvion);
-
+        ///Guardo origen
+        origen=ListaOrigen.getItemAt(indexCiudadOrigen);
         ///Guardo destino
         destino= ListaDestino.getItemAt(indexCiudadDestino);
 
@@ -1696,10 +1753,9 @@ public class Ventana extends javax.swing.JFrame {
 
             DatosVuelo nuevoDato1 = new DatosVuelo(usuario,FechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
 
+            nuevoDato1.setCostoDeVuelo(nuevoDato1.calcularCostoVuelo());
+
             archivo.GuardarDatosVueloEnLista(nuevoDato1);
-
-
-            System.out.println(nuevoDato1.toString());
 
         }
         else{
@@ -1707,8 +1763,10 @@ public class Ventana extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"No se pudo cargar el viaje intente mas tarde o escriba bien lo pedido");
 
 
-        }
 
+
+
+        }
         jFrame22.setVisible(true);
         jFrame22.setSize(560,660);
         jFrame22.setTitle("Pantalla Principal");
@@ -1718,6 +1776,8 @@ public class Ventana extends javax.swing.JFrame {
         jFrame22.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         jFrame11.setVisible(false);
+
+
 
     }
 
@@ -1749,15 +1809,9 @@ public class Ventana extends javax.swing.JFrame {
         Date fechaElegida = (Date) ElegirFecha.getValue();
 
 
-        ///Guardo el origen del vuelo elegido
-        Ciudad origen;
 
         ///guardo la posicion elegida
         int indexCiudadOrigen = ListaOrigen.getSelectedIndex();
-
-        String[] strings= new String[]{ };
-
-        int i=0;
 
         ///Guardo origen
         origen= ListaOrigen.getItemAt(indexCiudadOrigen);
@@ -1795,59 +1849,6 @@ public class Ventana extends javax.swing.JFrame {
             }
         }
 
-
-        ///Cambio los aviones que se muestran segun la fecha que se elige
-
-        ///Si ya borre el avion en fecha no lo puedo volver a borrar en acompañante de la lista de aviones disponible
-        boolean datoEliminado= false;
-
-        ///Guardo los nombres de los aviones disponibles para la fecha elegida
-        ArrayList<String> AvionesDisponibles = new ArrayList<>();
-
-        ///Lista de aviones
-
-        ArrayList<Avion> ListaAviones = new ArrayList<>();
-
-        archivo.GuardarAvionesEnLista();
-
-        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
-
-
-        ///Guardo la lista de vuelos reservados
-        ArrayList<DatosVuelo> ListaVuelos = new ArrayList<>();
-
-        archivo.GuardarAvionesEnLista();
-
-        ListaVuelos = archivo.DevuelvoListaDeDatosVueloGuardada();
-
-        ///Guardo La fecha ingresada por pantalla
-        FechaElegida = (Date) ElegirFecha.getValue();
-
-        ///Guardo el nro de acompañantes elegido por pantalla
-        nroAcompañantes = (int) CantidadAcompañantes.getValue();
-
-
-        ///Me fijo si hay reservas
-        if (ListaVuelos != null) {
-
-            for (DatosVuelo dato : ListaVuelos) {
-
-                ///Guardo los nombres de los aviones disponibles para la fecha y nro de acompañantes
-                for (Avion avion : ListaAviones){
-
-                    if(!FechaElegida.equals(dato.getFecha())&&nroAcompañantes < dato.getCantidadPasajeros()){
-
-
-                        AvionesDisponibles.add(avion.getIdentificador());
-
-
-                    }
-                }
-
-            }
-
-
-        }
 
 
     }
@@ -1979,11 +1980,8 @@ public class Ventana extends javax.swing.JFrame {
 
     private void BotonVerAvionesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-
         nroAcompañantes = (int) CantidadAcompañantes.getValue();
         FechaElegida = (Date) ElegirFecha.getValue();
-
-        boolean ingresoTextoCorrecto = false;
         boolean DatoEliminado = false;
 
         String avionesLista;
@@ -2051,6 +2049,53 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
+    private void BotonCalcularCostoActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+
+///Aca hay un error
+        boolean ingresoTextoCorrecto = false;
+
+        ArrayList<Avion> ListaAviones = new ArrayList<>();
+
+        archivo.GuardarAvionesEnLista();
+
+
+        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+
+
+        for (Avion avion : ListaAviones){
+
+            if(avion.getIdentificador().equals(TextElegirAvion.getText())){
+
+                nuevoAvion=avion;
+
+            }
+
+
+        }
+
+        System.out.println(TextElegirAvion.getText());
+        if(nuevoAvion!=null){
+
+            DatosVuelo nuevoDato1 = new DatosVuelo(usuario,FechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+            CostoTotal.setText(String.valueOf(nuevoDato1.calcularCostoVuelo()));
+
+
+        }
+        else{
+
+            JOptionPane.showMessageDialog(null,"No se pudo cargar el viaje intente mas tarde ");
+
+
+        }
+
+
+    }
+
+    private void BotonAtrasListasActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -2098,8 +2143,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton BotonAtrasPCancelarVuelo;
     private javax.swing.JButton BotonAtrasPFecha;
     private javax.swing.JButton BotonAtrasPSecundaria;
+    private javax.swing.JButton BotonAtrasListas;
     private javax.swing.JButton BotonCancelarPRegistrarse;
     private javax.swing.JButton BotonCancelarViajePSecundaria;
+    private javax.swing.JButton BotonCalcularCosto;
     private javax.swing.JButton BotonComenzar;
     private javax.swing.JButton BotonConfirmarCancelarVuelo;
     private javax.swing.JButton BotonConfirmarViaje;

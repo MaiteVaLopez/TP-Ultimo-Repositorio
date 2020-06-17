@@ -409,4 +409,35 @@ public class Archivo {
 
     }
 
+    public void GuardarDatosVueloEnArchivo(){
+
+
+        ArrayList<DatosVuelo> ListaDatosVuelo= new ArrayList<DatosVuelo>();
+
+
+        String documento;
+        Gson objGson = new Gson();
+
+
+        if(DevuelvoListaDeDatosVueloGuardada()!= null){
+
+            ///Cargo la lista de datos para agregarle uno mas
+            ListaDatosVuelo = DevuelvoListaDeDatosVueloGuardada();
+
+        }
+
+
+        if (miarchivoDatosVuelo.getName().endsWith("json")) {
+
+            ///Pasa La lista de DAtos Vuelo a .json
+            documento = objGson.toJson(ListaDatosVuelo);
+
+
+            GuardarArchivoDatosVuelo(miarchivoDatosVuelo, documento);
+
+        }
+
+    }
+
+
 }
