@@ -1984,21 +1984,18 @@ public class Ventana extends javax.swing.JFrame {
         FechaElegida = (Date) ElegirFecha.getValue();
         boolean DatoEliminado = false;
 
-        String avionesLista;
-
         ///Guardo los nombres de los aviones disponibles para la fecha elegida
         ArrayList<String> AvionesDisponibles = new ArrayList<>();
 
         ///Lista de aviones
 
-
-        ArrayList<Avion> ListaAviones = new ArrayList<>();
+        ArrayList<Avion> ListaAviones;
 
         archivo.GuardarAvionesEnLista();
 
         ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
 
-        ///Guardo los nombres de los aviones en lista disponioble
+        ///Guardo los nombres de los aviones en lista disponible
         for (Avion avion : ListaAviones) {
 
             AvionesDisponibles.add(avion.getIdentificador());

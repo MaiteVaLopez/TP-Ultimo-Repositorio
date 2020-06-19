@@ -4,9 +4,11 @@ import com.company.InterfazGrafica.Ventana;
 import com.company.Modelado_clases.*;
 import com.company.Persistencia.DatosVuelo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import static com.company.Modelado_clases.Ciudad.*;
 
@@ -14,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-
+        /*
         Usuario user = new Usuario("Pedro", "Perez", 1234, 21);
         Date fecha = new Date();
         Avion bronce = new Bronze("avion1", 300, 100, 20, 500, Propulsion.A_REACCION);
@@ -28,7 +30,7 @@ public class Main {
 
         ///Probando clases Usuario y DatosVuelo
 
-        /*Date fecha=null;
+        Date fecha=null;
 
         List<DatosVuelo>listado=new ArrayList<DatosVuelo>();
 
@@ -65,16 +67,17 @@ public class Main {
         //</editor-fold>*/
 
         // Create and display the form
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Ventana().setVisible(true);
             }
         });
 
-             /*   Scanner scan=new Scanner(System.in);
+        /*
+                Scanner scan=new Scanner(System.in);
                 String  fechaIngresada=scan.nextLine();
-                SimpleDateFormat formatoFecha=new Simple("aaaa/mm/dd");*/
-
+                SimpleDateFormat formatoFecha=new Simple("aaaa/mm/dd");
+*/
     }
 }
 

@@ -46,13 +46,13 @@ public class Archivo {
     public String LeoUnArchivoUsuario() {
 
 
-        String datosArchivoJson= null;
+        String datosArchivoJson= null;   /// devuelve el contenido del archivo en formato .json
 
         try {
             if (!miarchivoUsuario.exists()) {
 
 
-                System.out.println("El archivo no existe");
+                System.out.println("ERROR: El archivo de usuarios no existe");
 
 
             }
@@ -81,7 +81,7 @@ public class Archivo {
             }
         } catch (IOException e) {
 
-            System.out.println("No se pudo leer");
+            System.out.println("ERROR: No se pudo leer el archivo de usuarios.");
 
 
         }
@@ -260,7 +260,7 @@ public class Archivo {
 
             Gson gson = new Gson();
 
-            ///Paso los datos del archivo . json a lista de DAtosVuelo
+            ///Paso los datos del archivo . json a lista de DatosVuelo
 
             ListaDatosVuelo = gson.fromJson(datosArchivo, (java.lang.reflect.Type)typeDatosVuelo);//Es para que pueda leer el arreglo de usuarios
 
