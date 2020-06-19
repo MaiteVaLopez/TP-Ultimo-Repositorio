@@ -271,6 +271,27 @@ public class Archivo {
 
     }
 
+    ///Busca los vuelos de un determinado usuario y los devuelve en una lista
+    public ArrayList<DatosVuelo> listarVuelosDeUsuario(Usuario usuario)
+    {
+        ArrayList<DatosVuelo> listadoVuelosUsuario=null;
+        ArrayList<DatosVuelo> listadoDeVuelos=DevuelvoListaDeDatosVueloGuardada();
+
+        if(listadoDeVuelos!=null)
+        {
+            for(DatosVuelo list: listadoDeVuelos)
+            {
+                if(usuario.equals(list.getUsuario()))
+                {
+                    listadoVuelosUsuario.add(list);}
+            }
+        }
+        else
+            System.out.println("Listado de vuelos vacia");
+
+        return listadoVuelosUsuario;
+    }
+
     ///Metodo utilizado en ventana para guardar una lista .json en un archivo, el mensaje devuelve si se pudo guardar con exito o no
     public String GuardarArchivoUsuario(File archivo, String documento, FileOutputStream salida) {
 
