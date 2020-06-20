@@ -5,21 +5,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
 import com.company.Modelado_clases.Avion;
 
 public class Archivo {
 
     ///Archivo
-    File miarchivoUsuario;
-    File miarchivoAvion;
-    File miarchivoDatosVuelo;
+    File usuarios = new File("Usuarios.json");
+    File aviones = new File("Aviones.json");
+    File datosvuelo = new File("DatosVuelo.json");
 
-    FileOutputStream salidaAvion;
-
-    FileOutputStream salidaDatosVuelo;
 
     Type typeUsuario = (Type) new TypeToken<ArrayList<Usuario>>() {}.getType();
 
@@ -27,111 +24,36 @@ public class Archivo {
 
     Type typeAvion = (Type) new TypeToken<ArrayList<Avion>>() {}.getType();
 
-    String pathAvion = "Aviones.json";
 
-    String pathDatosVuelo = "DatosVuelo.json";
+    ///CONSTRUCTOR
 
-    private Avion avion;
-
-    ///Escribir archivo
-
-    ///path es la direccion de la carpeta que contiene el archivo
-
-    public Archivo(String pathUsuario) {
-
-        miarchivoUsuario = new File(pathUsuario);
-
-        miarchivoAvion = new File(pathAvion);
-
-        miarchivoDatosVuelo = new File(pathDatosVuelo);
-    }
-
-    public Archivo(){
+    public Archivo() {
 
     }
 
 
-    public String LeoUnArchivoUsuario() {
 
 
-        String datosArchivoJson= null;   /// devuelve el contenido del archivo en formato .json
 
-        try {
-            if (!miarchivoUsuario.exists()) {
+    /////////////METODOS///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-                System.out.println("ERROR: El archivo de usuarios no existe");
 
-
-            }
-
-            if (!miarchivoUsuario.isDirectory()) {
-
-
-                FileInputStream fIn = new FileInputStream(miarchivoUsuario);
-
-                BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
-
-
-                String aDataRow = "";
-
-                String aBuffer = ""; //Holds the text
-
-                while ((aDataRow = myReader.readLine()) != null) {
-                    aBuffer += aDataRow;
-
-                }
-
-
-                myReader.close();
-
-                datosArchivoJson = aBuffer;
-            }
-        } catch (IOException e) {
-
-            System.out.println("ERROR: No se pudo leer el archivo de usuarios.");
-
-
-        }
-
-        ///Devuelve un String con datos . json
-        return datosArchivoJson;
-    }
-
-
+   ///Pasa el archivo aviones a un arraylist. Si no existe el archivo "aviones.json", crea uno y carga una lista ya hardcodeada
     public ArrayList<Avion> LeoUnArchivoAvion() {
 
         ArrayList<Avion> listaretornada = new ArrayList<>();
 
-        if(!(new File("Aviones.json")).exists()){     ///si no existe el archivo Aviones.json, termina la funcion aca
-            return null;
-        }
-
-        try {
-            File aviones = new File("Aviones.json");
+        try{
+            if(!(aviones).exists()){     ///si no existe el archivo Aviones.json, termina la funcion aca
+                aviones.createNewFile();
+                cargarAvionesEnArchivo();
+            }
 
             BufferedReader bufferAvion = new BufferedReader(new FileReader(aviones));
-
             Gson gson = new Gson();
-
             listaretornada = gson.fromJson(bufferAvion, typeAvion);
-            for(Avion avion: listaretornada) {
-
-
-                if (avion instanceof Bronze) {
-                    System.out.println(avion.toString());
-                } else if (avion instanceof Silver) {
-                    System.out.println(avion.toString());
-                } else {
-                    System.out.println(avion.toString());
-                }
-            }
-            /*
-            while(aux != null){
-                listaretornada.add(aux);
-                aux = gson.fromJson(bufferAvion, Avion.class);
-            }
-            */
+            bufferAvion.close();
 
         } catch (IOException e) {
             System.out.println("No se pudo leer el archivo de aviones.");
@@ -142,145 +64,65 @@ public class Archivo {
     }
 
 
-    public String LeoUnArchivoDatosVuelo() {
+    ///Pasa el archivo aviones a un arraylist. Si no existe el archivo "aviones.json", crea uno y carga una lista ya hardcodeada
+    public ArrayList<Usuario> leoUnArchivoUsuario() {
 
+        ArrayList<Usuario> listaretornada = new ArrayList<>();
 
-        String datosArchivoJson= null;
-
-        try {
-            if (!miarchivoDatosVuelo.exists()) {
-
-
-
-                miarchivoDatosVuelo.createNewFile();
-
-
-
+        try{
+            if(!(usuarios).exists()){     ///si no existe el archivo Aviones.json, termina la funcion aca
+                usuarios.createNewFile();
+                cargarUsuariosEnArchivo();
             }
 
-            if (!miarchivoDatosVuelo.isDirectory()) {
+            BufferedReader bufferUsuarios = new BufferedReader(new FileReader(usuarios));
+            Gson gson = new Gson();
+            listaretornada = gson.fromJson(bufferUsuarios, typeUsuario);
+            bufferUsuarios.close();
 
-
-                FileInputStream fIn = new FileInputStream(miarchivoDatosVuelo);
-
-                BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
-
-
-                String aDataRow = "";
-
-                String aBuffer = ""; //Holds the text
-
-                while ((aDataRow = myReader.readLine()) != null) {
-                    aBuffer += aDataRow;
-
-                }
-
-
-                myReader.close();
-
-                datosArchivoJson = aBuffer;
-            }
         } catch (IOException e) {
-
-            System.out.println("No se pudo leer");
-
-
+            System.out.println("No se pudo leer el archivo de usuarios.");
         }
 
         ///Devuelve un String con datos . json
-        return datosArchivoJson;
+        return listaretornada;
     }
 
-    ///Devuelvo una lista de usuarios leida del archivo
-    public ArrayList<Usuario> DevuelvoListaDeUsuariosGuardada() {
+    public ArrayList<DatosVuelo> leoUnArchivoDatosVuelo() {
 
-        ///Aca guarda los usuarios
-        ArrayList<Usuario> ListaUsuarios=null;
-        ///Aca deberia abrir y Leer el archivo de usuario para poder ver si el DNI es valido
+        ArrayList<DatosVuelo> listaretornada = new ArrayList<>();
 
-        ///Guardo los datos .json del archivo
-        String datosArchivo = LeoUnArchivoUsuario();
+        try{
+            if(!(datosvuelo).exists()){     ///si no existe el archivo datosvuelo.json, lo crea VACIO
+                datosvuelo.createNewFile();
+            }
 
-
-        if (datosArchivo!=null) {
-
+            BufferedReader bufferDatosVuelo = new BufferedReader(new FileReader(datosvuelo));
             Gson gson = new Gson();
+            listaretornada = gson.fromJson(bufferDatosVuelo, typeDatosVuelo);
+            bufferDatosVuelo.close();
 
-            ///Paso los datos del archivo . json a lista de usuarios
-
-            ListaUsuarios = gson.fromJson(datosArchivo, (java.lang.reflect.Type)typeUsuario);//Es para que pueda leer el arreglo de usuarios
-
-
-
+        } catch (IOException e) {
+            System.out.println("No se pudo leer el archivo de Datos Vuelo.");
         }
 
-        return ListaUsuarios;
-
+        ///Devuelve un String con datos . json
+        return listaretornada;
     }
 
 
-    /*Devuelvo una lista de aviones leida del archivo
-    public ArrayList<Avion> DevuelvoListaDeAvionesGuardada() {
 
 
-        ArrayList<Avion> ListaAviones = null;
 
-        ///Aca deberia abrir y Leer el archivo de Avion
-
-        ///Guardo los datos .json del archivo
-        String datosArchivo = LeoUnArchivoAvion();
-
-        if (datosArchivo!=null) {
-
-            Gson gson = new Gson();
-
-            ///Paso los datos del archivo . json a lista de aviones
-
-            ListaAviones = gson.fromJson(datosArchivo, (java.lang.reflect.Type)typeAvion);//Es para que pueda leer el arreglo de usuarios
-
-
-        }
-
-        return ListaAviones;
-
-    }
-*/
-
-    ///Devuelvo una lista de datos vuelo leida del archivo
-    public ArrayList<DatosVuelo> DevuelvoListaDeDatosVueloGuardada() {
-
-
-        ArrayList<DatosVuelo> ListaDatosVuelo = null;
-
-        ///Aca deberia abrir y Leer el archivo de DatosVuelo
-
-        ///Guardo los datos .json del archivo
-        String datosArchivo = LeoUnArchivoDatosVuelo();
-
-        if (datosArchivo!=null) {
-
-            Gson gson = new Gson();
-
-            ///Paso los datos del archivo . json a lista de DatosVuelo
-
-            ListaDatosVuelo = gson.fromJson(datosArchivo, (java.lang.reflect.Type)typeDatosVuelo);//Es para que pueda leer el arreglo de usuarios
-
-
-        }
-
-        return ListaDatosVuelo;
-
-    }
 
     ///Busca los vuelos de un determinado usuario y los devuelve en una lista
-    public ArrayList<DatosVuelo> listarVuelosDeUsuario(Usuario usuario)
+    public ArrayList<DatosVuelo> listarVuelosDeUsuario(Usuario usuario, ArrayList<DatosVuelo> listadoVuelos)
     {
         ArrayList<DatosVuelo> listadoVuelosUsuario=null;
-        ArrayList<DatosVuelo> listadoDeVuelos=DevuelvoListaDeDatosVueloGuardada();
 
-        if(listadoDeVuelos!=null)
+        if(listadoVuelos!=null)
         {
-            for(DatosVuelo list: listadoDeVuelos)
+            for(DatosVuelo list: listadoVuelos)
             {
                 if(usuario.equals(list.getUsuario()))
                 {
@@ -293,173 +135,107 @@ public class Archivo {
         return listadoVuelosUsuario;
     }
 
-    ///Metodo utilizado en ventana para guardar una lista .json en un archivo, el mensaje devuelve si se pudo guardar con exito o no
-    public String GuardarArchivoUsuario(File archivo, String documento, FileOutputStream salida) {
 
-        String mensaje = null;
+
+    ///esta funcion se ejecutará solamente si el archivo aviones no existe. Crea un arraylist de Aviones hardcodeada y lo guarda en el archivo .json
+    ///Siempre tratamos a los aviones como ARRAYLIST y no como cada avion en particular
+    public void cargarAvionesEnArchivo(){
+
+
+        ArrayList<Avion> listaDeAviones= new ArrayList<>();
+
+
+        if (aviones.getName().endsWith("json")) {
+
+            Avion Oro1 = new Gold("Gold1", 1500, 300, 20, 800, Propulsion.A_REACCION, true);
+            Avion Oro2 = new Gold("Gold2", 1500, 275, 18, 750, Propulsion.A_REACCION, false);
+            Avion Oro3 = new Gold("Gold3", 1500, 250, 16, 725, Propulsion.A_HELICE, true);
+
+            Avion Plata1 = new Silver("Silver1", 1000, 245, 17, 700, Propulsion.A_HELICE);
+            Avion Plata2 = new Silver("Silver2", 1000, 225, 13, 700, Propulsion.A_REACCION);
+            Avion Plata3 = new Silver("Silver3", 1000, 210, 11, 680, Propulsion.A_HELICE);
+
+            Avion Bronce1 = new Bronze("Bronze1", 950, 195, 12, 661, Propulsion.A_HELICE);
+            Avion Bronce2 = new Bronze("Bronze2", 950, 180, 8, 650, Propulsion.DE_PISTONES);
+            Avion Bronce3 = new Bronze("Bronze3", 950, 160, 6, 650, Propulsion.DE_PISTONES);
+
+
+            listaDeAviones.add(Oro1);
+            listaDeAviones.add(Oro2);
+            listaDeAviones.add(Oro3);
+
+            listaDeAviones.add(Plata1);
+            listaDeAviones.add(Plata2);
+            listaDeAviones.add(Plata3);
+
+            listaDeAviones.add(Bronce1);
+            listaDeAviones.add(Bronce2);
+            listaDeAviones.add(Bronce3);
+
+
+            try {
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(aviones));
+                Gson objGson = new Gson();
+                objGson.toJson(listaDeAviones, typeAvion, bufferedWriter);
+                bufferedWriter.close();
+
+            } catch (IOException e) {
+                System.out.println("Error. No se pudo guardar el archivo Aviones");
+            }
+        }
+
+    }
+
+    ///Si no existia previamente el archivo de Usuarios, se cargan tres usuarios ya hardcodeados
+    public void cargarUsuariosEnArchivo(){
+
+
+        ArrayList<Usuario> listaDeUsuarios= new ArrayList<>();
+
+
+        if (usuarios.getName().endsWith("json")) {
+
+            Usuario usuario1 = new Usuario("Maite", "Lopez", 123, 30);
+            Usuario usuario2 = new Usuario("Ayelen", "Marinoni", 321, 29);
+            Usuario usuario3 = new Usuario("Agustin", "Vello", 231, 27);
+
+
+            listaDeUsuarios.add(usuario1);
+            listaDeUsuarios.add(usuario2);
+            listaDeUsuarios.add(usuario3);
+
+
+
+            try {
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(aviones));
+                Gson objGson = new Gson();
+                objGson.toJson(listaDeUsuarios, typeUsuario, bufferedWriter);
+                bufferedWriter.close();
+
+            } catch (IOException e) {
+                System.out.println("Error. No se pudo guardar el archivo Usuarios");
+            }
+        }
+
+    }
+
+
+    ///Toma la lista ya actualizada con la instancia DatosVuelo nueva agregada, y sobrescribe el archivo con la nueva lista
+    public void guardarListaVuelos(ArrayList<DatosVuelo> listaDeVuelos){
 
         try {
 
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(datosvuelo));
+            Gson objGson = new Gson();
+            objGson.toJson(listaDeVuelos, typeDatosVuelo, bufferedWriter);
+            bufferedWriter.close();
 
-            salida = new FileOutputStream(archivo);
-            byte[] byjson = documento.getBytes();
-            salida.write(byjson);
-            mensaje = "Usuario Registrado Con Éxito";
-
-
-        } catch (Exception e) {
-        }
-
-        return mensaje;
-
-
-    }
-
-    ///Metodo utilizado en ventana para guardar una lista .json en un archivo
-    public void GuardarArchivoAvion(File archivo, String documento) {
-
-        try {
-
-
-            salidaAvion = new FileOutputStream(archivo);
-            byte[] byjson = documento.getBytes();
-            salidaAvion.write(byjson);
-
-
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.out.println("Error. No se pudo guardar el archivo Datos Vuelo");
         }
 
     }
-
-    public void GuardarAvionesEnLista(){
-
-
-        ArrayList<Avion> ListaAviones= new ArrayList<>();
-
-        String documento;
-        Gson objGson = new Gson();
-
-
-
-        if (miarchivoAvion.getName().endsWith("json")) {
-
-            Avion Oro1 = new Gold("Gold1", 1500, 300, 20, 60, Propulsion.A_HELICE, true);
-            Avion Oro2 = new Gold("Gold2", 1500, 300, 20, 60, Propulsion.A_HELICE, false);
-            Avion Oro3 = new Gold("Gold3", 1500, 300, 20, 60, Propulsion.A_HELICE, true);
-
-
-            Avion Plata1 = new Silver("Silver1", 1000, 200, 15, 40, Propulsion.A_REACCION);
-            Avion Plata2 = new Silver("Silver2", 1000, 200, 15, 40, Propulsion.A_REACCION);
-            Avion Plata3 = new Silver("Silver3", 1000, 200, 15, 40, Propulsion.A_REACCION);
-
-            Avion Bronce1 = new Bronze("Bronze1", 950, 150, 10, 35, Propulsion.A_REACCION);
-            Avion Bronce2 = new Bronze("Bronze2", 950, 150, 10, 35, Propulsion.A_REACCION);
-            Avion Bronce3 = new Bronze("Bronze3", 950, 150, 10, 35, Propulsion.A_REACCION);
-
-
-            ListaAviones.add(Oro1);
-            ListaAviones.add(Oro2);
-            ListaAviones.add(Oro3);
-
-            ListaAviones.add(Plata1);
-            ListaAviones.add(Plata2);
-            ListaAviones.add(Plata3);
-
-            ListaAviones.add(Bronce1);
-            ListaAviones.add(Bronce2);
-            ListaAviones.add(Bronce3);
-
-
-            ///Pasa La lista de Aviones a .json
-            documento = objGson.toJson(ListaAviones);
-
-
-            GuardarArchivoAvion(miarchivoAvion, documento);
-
-        }
-
-    }
-
-
-    ///Metodo utilizado en ventana para guardar una lista .json en un archivo
-    public void GuardarArchivoDatosVuelo(File archivo, String documento) {
-
-        try {
-
-
-            salidaDatosVuelo = new FileOutputStream(archivo);
-            byte[] byjson = documento.getBytes();
-            salidaDatosVuelo.write(byjson);
-
-
-        } catch (Exception e) {
-        }
-
-    }
-
-    public void GuardarDatosVueloEnLista(DatosVuelo datonuevo){
-
-
-        ArrayList<DatosVuelo> ListaDatosVuelo= new ArrayList<DatosVuelo>();
-
-
-        String documento;
-        Gson objGson = new Gson();
-
-
-        if(DevuelvoListaDeDatosVueloGuardada()!= null){
-
-            ///Cargo la lista de datos para agregarle uno mas
-            ListaDatosVuelo = DevuelvoListaDeDatosVueloGuardada();
-
-        }
-
-
-        if (miarchivoDatosVuelo.getName().endsWith("json")) {
-
-            ListaDatosVuelo.add(datonuevo);
-
-
-
-            ///Pasa La lista de DAtos Vuelo a .json
-            documento = objGson.toJson(ListaDatosVuelo);
-
-
-            GuardarArchivoDatosVuelo(miarchivoDatosVuelo, documento);
-
-        }
-
-    }
-
-    public void GuardarDatosVueloEnArchivo(){
-
-
-        ArrayList<DatosVuelo> ListaDatosVuelo= new ArrayList<DatosVuelo>();
-
-
-        String documento;
-        Gson objGson = new Gson();
-
-
-        if(DevuelvoListaDeDatosVueloGuardada()!= null){
-
-            ///Cargo la lista de datos para agregarle uno mas
-            ListaDatosVuelo = DevuelvoListaDeDatosVueloGuardada();
-
-        }
-
-
-        if (miarchivoDatosVuelo.getName().endsWith("json")) {
-
-            ///Pasa La lista de DAtos Vuelo a .json
-            documento = objGson.toJson(ListaDatosVuelo);
-
-
-            GuardarArchivoDatosVuelo(miarchivoDatosVuelo, documento);
-
-        }
-
-    }
-
 
 }

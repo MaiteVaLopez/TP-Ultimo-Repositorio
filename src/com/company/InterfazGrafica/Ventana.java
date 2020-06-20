@@ -1726,7 +1726,7 @@ public class Ventana extends javax.swing.JFrame {
 
         ArrayList<Avion> ListaAviones = new ArrayList<>();
 
-        archivo.GuardarAvionesEnLista();
+        archivo.cargarAvionesEnArchivo();
 
         ///ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
 
@@ -1761,6 +1761,8 @@ public class Ventana extends javax.swing.JFrame {
 
             nuevoDato1.setCostoDeVuelo(nuevoDato1.calcularCostoVuelo());
 
+          //  lisaDatosVuelo.add(nuevoDato1);
+          //  archivo.guardarListaVuelos(listaDatosVuelo);
             archivo.GuardarDatosVueloEnLista(nuevoDato1);
 
         }
@@ -1999,7 +2001,7 @@ public class Ventana extends javax.swing.JFrame {
 
         ArrayList<Avion> ListaAviones;
 
-        archivo.GuardarAvionesEnLista();
+        archivo.cargarAvionesEnArchivo();
 
         ListaAviones = archivo.LeoUnArchivoAvion();
 
@@ -2012,7 +2014,7 @@ public class Ventana extends javax.swing.JFrame {
         ///Guardo la lista de vuek¿los reservados
         ArrayList<DatosVuelo> ListaVuelos = new ArrayList<>();
 
-        archivo.GuardarAvionesEnLista();
+        archivo.cargarAvionesEnArchivo();
 
         ListaVuelos = archivo.DevuelvoListaDeDatosVueloGuardada();
 
