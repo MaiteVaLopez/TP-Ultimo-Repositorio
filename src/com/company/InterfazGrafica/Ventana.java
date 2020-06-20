@@ -11,7 +11,6 @@ import com.company.Persistencia.Archivo;
 import com.google.gson.Gson;
 
 import javax.swing.*;
-import javax.swing.text.html.Option;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -191,6 +190,9 @@ public class Ventana extends javax.swing.JFrame {
         AeroTaxi = new javax.swing.JLabel();
         PanelComenzar = new javax.swing.JPanel();
         BotonComenzar = new javax.swing.JButton();
+
+
+        ///DESDE ACA SON LOS TAMAÑOS DE LOS BOTONES Y CUESTIONES GRAFICAS TRAIDAS DE NETBEANS, HASTA LA LINEA 1300
 
         PanelAeroTaxiPantallaPrincipal.setBackground(new java.awt.Color(51, 153, 255));
         PanelAeroTaxiPantallaPrincipal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 4, true));
@@ -1311,6 +1313,10 @@ public class Ventana extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>
 
+    ///HASTA ACA SON LAS CUESTIONES GRAFICAS TRAIDAS DEL NETBEANS
+
+
+
     private void BotonAceptarPantallaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
 
@@ -1722,7 +1728,7 @@ public class Ventana extends javax.swing.JFrame {
 
         archivo.GuardarAvionesEnLista();
 
-        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+        ///ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
 
 
         boolean ingresoTextoCorrecto=false;
@@ -1730,7 +1736,7 @@ public class Ventana extends javax.swing.JFrame {
         ///Guardo origen
         origen=ListaOrigen.getItemAt(indexCiudadOrigen);
         ///Guardo destino
-        destino= ListaDestino.getItemAt(indexCiudadDestino);
+        destino= (Ciudad) ListaDestino.getItemAt(indexCiudadDestino);
 
         for (Avion avion : ListaAviones){
 
@@ -1981,6 +1987,8 @@ public class Ventana extends javax.swing.JFrame {
     private void BotonVerAvionesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         nroAcompañantes = (int) CantidadAcompañantes.getValue();
+        nroAcompañantes++;                                 //esta es la cantidad TOTAL de personas. Se le añade el usuario a la cant de acompañantes
+
         FechaElegida = (Date) ElegirFecha.getValue();
         boolean DatoEliminado = false;
 
@@ -1993,7 +2001,7 @@ public class Ventana extends javax.swing.JFrame {
 
         archivo.GuardarAvionesEnLista();
 
-        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+        ListaAviones = archivo.LeoUnArchivoAvion();
 
         ///Guardo los nombres de los aviones en lista disponible
         for (Avion avion : ListaAviones) {
@@ -2017,7 +2025,7 @@ public class Ventana extends javax.swing.JFrame {
 
                 System.out.println(datosVuelo.getAvion().getMaxPasajeros());
                 ///Si hay una fecha ya reservada
-                if (FechaElegida.getDate() == (datosVuelo.getFecha().getDate())) {
+                if (FechaElegida.getDate() == (datosVuelo.getFecha().getDate())) {    ///usar equals
                     ///Borro de aviones disponibles ese nombre
                     AvionesDisponibles.remove(datosVuelo.getAvion().getIdentificador());
                     DatoEliminado = true;
@@ -2054,10 +2062,10 @@ public class Ventana extends javax.swing.JFrame {
 
         ArrayList<Avion> ListaAviones = new ArrayList<>();
 
-        archivo.GuardarAvionesEnLista();
+        //archivo.GuardarAvionesEnLista();
 
 
-        ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
+       // ListaAviones = archivo.DevuelvoListaDeAvionesGuardada();
 
 
         for (Avion avion : ListaAviones){
@@ -2176,7 +2184,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNombrePRegistrarse;
     private javax.swing.JLabel LabelNombrePReservarCancelarVuelo;
     private javax.swing.JLabel LabelQuedeseahacer;
-    private javax.swing.JComboBox<Ciudad> ListaDestino;
+    private javax.swing.JComboBox ListaDestino;
     private JComboBox<Ciudad> ListaOrigen;
     private javax.swing.JFrame ListaUsuarios;
     private javax.swing.JFrame ListaVuelos;

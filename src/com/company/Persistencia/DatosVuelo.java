@@ -155,6 +155,9 @@ public class DatosVuelo {
 
     ///Metodo equals y hashcode compara vuelos segun usuario y fecha ya que un usuario no puede hacer dos vuelos en una misma fecha
 
+
+    ///HACER TOSTRING
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

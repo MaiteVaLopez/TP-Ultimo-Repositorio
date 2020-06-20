@@ -2,8 +2,11 @@ package com.company;
 
 import com.company.InterfazGrafica.Ventana;
 import com.company.Modelado_clases.*;
+import com.company.Persistencia.Archivo;
 import com.company.Persistencia.DatosVuelo;
 
+import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,8 +43,27 @@ public class Main {
         Usuario usuario=new Usuario("aye","marinoni",1,26,listado);
 
          System.out.println(usuario.toString());*/
+/*
+        Archivo miarchivo = new Archivo();
 
 
+        ArrayList<Avion> listaAviones = new ArrayList<>();
+
+        listaAviones = miarchivo.LeoUnArchivoAvion();
+
+
+        for(Avion avion: listaAviones){
+
+
+            if(avion instanceof Bronze){
+                System.out.println(avion.toString());
+            }else if(avion instanceof Silver){
+                System.out.println(avion.toString());
+            }else{
+                System.out.println(avion.toString());
+            }
+        }
+*/
 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

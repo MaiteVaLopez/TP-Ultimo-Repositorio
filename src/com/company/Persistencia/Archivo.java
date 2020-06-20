@@ -5,8 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import com.company.Modelado_clases.Avion;
 
 public class Archivo {
 
@@ -29,6 +31,8 @@ public class Archivo {
 
     String pathDatosVuelo = "DatosVuelo.json";
 
+    private Avion avion;
+
     ///Escribir archivo
 
     ///path es la direccion de la carpeta que contiene el archivo
@@ -40,6 +44,10 @@ public class Archivo {
         miarchivoAvion = new File(pathAvion);
 
         miarchivoDatosVuelo = new File(pathDatosVuelo);
+    }
+
+    public Archivo(){
+
     }
 
 
@@ -91,53 +99,46 @@ public class Archivo {
     }
 
 
-    public String LeoUnArchivoAvion() {
+    public ArrayList<Avion> LeoUnArchivoAvion() {
 
+        ArrayList<Avion> listaretornada = new ArrayList<>();
 
-        String datosArchivoJson= null;
+        if(!(new File("Aviones.json")).exists()){     ///si no existe el archivo Aviones.json, termina la funcion aca
+            return null;
+        }
 
         try {
-            if (!miarchivoAvion.exists()) {
+            File aviones = new File("Aviones.json");
+
+            BufferedReader bufferAvion = new BufferedReader(new FileReader(aviones));
+
+            Gson gson = new Gson();
+
+            listaretornada = gson.fromJson(bufferAvion, typeAvion);
+            for(Avion avion: listaretornada) {
 
 
-
-                miarchivoAvion.createNewFile();
-
-
-
-            }
-
-            if (!miarchivoAvion.isDirectory()) {
-
-
-                FileInputStream fIn = new FileInputStream(miarchivoAvion);
-
-                BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
-
-
-                String aDataRow = "";
-
-                String aBuffer = ""; //Holds the text
-
-                while ((aDataRow = myReader.readLine()) != null) {
-                    aBuffer += aDataRow;
-
+                if (avion instanceof Bronze) {
+                    System.out.println(avion.toString());
+                } else if (avion instanceof Silver) {
+                    System.out.println(avion.toString());
+                } else {
+                    System.out.println(avion.toString());
                 }
-
-
-                myReader.close();
-
-                datosArchivoJson = aBuffer;
             }
+            /*
+            while(aux != null){
+                listaretornada.add(aux);
+                aux = gson.fromJson(bufferAvion, Avion.class);
+            }
+            */
+
         } catch (IOException e) {
-
-            System.out.println("No se pudo leer");
-
-
+            System.out.println("No se pudo leer el archivo de aviones.");
         }
 
         ///Devuelve un String con datos . json
-        return datosArchivoJson;
+        return listaretornada;
     }
 
 
@@ -218,7 +219,7 @@ public class Archivo {
     }
 
 
-    ///Devuelvo una lista de aviones leida del archivo
+    /*Devuelvo una lista de aviones leida del archivo
     public ArrayList<Avion> DevuelvoListaDeAvionesGuardada() {
 
 
@@ -243,7 +244,7 @@ public class Archivo {
         return ListaAviones;
 
     }
-
+*/
 
     ///Devuelvo una lista de datos vuelo leida del archivo
     public ArrayList<DatosVuelo> DevuelvoListaDeDatosVueloGuardada() {
