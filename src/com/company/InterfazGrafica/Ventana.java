@@ -28,6 +28,7 @@ public class Ventana extends javax.swing.JFrame {
 
     ///lINEA 197 ATRIBUTOS CREADOS POR NOSOTROS, INICIALIZADOS
     ///Linea 1373 Comienzan los botones
+    DatosVuelo nuevoDato;
 
     ///Para poder acceder a la lectura y escritura de archivos
     Archivo archivo = new Archivo();
@@ -1572,15 +1573,15 @@ public class Ventana extends javax.swing.JFrame {
         JFrame ventanaPantallaPrincipal = pantallaPrincipal;
 
         ///Guardo el nuevo Dato
-        DatosVuelo nuevoDatoVuelo= new DatosVuelo(usuario,fechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+       /// DatosVuelo nuevoDatoVuelo= new DatosVuelo(usuario,fechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
 
 
-        if (nuevoDatoVuelo!=null){
+        if (nuevoDato!=null){
 
             ///Guardo el nuevo dato a la lista de datos vuelo
 
             ///Primero agrego el nuevo dato a la lista
-            listaVuelos.add(nuevoDatoVuelo);
+            listaVuelos.add(nuevoDato);
 
             ///Luego guardo la lista en el archivo
             archivo.guardarListaVuelos(listaVuelos);
@@ -1632,12 +1633,6 @@ public class Ventana extends javax.swing.JFrame {
         ///Guardo el origen elegido
         origen = bOrigenPreservarVuelo.getItemAt(indiceListaOrigen);
 
-        ///Guardo el indice de la ciudad elegida
-        indiceListaDestino= bDestinoPreservarVuelo.getSelectedIndex();
-
-        ///Guardo el destino elegido
-        destino=  bDestinoPreservarVuelo.getItemAt(indiceListaDestino);
-
 
         if(indiceListaOrigen==0) {
 
@@ -1670,7 +1665,11 @@ public class Ventana extends javax.swing.JFrame {
             }
         }
 
+        ///Guardo el indice de la ciudad elegida
+        indiceListaDestino= bDestinoPreservarVuelo.getSelectedIndex();
 
+        ///Guardo el destino elegido
+        destino=  bDestinoPreservarVuelo.getItemAt(indiceListaDestino);
     }
 
     private void bListasVuelosPlistasActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1896,7 +1895,7 @@ public class Ventana extends javax.swing.JFrame {
         }
 
         ///Si se ingreso un nombre de avion valido
-        if(ingresoTextoCorrecto=true){
+        if(ingresoTextoCorrecto==true){
 
             ///Recorre la lista de aviones para guardar el avion seleccionado
             for (Avion avion : listaAviones){
@@ -1908,7 +1907,12 @@ public class Ventana extends javax.swing.JFrame {
             }
 
             ///Genera un datos vuelo para guardar en el archivo
-            DatosVuelo nuevoDato = new DatosVuelo(usuario,fechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+            nuevoDato = new DatosVuelo(usuario,fechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+            int kilometros=nuevoDato.calcularKms();
+            nuevoDato.setKmsRuta(kilometros);
+            int costo=nuevoDato.calcularCostoVuelo();
+            nuevoDato.setCostoDeVuelo(costo);
+                ///System.out.println("mostrar kilometros y costo"+kilometros, " ",+costo);
 
             ///Mustra el costo total por pantalla
             lCostoTotalPreservarVuelo.setText(String.valueOf(nuevoDato.calcularCostoVuelo()));

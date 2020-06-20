@@ -150,17 +150,17 @@ public class Archivo {
 
         if (aviones.getName().endsWith("json")) {
 
-            Avion Oro1 = new Gold("Gold1", 1500, 300, 20, 800, Propulsion.A_REACCION, true);
-            Avion Oro2 = new Gold("Gold2", 1500, 275, 18, 750, Propulsion.A_REACCION, false);
-            Avion Oro3 = new Gold("Gold3", 1500, 250, 16, 725, Propulsion.A_HELICE, true);
+            Gold Oro1 = new Gold("Gold1", 1500, 300, 20, 800, Propulsion.A_REACCION, true);
+            Gold Oro2 = new Gold("Gold2", 1500, 275, 18, 750, Propulsion.A_REACCION, false);
+            Gold Oro3 = new Gold("Gold3", 1500, 250, 16, 725, Propulsion.A_HELICE, true);
 
-            Avion Plata1 = new Silver("Silver1", 1000, 245, 17, 700, Propulsion.A_HELICE);
-            Avion Plata2 = new Silver("Silver2", 1000, 225, 13, 700, Propulsion.A_REACCION);
-            Avion Plata3 = new Silver("Silver3", 1000, 210, 11, 680, Propulsion.A_HELICE);
+            Silver Plata1 = new Silver("Silver1", 1000, 245, 17, 700, Propulsion.A_HELICE);
+            Silver Plata2 = new Silver("Silver2", 1000, 225, 13, 700, Propulsion.A_REACCION);
+            Silver Plata3 = new Silver("Silver3", 1000, 210, 11, 680, Propulsion.A_HELICE);
 
-            Avion Bronce1 = new Bronze("Bronze1", 950, 195, 12, 661, Propulsion.A_HELICE);
-            Avion Bronce2 = new Bronze("Bronze2", 950, 180, 8, 650, Propulsion.DE_PISTONES);
-            Avion Bronce3 = new Bronze("Bronze3", 950, 160, 6, 650, Propulsion.DE_PISTONES);
+            Bronze Bronce1 = new Bronze("Bronze1", 950, 195, 12, 661, Propulsion.A_HELICE);
+            Bronze Bronce2 = new Bronze("Bronze2", 950, 180, 8, 650, Propulsion.DE_PISTONES);
+            Bronze Bronce3 = new Bronze("Bronze3", 950, 160, 6, 650, Propulsion.DE_PISTONES);
 
 
             listaDeAviones.add(Oro1);

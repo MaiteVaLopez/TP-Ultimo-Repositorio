@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Avion implements Serializable {
+ public class Avion implements Serializable {
 
     private String identificador;   //para diferenciar entre aviones
     private int combMax;   //combustible maximo (pueden llegar hasta 200.000 lt)
