@@ -44,10 +44,12 @@ public class Archivo {
 
         ArrayList<Avion> listaretornada = new ArrayList<>();
 
+
         try{
             if(!(aviones).exists()){     ///si no existe el archivo Aviones.json, termina la funcion aca
                 aviones.createNewFile();
                 cargarAvionesEnArchivo();
+
             }
 
             BufferedReader bufferAvion = new BufferedReader(new FileReader(aviones));
@@ -84,6 +86,7 @@ public class Archivo {
             System.out.println("No se pudo leer el archivo de usuarios.");
         }
 
+        System.out.println(listaretornada.toString());
         ///Devuelve un String con datos . json
         return listaretornada;
     }
@@ -209,7 +212,7 @@ public class Archivo {
 
             try {
 
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(aviones));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(usuarios));
                 Gson objGson = new Gson();
                 objGson.toJson(listaDeUsuarios, typeUsuario, bufferedWriter);
                 bufferedWriter.close();
@@ -233,8 +236,7 @@ public class Archivo {
             bufferedWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Error. No se pudo guardar el archivo Datos Vuelo");
-        }
+           }
 
     }
 
