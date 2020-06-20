@@ -78,6 +78,9 @@ public class Ventana extends javax.swing.JFrame {
     ///Guardo los NOMBRES SOLO de los aviones disponibles para la fecha elegida
     ArrayList<String> avionesDisponibles = new ArrayList<>();
 
+    ///Calendario
+    Calendar calendar = Calendar.getInstance();//Variable de Objeto Calendar
+
 
     /**
      * Creates new form ventana
@@ -576,8 +579,28 @@ public class Ventana extends javax.swing.JFrame {
         lFechavueloPreservarVuelo.setFont(new Font("Tahoma", 1, 14)); // NOI18N
         lFechavueloPreservarVuelo.setText("Fecha del Vuelo ");
 
+        //Obtenemos una fecha de inicio, será la fecha actual del sistema
+        Date inicio = calendar.getTime();
+        //Indicamos año hasta -100 del actual
+        calendar.add(Calendar.YEAR, -100);
+        //Guardamos la configuración en un DATE
+        Date fechaAnterior = calendar.getTime();
+        //Indicamos año hasta +200 del actual
+        calendar.add(Calendar.YEAR, 200);
+        //Guardamos la configuración en un DATE
+        Date fechaPosterior = calendar.getTime();
+        //Usamos el contructor de abajo para crear un modelo para el Spinner
+        //SpinnerDateModel(Date value, Comparable start, Comparable end, int calendarField)
+        //Utilizamos los datos que creamos más arriba
+        //Para fecha utilizamos Calendar.YEAR y para hora Calendar.HOUR, el resto puede ser igual
+        SpinnerModel fechaModel = new SpinnerDateModel(inicio, fechaAnterior, fechaPosterior, Calendar.YEAR);
+
+        //Indicamos el model para cada Spinner además del formato de fecha y hora según corresponda.
+
         bElegirFechaPreservarVuelo.setFont(new Font("Tahoma", 1, 14)); // NOI18N
-        bElegirFechaPreservarVuelo.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), new java.util.Date(1655718780000L), java.util.Calendar.DAY_OF_WEEK_IN_MONTH));
+        bElegirFechaPreservarVuelo.setModel(fechaModel);
+        bElegirFechaPreservarVuelo.setEditor(new JSpinner.DateEditor(bElegirFechaPreservarVuelo, "dd/MM/yyyy"));
+
 
         lOrigenPreservarVuelo.setFont(new Font("Tahoma", 1, 14)); // NOI18N
         lOrigenPreservarVuelo.setText("Origen");
@@ -1804,7 +1827,7 @@ public class Ventana extends javax.swing.JFrame {
                 ///Me fijo si el usuario ya reservo un avion ese dia
                 ///No me tomo el equals
 
-                if(datosVuelo.getFecha().getDate()==fechaElegida.getDate()) {
+                if(datosVuelo.getFecha().equals(fechaElegida)) {
 
                     if (datosVuelo.getUsuario().hashCode() == usuario.hashCode()) {
                         JOptionPane.showMessageDialog(null, "El usuario ya tiene reservado un avion para esa fecha, No es posible reservar otro");
@@ -1822,7 +1845,7 @@ public class Ventana extends javax.swing.JFrame {
             ///Me fijo si hay reservas de otros usuarios
                 for (DatosVuelo datosVuelos : listaVuelos) {
 
-                    if (fechaElegida.getDate()==(datosVuelos.getFecha().getDate())) {
+                    if (fechaElegida.equals(datosVuelos.getFecha().getDate())) {
                         ///Borro de aviones disponibles ese nombre
                         avionesDisponibles.remove(datosVuelos.getAvion().getIdentificador());
 

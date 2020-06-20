@@ -20,16 +20,7 @@ public class GsonAvion {
         private Gson gson;
 
         public GsonAvion() {
-            RuntimeTypeAdapterFactory<Avion> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                    .of(Avion.class, "type")
-                    .registerSubtype(Gold.class, "gold")
-                    .registerSubtype(Silver.class, "silver")
-                    .registerSubtype(Bronze.class, "bronze");
 
-            this.gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
-                    .registerTypeAdapterFactory(runtimeTypeAdapterFactory)
-                    .create();
         }
 
         public void saveAviones(ArrayList<Avion> listaAviones) throws IOException {
@@ -40,6 +31,7 @@ public class GsonAvion {
             gson.toJson(listaAviones, bufferedWriter);
 
             bufferedWriter.flush();
+
         }
 
         public ArrayList<Avion> getAvion() throws FileNotFoundException {
@@ -52,4 +44,4 @@ public class GsonAvion {
             return avionGSON;
         }
     }
-}
+
