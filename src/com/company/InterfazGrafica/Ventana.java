@@ -1638,7 +1638,24 @@ public class Ventana extends javax.swing.JFrame {
         ventanaCancelarVuelo.setVisible(false);
     }
 
+    private void borrarComponentes(){
+
+        java.util.Date fecha = new Date();
+
+        bOrigenPreservarVuelo.setSelectedIndex(-1);
+        bDestinoPreservarVuelo.setSelectedIndex(-1);
+        bElegirFechaPreservarVuelo.setValue(fecha);
+        bCantidadAcompañantesPreservarVuelo.setValue(0);
+        textAreaAvionesDisponiblesPreservarVuelo.setText("");
+        bEscribirAvionPreservarVuelo.setText(" ");
+        lCostoTotalPreservarVuelo.setText("$");
+
+
+
+    }
     private void bConfirmarVueloPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+
+        
 
         JFrame ventanaReservarVuelo = pReservarVuelo;
         JFrame ventanaPantallaPrincipal = pantallaPrincipal;
@@ -1890,6 +1907,7 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     private void bVerAvionesPreservarVueloActionPerformed(ActionEvent evt) {
+
 
 
         ///Guardo el indice de la ciudad elegida
