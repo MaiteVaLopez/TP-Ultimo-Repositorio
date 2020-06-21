@@ -1412,7 +1412,7 @@ public class Ventana extends javax.swing.JFrame {
         JFrame ventanaIngesarDNI = pIngresarDNI;
 
         ///Variable que guarda el DNI del usuario ingresado por pantalla
-        int DNIIngresadoPantalla=0;
+        int DNIIngresadoPantalla = 0;
         String DNIPantalla;
 
         ///Se convierte en true si el DNI coincide con algun usuario de la lista
@@ -1423,6 +1423,7 @@ public class Ventana extends javax.swing.JFrame {
         ///Al ingresar por pantalla entra un sTring hay q setearlo pues DNI de usuario es un int
         DNIPantalla= tIngresarDNIUsuarioText.getText();
 
+<<<<<<< HEAD
         ///Validar DNI
 
         if(DNIPantalla.length()==0){
@@ -1434,13 +1435,17 @@ public class Ventana extends javax.swing.JFrame {
             DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
 
 
+=======
+        try{
+            DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
+        }catch (NumberFormatException e){
+>>>>>>> b64514a53a7ae2b3f543de5f79c9cdbf05523b7b
 
-
-
-///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
+        }
 
             ///Verifico que el usuario esté en la lista de registro
 
+<<<<<<< HEAD
             ///Recorro la lista de usuarios buscando el que se ingreso por teclado
 
 
@@ -1453,13 +1458,23 @@ public class Ventana extends javax.swing.JFrame {
                     ///Para poder utilizar el usuario que ingreso con todos sus datos
                     usuario = usuarioListado;
                 }
+=======
+        ///Recorro la lista de usuarios buscando el que se ingreso por teclado
+        
+        for (Usuario usuarioListado: listaUsuarios) {
+>>>>>>> b64514a53a7ae2b3f543de5f79c9cdbf05523b7b
 
             }
 
             ///Si no lo encontro le pido que ingrese un DNI valido
 
+<<<<<<< HEAD
             if (usuarioEncontrado ==false) {
                 JOptionPane.showMessageDialog(null, "Dni incorrecto");
+=======
+        if (!usuarioEncontrado) {
+            JOptionPane.showMessageDialog(null, "ERROR: Ingrese un DNI correcto");
+>>>>>>> b64514a53a7ae2b3f543de5f79c9cdbf05523b7b
 
                 ///Vuelve a la ventana DNI
                 ventanaIngesarDNI.setVisible(true);
