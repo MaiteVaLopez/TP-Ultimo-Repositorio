@@ -1832,7 +1832,7 @@ public class Ventana extends javax.swing.JFrame {
             if(fechaIngresadaPantalla.equals(dato.getFecha())){
 
                 ///Carga la tabla
-                model.addRow(new Object[]{dato.getUsuario().getNombre(),dato.getUsuario().getApellido(),dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(),dato.getKmsRuta()});
+                model.addRow(new Object[]{dato.getUsuario().getNombre(),dato.getUsuario().getApellido(),dato.getAvion().getIdentificador(),dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(),dato.getCostoDeVuelo(),dato.getKmsRuta()});
 
             }
 
