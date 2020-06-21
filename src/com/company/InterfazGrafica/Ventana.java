@@ -12,7 +12,6 @@ import com.company.Persistencia.Archivo;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.html.Option;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -171,7 +170,7 @@ public class Ventana extends javax.swing.JFrame {
         lSeleccionePlistas = new JLabel();
         lUnaPlistas = new JLabel();
         lListaPlistas = new JLabel();
-        PListasVuelos = new JFrame();
+        pListasVuelos = new JFrame();
         lFechaPlistaVuelos = new JLabel();
         bFechaPlistaVuelos = new JSpinner();
         lIngresefechaPlistaVuelos = new JLabel();
@@ -180,7 +179,7 @@ public class Ventana extends javax.swing.JFrame {
         panelComenzar3 = new JPanel();
         bAtrasPlistaVuelos = new JButton();
         bListaVuelosPlistaVuelos = new JButton();
-        PListaUsuarios = new JFrame();
+        pListaUsuarios = new JFrame();
         panelBotonesPRegistrarse2 = new JPanel();
         bAtrasPlistaUsuarios = new JButton();
         panelAeroTaxiPRegistrarse2 = new JPanel();
@@ -922,7 +921,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistaVuelos.setText("Atras");
         bAtrasPlistaVuelos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                BatrasPlistaVuelosActionPerformed(evt);
+                bAtrasPlistaVuelosActionPerformed(evt);
             }
         });
 
@@ -955,8 +954,8 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap())
         );
 
-        GroupLayout PListasVuelosLayout = new GroupLayout(PListasVuelos.getContentPane());
-        PListasVuelos.getContentPane().setLayout(PListasVuelosLayout);
+        GroupLayout PListasVuelosLayout = new GroupLayout(pListasVuelos.getContentPane());
+        pListasVuelos.getContentPane().setLayout(PListasVuelosLayout);
         PListasVuelosLayout.setHorizontalGroup(
                 PListasVuelosLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(panelComenzar3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -994,7 +993,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistaUsuarios.setText("Atras");
         bAtrasPlistaUsuarios.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                BatrasPlistaUsuariosActionPerformed(evt);
+                bAtrasPlistaUsuariosActionPerformed(evt);
             }
         });
 
@@ -1070,11 +1069,13 @@ public class Ventana extends javax.swing.JFrame {
         });
 
 
+        ///No editar Tabla
+        tablaListaUsuariosPlistaUsuarios.enableInputMethods(false);
 
         jScrollPane1.setViewportView(tablaListaUsuariosPlistaUsuarios);
 
-        GroupLayout PListaUsuariosLayout = new GroupLayout(PListaUsuarios.getContentPane());
-        PListaUsuarios.getContentPane().setLayout(PListaUsuariosLayout);
+        GroupLayout PListaUsuariosLayout = new GroupLayout(pListaUsuarios.getContentPane());
+        pListaUsuarios.getContentPane().setLayout(PListaUsuariosLayout);
         PListaUsuariosLayout.setHorizontalGroup(
                 PListaUsuariosLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(panelAeroTaxiPRegistrarse2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1219,7 +1220,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistaVuelosMostrados.setText("Atras");
         bAtrasPlistaVuelosMostrados.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                BatrasPlistaVuelosMostradosActionPerformed(evt);
+                bAtrasPlistaVuelosMostradosActionPerformed(evt);
             }
         });
 
@@ -1248,6 +1249,11 @@ public class Ventana extends javax.swing.JFrame {
                         "Nombre(Usuario)", "Apellido", "Avion", "Origen", "Destino", "Pasajeros", "Costo", "Km"
                 }
         ));
+
+
+        ///No editar Tabla
+        tablaMostrarVuelos.enableInputMethods(false);
+
         jScrollPane3.setViewportView(tablaMostrarVuelos);
 
         GroupLayout PListaVuelosMostradosLayout = new GroupLayout(pListaVuelosMostrados.getContentPane());
@@ -1757,7 +1763,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bListasVuelosPlistasActionPerformed(java.awt.event.ActionEvent evt) {
 
-        JFrame ventanaListasvuelos = PListasVuelos;
+        JFrame ventanaListasvuelos = pListasVuelos;
         JFrame ventanaListas = pListas;
 
         ventanaListas.setVisible(false);
@@ -1774,7 +1780,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bListasUsuariosPlistasActionPerformed(java.awt.event.ActionEvent evt) {
 
-        JFrame ventanaListaUsuario = PListaUsuarios;
+        JFrame ventanaListaUsuario = pListaUsuarios;
         JFrame ventanaLista = pListas;
 
         ventanaLista.setVisible(false);
@@ -1846,9 +1852,9 @@ public class Ventana extends javax.swing.JFrame {
         ventanaListasVuelosMostrados.setVisible(true);
     }
 
-    private void BatrasPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bAtrasPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
         JFrame ventanaListas = pListas;
-        JFrame ventanaListasVuelos = PListasVuelos;
+        JFrame ventanaListasVuelos = pListasVuelos;
 
         ventanaListasVuelos.setVisible(false);
         ventanaListas.setSize(560,660);
@@ -1889,10 +1895,10 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void BatrasPlistaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bAtrasPlistaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         JFrame jFrame11 = pListas;
-        JFrame jFrame22 = PListaUsuarios;
+        JFrame jFrame22 = pListaUsuarios;
 
         jFrame22.setVisible(false);
         jFrame11.setSize(560,660);
@@ -2165,8 +2171,21 @@ public class Ventana extends javax.swing.JFrame {
         ventanaIngreseDNI.setVisible(true);
     }
 
-    private void BatrasPlistaVuelosMostradosActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void bAtrasPlistaVuelosMostradosActionPerformed(java.awt.event.ActionEvent evt) {
+        JFrame ventanaListaVuelosMostrados = pListaVuelosMostrados;
+        JFrame ventanaListaVuelos = pListasVuelos;
+        
+        ventanaListaVuelosMostrados.setVisible(false);
+        ventanaListaVuelos.setSize(560,660);
+        ventanaListaVuelos.setTitle("Ingresar Usuario");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaListaVuelos.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaListaVuelos.setVisible(true);
+
     }
 
     /**
@@ -2268,10 +2287,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel lUsuarioPreservarCancelarVuelo;
     private javax.swing.JFrame pCancelarVuelo;
     private javax.swing.JFrame pIngresarDNI;
-    private javax.swing.JFrame PListaUsuarios;
+    private javax.swing.JFrame pListaUsuarios;
     private javax.swing.JFrame pListaVuelosMostrados;
     private javax.swing.JFrame pListas;
-    private javax.swing.JFrame PListasVuelos;
+    private javax.swing.JFrame pListasVuelos;
     private javax.swing.JFrame preservarcancelarvuelo;
     private javax.swing.JFrame pReservarVuelo;
     private javax.swing.JPanel panelAeroTaxi;
