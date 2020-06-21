@@ -1,6 +1,7 @@
 package com.company.Modelado_clases;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import java.util.Date;
     private int velMax;  //hasta 1000 km/h
     private Propulsion propulsion; //clase enum
 
+    // private String type;
 
     public Avion(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion) {
         this.identificador = identificador;
@@ -93,5 +95,11 @@ import java.util.Date;
                 " pasajeros, Velocidad max: " + velMax +
                 " km/h, Motor: " + propulsion;
     }
+//
+//    public String getType(){return type;}
+//
+//    public void setType(String type) {
+//        this.type= type;
+//    }
 
 }

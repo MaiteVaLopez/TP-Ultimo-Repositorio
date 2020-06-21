@@ -12,6 +12,7 @@ public final class Gold extends Avion implements Serializable {
 
     public Gold(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion, boolean wifi) {
         super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion);
+//        this.setType("Gold");
         this.wifi = wifi;
     }
 

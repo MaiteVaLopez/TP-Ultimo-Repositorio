@@ -139,11 +139,11 @@ public class DatosVuelo {
     public int calcularCostoVuelo() {
         int costoTotal=0;
         costoTotal = (kmsRuta * avion.getCosto_x_km()) + (cantidadPasajeros * 3500);
-        if(getAvion() instanceof Bronze){
+        if(getAvion().getIdentificador().startsWith("Bronze")){
             costoTotal = costoTotal + 3000;
-        }else if (getAvion() instanceof Silver){
+        }else if (getAvion().getIdentificador().startsWith("Silver")){
             costoTotal = costoTotal + 4000;
-        }else if (getAvion() instanceof Gold){
+        }else if (getAvion().getIdentificador().startsWith("Gold")){
             costoTotal = costoTotal + 6000;
         }
         return costoTotal;

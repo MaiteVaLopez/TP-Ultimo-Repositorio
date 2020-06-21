@@ -59,7 +59,7 @@ public class Ventana extends javax.swing.JFrame {
     ////////lISTAS//////////////////////////////
 
     ///Lista de Datos Vuelo
-    ArrayList<DatosVuelo> listaVuelos = new ArrayList<>();
+    ArrayList<DatosVuelo> listaDatoVuelos = new ArrayList<>();
 
     ///Lista Usuarios
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
@@ -497,8 +497,25 @@ public class Ventana extends javax.swing.JFrame {
         lFechaPcancelarVuelo.setFont(new Font("Vivaldi", 1, 18)); // NOI18N
         lFechaPcancelarVuelo.setText("Fecha");
 
+        //Obtenemos una fecha de inicio, será la fecha actual del sistema
+        Date inicio = calendar.getTime();
+        //Indicamos año hasta -100 del actual
+        calendar.add(Calendar.YEAR, -100);
+        //Guardamos la configuración en un DATE
+        Date fechaAnterior = calendar.getTime();
+        //Indicamos año hasta +200 del actual
+        calendar.add(Calendar.YEAR, 200);
+        //Guardamos la configuración en un DATE
+        Date fechaPosterior = calendar.getTime();
+        //Usamos el contructor de abajo para crear un modelo para el Spinner
+        //SpinnerDateModel(Date value, Comparable start, Comparable end, int calendarField)
+        //Utilizamos los datos que creamos más arriba
+        //Para fecha utilizamos Calendar.YEAR y para hora Calendar.HOUR, el resto puede ser igual
+        SpinnerModel fechaModel = new SpinnerDateModel(inicio, fechaAnterior, fechaPosterior, Calendar.YEAR);
+
         bFechaPcancelarVuelo.setFont(new Font("Tahoma", 1, 14)); // NOI18N
-        bFechaPcancelarVuelo.setModel(new SpinnerDateModel(new Date(), new Date(), new Date(1623815460000L), Calendar.DAY_OF_MONTH));
+        bFechaPcancelarVuelo.setModel(fechaModel);
+        bFechaPcancelarVuelo.setEditor(new JSpinner.DateEditor(bFechaPcancelarVuelo, "dd/MM/yyyy"));
 
         lIngresefechaPcancelarVuelo.setFont(new Font("Vladimir Script", 1, 24)); // NOI18N
         lIngresefechaPcancelarVuelo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -579,21 +596,6 @@ public class Ventana extends javax.swing.JFrame {
         lFechavueloPreservarVuelo.setFont(new Font("Tahoma", 1, 14)); // NOI18N
         lFechavueloPreservarVuelo.setText("Fecha del Vuelo ");
 
-        //Obtenemos una fecha de inicio, será la fecha actual del sistema
-        Date inicio = calendar.getTime();
-        //Indicamos año hasta -100 del actual
-        calendar.add(Calendar.YEAR, -100);
-        //Guardamos la configuración en un DATE
-        Date fechaAnterior = calendar.getTime();
-        //Indicamos año hasta +200 del actual
-        calendar.add(Calendar.YEAR, 200);
-        //Guardamos la configuración en un DATE
-        Date fechaPosterior = calendar.getTime();
-        //Usamos el contructor de abajo para crear un modelo para el Spinner
-        //SpinnerDateModel(Date value, Comparable start, Comparable end, int calendarField)
-        //Utilizamos los datos que creamos más arriba
-        //Para fecha utilizamos Calendar.YEAR y para hora Calendar.HOUR, el resto puede ser igual
-        SpinnerModel fechaModel = new SpinnerDateModel(inicio, fechaAnterior, fechaPosterior, Calendar.YEAR);
 
         //Indicamos el model para cada Spinner además del formato de fecha y hora según corresponda.
 
@@ -873,8 +875,11 @@ public class Ventana extends javax.swing.JFrame {
         lFechaPlistaVuelos.setFont(new Font("Vivaldi", 1, 18)); // NOI18N
         lFechaPlistaVuelos.setText("Fecha");
 
+
+
         bFechaPlistaVuelos.setFont(new Font("Tahoma", 1, 14)); // NOI18N
-        bFechaPlistaVuelos.setModel(new SpinnerDateModel(new Date(), new Date(), null, Calendar.DAY_OF_MONTH));
+        bFechaPlistaVuelos.setModel(fechaModel);
+        bFechaPlistaVuelos.setEditor(new JSpinner.DateEditor(bElegirFechaPreservarVuelo, "dd/MM/yyyy"));
 
         lIngresefechaPlistaVuelos.setFont(new Font("Vladimir Script", 1, 24)); // NOI18N
         lIngresefechaPlistaVuelos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1530,37 +1535,48 @@ public class Ventana extends javax.swing.JFrame {
         ///Comparo que la fecha a cancelar no sea la de hoy ni de dias pasados
         ///Si la fecha a cancelar  o igual a la fecha de hoy
 
-        if(fecha.getDate()==fechaCancelar.getDate()){
+        ArrayList<DatosVuelo> listaModificada= new ArrayList<>();
+
+        if(fecha.equals(fechaCancelar)){
 
             JOptionPane.showMessageDialog(null,"No se puede Cancelar un vuelo con menos de 24hs de anticipación"); }
-        else{
+        else {
             ///Si se ingresa una fecha que ya paso
-            if(fecha.getDate()>fechaCancelar.getDate()){
+            if (fecha.hashCode() > fechaCancelar.hashCode()) {
 
-                JOptionPane.showMessageDialog(null,"La fecha ingresada no es válida, Ya pasó");
+                JOptionPane.showMessageDialog(null, "La fecha ingresada no es válida, Ya pasó");
             }
             ///Si la fecha es mayor a la de hoy se puede cancelar el vuelo
-            else{
-                if(listaVuelos!=null){
+            else {
+                if (listaDatoVuelos != null) {
 
-                    for (DatosVuelo dato : listaVuelos){
+                    for (DatosVuelo dato : listaDatoVuelos) {
 
-                        if((fechaCancelar.getDate()==dato.getFecha().getDate())&&(usuario.hashCode()==dato.getUsuario().hashCode())){
+                        if ((fechaCancelar.equals(dato.getFecha())) && (usuario.equals(dato.getUsuario()))) {
 
                             datoABorrar = dato;
                         }
-                    }
 
-                    ///Borro de la lista de vuelos el dato con la fecha cancelada
-
-                    listaVuelos.remove(datoABorrar);
                     }
+                }
                 else{
-                    JOptionPane.showMessageDialog(null,"No es posible cancelar el vuelo pues no hay vuelos reservados en esa fecha");
-                }
-                }
+                        JOptionPane.showMessageDialog(null, "No es posible cancelar el vuelo pues no hay vuelos reservados en esa fecha");
+                    }
+
+
+            }
+        }
+
+        if(datoABorrar!=null){
+
+            JOptionPane.showMessageDialog(null,"La Fecha Fue Cancelada Con Éxito");
+
+            listaDatoVuelos.remove(datoABorrar);
+
+            archivo.guardarListaVuelos(listaDatoVuelos);
 
         }
+
 
         ventanaCancelarVuelo.setVisible(false);
         ventanaReservarCancelarVuelo.setSize(560,660);
@@ -1604,10 +1620,10 @@ public class Ventana extends javax.swing.JFrame {
             ///Guardo el nuevo dato a la lista de datos vuelo
 
             ///Primero agrego el nuevo dato a la lista
-            listaVuelos.add(nuevoDato);
+            listaDatoVuelos.add(nuevoDato);
 
             ///Luego guardo la lista en el archivo
-            archivo.guardarListaVuelos(listaVuelos);
+            archivo.guardarListaVuelos(listaDatoVuelos);
 
             JOptionPane.showMessageDialog(null,"Vuelo Reservado con éXito");
         }
@@ -1771,6 +1787,8 @@ public class Ventana extends javax.swing.JFrame {
 
         listaAviones = archivo.LeoUnArchivoAvion();
 
+        listaDatoVuelos = archivo.leoUnArchivoDatosVuelo();
+
         listaUsuarios = archivo.leoUnArchivoUsuario();
 
     }
@@ -1796,6 +1814,7 @@ public class Ventana extends javax.swing.JFrame {
 
         ///Esto esta por si apreta el boton varias veces para que no se repitan los aviones
         avionesDisponibles= new ArrayList<>();
+
         ///Verifico si el usuario pidio un avion para ese dia
         boolean fechaOcupadaPorUsuario=false;
 
@@ -1817,19 +1836,20 @@ public class Ventana extends javax.swing.JFrame {
             avionesDisponibles.add(avion.getIdentificador());
         }
 
+
         ///Si la lista no esta vacioa, hay reservas
-        if(listaVuelos!=null){
+        if(listaDatoVuelos !=null){
 
 
             ///Me fijo si el usuario ya reservo un avion para esa fecha
-            for (DatosVuelo datosVuelo : listaVuelos){
+            for (DatosVuelo datosVuelo : listaDatoVuelos){
 
                 ///Me fijo si el usuario ya reservo un avion ese dia
                 ///No me tomo el equals
 
                 if(datosVuelo.getFecha().equals(fechaElegida)) {
 
-                    if (datosVuelo.getUsuario().hashCode() == usuario.hashCode()) {
+                    if (datosVuelo.getUsuario().equals(usuario) ) {
                         JOptionPane.showMessageDialog(null, "El usuario ya tiene reservado un avion para esa fecha, No es posible reservar otro");
                         ///Cambio el booleana true
                         fechaOcupadaPorUsuario=true;
@@ -1843,9 +1863,9 @@ public class Ventana extends javax.swing.JFrame {
         if(fechaOcupadaPorUsuario==false){
 
             ///Me fijo si hay reservas de otros usuarios
-                for (DatosVuelo datosVuelos : listaVuelos) {
+                for (DatosVuelo datosVuelos : listaDatoVuelos) {
 
-                    if (fechaElegida.equals(datosVuelos.getFecha().getDate())) {
+                    if (fechaElegida.equals(datosVuelos.getFecha())) {
                         ///Borro de aviones disponibles ese nombre
                         avionesDisponibles.remove(datosVuelos.getAvion().getIdentificador());
 
@@ -2009,8 +2029,8 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     private void bListasPPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
-        JFrame ventanaListas = pantallaPrincipal;
-        JFrame ventanaPPrincipal = pListas;
+        JFrame ventanaPPrincipal = pantallaPrincipal;
+        JFrame  ventanaListas= pListas;
 
         ventanaPPrincipal.setVisible(false);
         ventanaListas.setSize(560,660);

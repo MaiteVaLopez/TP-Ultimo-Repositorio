@@ -12,6 +12,7 @@ public final class Silver extends Avion implements Serializable {
 
     public Silver(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion) {
         super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion);
+//        this.setType("Silver");
     }
 //
 //    public Silver() {

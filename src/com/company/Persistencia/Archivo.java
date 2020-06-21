@@ -86,7 +86,6 @@ public class Archivo {
             System.out.println("No se pudo leer el archivo de usuarios.");
         }
 
-        System.out.println(listaretornada.toString());
         ///Devuelve un String con datos . json
         return listaretornada;
     }
