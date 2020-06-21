@@ -68,24 +68,25 @@ public class Usuario {
 
         if(vuelosConfirmados !=null) {
             for (DatosVuelo list : vuelosConfirmados) {
-                if (list.getAvion() instanceof Bronze)
+                if (list.getAvion().getIdentificador().startsWith("Bronze"))
                     condBronze = 1;
-                if (list.getAvion() instanceof Silver)
+                if (list.getAvion().getIdentificador().startsWith("Silver"))
                     condSilver = 1;
-                if (list.getAvion() instanceof Gold)
+                if (list.getAvion().getIdentificador().startsWith("Gold"))
                     condGold = 1;
             }
 
             if (condGold == 1) {
-                mensaje = "El mejor avion fue un GOLD";
+                mensaje = "GOLD";
             } else if (condSilver == 1) {
-                mensaje = "El mejor avion fue un Silver";
+                mensaje = "Silver";
             } else if (condBronze == 1) {
-                mensaje = "El mejor avion fue un Bronze";
+                mensaje = "Bronze";
             }
         }
         else
             mensaje="El usuario no registra vuelos";
+
         return mensaje;
     }
 

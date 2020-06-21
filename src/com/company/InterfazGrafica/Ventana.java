@@ -68,6 +68,10 @@ public class Ventana extends javax.swing.JFrame {
     ///Lista aviones
     ArrayList<Avion> listaAviones = new ArrayList<>();
 
+    ///Lista de datos mejor avion y costo total del usurio
+    ArrayList<DatosVuelo> listadeVuelosConfirmados = new ArrayList<>();
+
+
     ///Guardo el nuevo avion elegido
     Avion nuevoAvion;
 
@@ -926,7 +930,7 @@ public class Ventana extends javax.swing.JFrame {
         bListaVuelosPlistaVuelos.setText("Lista de Vuelos");
         bListaVuelosPlistaVuelos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                BlistaVuelosPlistaVuelosActionPerformed(evt);
+                bListaVuelosPlistaVuelosActionPerformed(evt);
             }
         });
 
@@ -1034,36 +1038,23 @@ public class Ventana extends javax.swing.JFrame {
                                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
+
+
+
+
         tablaListaUsuariosPlistaUsuarios.setFont(new Font("Verdana", 1, 14)); // NOI18N
         tablaListaUsuariosPlistaUsuarios.setModel(new DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null}
+
+
+
                 },
                 new String [] {
                         "Nombre", "Apellido", "DNI", "Edad", "Mejor Avion", "Costo Total"
                 }
         ) {
             Class[] types = new Class [] {
-                    String.class, String.class, String.class, String.class, String.class, Integer.class
+                    String.class, String.class, Integer.class, Integer.class, String.class, Integer.class
             };
             boolean[] canEdit = new boolean [] {
                     false, false, false, false, false, false
@@ -1077,6 +1068,9 @@ public class Ventana extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+
+
+
         jScrollPane1.setViewportView(tablaListaUsuariosPlistaUsuarios);
 
         GroupLayout PListaUsuariosLayout = new GroupLayout(PListaUsuarios.getContentPane());
@@ -1248,10 +1242,7 @@ public class Ventana extends javax.swing.JFrame {
 
         tablaMostrarVuelos.setModel(new DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null}
+
                 },
                 new String [] {
                         "Nombre(Usuario)", "Apellido", "Avion", "Origen", "Destino", "Pasajeros", "Costo", "Km"
@@ -1390,6 +1381,31 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>
 
 
+    ///Estas funciones son para Tabla de lista usuarios
+
+    private ArrayList<Label> cargarTablaUsuario() {
+
+        ArrayList<Label> tablaUsuarios = new ArrayList<>();
+
+        int i=0;
+
+        Label labelusuario;
+
+        for (Usuario usuario : listaUsuarios) {
+
+            labelusuario= new Label();
+
+            labelusuario.setName("label"+String.valueOf(i));
+
+            labelusuario.setText(usuario.getNombre()+"     "+usuario.getApellido()+"     "+ usuario.getDni()+"     "+ usuario.getEdad()+"     "+ usuario.mejorAvion(listadeVuelosConfirmados)+"     "+ usuario.costoTotalDeVuelos(listadeVuelosConfirmados));
+
+            tablaUsuarios.add(labelusuario);
+
+        }
+
+        return tablaUsuarios;
+    }
+
     ///HASTA ACA SON LAS CUESTIONES GRAFICAS TRAIDAS DEL NETBEANS
     private void bContinuarPIngresarDNIActionPerformed(java.awt.event.ActionEvent evt) {
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
@@ -1403,67 +1419,79 @@ public class Ventana extends javax.swing.JFrame {
         boolean usuarioEncontrado = false;
 
 
+
         ///Al ingresar por pantalla entra un sTring hay q setearlo pues DNI de usuario es un int
         DNIPantalla= tIngresarDNIUsuarioText.getText();
 
-        DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
+        ///Validar DNI
+
+        if(DNIPantalla.length()==0){
+
+            JOptionPane.showMessageDialog(null,"Debe ingresar DNI");
+        }
+        else{
+
+            DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
+
+
 
 
 
 ///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
 
-        ///Verifico que el usuario esté en la lista de registro
+            ///Verifico que el usuario esté en la lista de registro
 
-        ///Recorro la lista de usuarios buscando el que se ingreso por teclado
+            ///Recorro la lista de usuarios buscando el que se ingreso por teclado
 
 
+            for (Usuario usuarioListado: listaUsuarios) {
 
-        for (Usuario usuarioListado: listaUsuarios) {
+                ///Comparo DNI
+                if (DNIIngresadoPantalla == usuarioListado.getDni()) {
+                    //Si lo encuentra
+                    usuarioEncontrado = true;
+                    ///Para poder utilizar el usuario que ingreso con todos sus datos
+                    usuario = usuarioListado;
+                }
 
-            ///Comparo DNI
-            if (DNIIngresadoPantalla == usuarioListado.getDni()) {
-                //Si lo encuentra
-                usuarioEncontrado = true;
-                ///Para poder utilizar el usuario que ingreso con todos sus datos
-                usuario = usuarioListado;
             }
 
+            ///Si no lo encontro le pido que ingrese un DNI valido
+
+            if (usuarioEncontrado ==false) {
+                JOptionPane.showMessageDialog(null, "Dni incorrecto");
+
+                ///Vuelve a la ventana DNI
+                ventanaIngesarDNI.setVisible(true);
+                ventanaIngesarDNI.setSize(560, 660);
+                ventanaIngesarDNI.setTitle("Ingrese DNI");
+
+                //este metodo devuelve el tamaño de la pantalla
+                Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+
+                //para centrar la ventana lo hacemos con el siguiente calculo
+                ventanaIngesarDNI.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
+
+            }
+            else {
+                ///Para que en la Pantalla Reservar Cancelar Vuelo aparzca el nombre del usuario
+                lNombrePreservarCancelarVuelo.setText(usuario.getNombre());
+                ventanaIngesarDNI.setVisible(false);
+                ventanaReservarCancelarVuelo.setSize(560, 660);
+                ventanaReservarCancelarVuelo.setTitle("Reservar o Cancelar");
+
+                //este metodo devuelve el tamaño de la pantalla
+                Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+
+                //para centrar la ventana lo hacemos con el siguiente calculo
+                ventanaReservarCancelarVuelo.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
+
+                ventanaReservarCancelarVuelo.setVisible(true);
+
+
+            }
         }
 
-        ///Si no lo encontro le pido que ingrese un DNI valido
-
-        if (usuarioEncontrado ==false) {
-            JOptionPane.showMessageDialog(null, "Dni incorrecto");
-
-            ///Vuelve a la ventana DNI
-            ventanaIngesarDNI.setVisible(true);
-            ventanaIngesarDNI.setSize(560, 660);
-            ventanaIngesarDNI.setTitle("Ingrese DNI");
-
-            //este metodo devuelve el tamaño de la pantalla
-            Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-
-            //para centrar la ventana lo hacemos con el siguiente calculo
-            ventanaIngesarDNI.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
-
-        }
-        else {
-            ///Para que en la Pantalla Reservar Cancelar Vuelo aparzca el nombre del usuario
-            lNombrePreservarCancelarVuelo.setText(usuario.getNombre());
-            ventanaIngesarDNI.setVisible(false);
-            ventanaReservarCancelarVuelo.setSize(560, 660);
-            ventanaReservarCancelarVuelo.setTitle("Reservar o Cancelar");
-
-            //este metodo devuelve el tamaño de la pantalla
-            Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-
-            //para centrar la ventana lo hacemos con el siguiente calculo
-            ventanaReservarCancelarVuelo.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
-
-            ventanaReservarCancelarVuelo.setVisible(true);
-
-
-        }
     }
 
     private void bReservarPreservarCancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1708,11 +1736,6 @@ public class Ventana extends javax.swing.JFrame {
             }
         }
 
-        ///Guardo el indice de la ciudad elegida
-        indiceListaDestino= bDestinoPreservarVuelo.getSelectedIndex();
-
-        ///Guardo el destino elegido
-        destino=  bDestinoPreservarVuelo.getItemAt(indiceListaDestino);
     }
 
     private void bListasVuelosPlistasActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1741,6 +1764,22 @@ public class Ventana extends javax.swing.JFrame {
         ventanaListaUsuario.setSize(560,660);
         ventanaListaUsuario.setTitle("Lista Usuarios");
 
+
+        DefaultTableModel model = (DefaultTableModel) tablaListaUsuariosPlistaUsuarios.getModel();
+
+        ///Para borrar las listas
+        while(model.getRowCount()>=1)
+            {
+            model.removeRow(0);
+            }
+        for (Usuario usuario : listaUsuarios) {
+
+
+            listadeVuelosConfirmados=archivo.listarVuelosDeUsuario(usuario,listaDatoVuelos);
+            model.addRow(new Object[]{usuario.getNombre(),usuario.getApellido(),usuario.getDni(), usuario.getEdad(), usuario.mejorAvion(listadeVuelosConfirmados),usuario.costoTotalDeVuelos(listadeVuelosConfirmados)});
+
+        }
+
         //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         //para centrar la ventana lo hacemos con el siguiente calculo
@@ -1749,25 +1788,61 @@ public class Ventana extends javax.swing.JFrame {
         ventanaListaUsuario.setVisible(true);
     }
 
-    private void BlistaVuelosPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+    private void bListaVuelosPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
 
-    private void BatrasPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = pListas;
-        JFrame jFrame22 = PListasVuelos;
+        ///Guardo la fecha ingresada
+        Date fechaIngresadaPantalla = (Date)bFechaPlistaVuelos.getValue();
 
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Lista Usuarios");
+        JFrame ventanaListasVuelosMostrados = pListaVuelosMostrados;
+        JFrame ventanaListas = pListas;
+
+        ventanaListas.setVisible(false);
+        ventanaListasVuelosMostrados.setSize(560,660);
+        ventanaListasVuelosMostrados.setTitle("Lista Vuelos");
+
+
+        DefaultTableModel model = (DefaultTableModel) tablaMostrarVuelos.getModel();
+
+        ///Para borrar las listas
+        while(model.getRowCount()>=1)
+        {
+            model.removeRow(0);
+        }
+
+//        muestro la lista de  DatoVuelos para fecha ingresada por pantalla
+        for (DatosVuelo dato : listaDatoVuelos) {
+
+            if(fechaIngresadaPantalla.equals(dato.getFecha())){
+
+                ///Carga la tabla
+                model.addRow(new Object[]{dato.getUsuario().getNombre(),dato.getUsuario().getApellido(),dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(),dato.getKmsRuta()});
+
+            }
+
+        }
 
         //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         //para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
+        ventanaListasVuelosMostrados.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
-        jFrame11.setVisible(true);
+        ventanaListasVuelosMostrados.setVisible(true);
+    }
+
+    private void BatrasPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
+        JFrame ventanaListas = pListas;
+        JFrame ventanaListasVuelos = PListasVuelos;
+
+        ventanaListasVuelos.setVisible(false);
+        ventanaListas.setSize(560,660);
+        ventanaListas.setTitle("Listas");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaListas.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaListas.setVisible(true);
     }
 
     private void botonComenzarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1816,6 +1891,13 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bVerAvionesPreservarVueloActionPerformed(ActionEvent evt) {
 
+
+        ///Guardo el indice de la ciudad elegida
+        indiceListaDestino= bDestinoPreservarVuelo.getSelectedIndex();
+
+        ///Guardo el destino elegido
+        destino=  bDestinoPreservarVuelo.getItemAt(indiceListaDestino);
+
         ///Fecha actual para ver si no se ingresa una fecha q ya paso
         java.util.Date fecha = new Date();
 
@@ -1852,7 +1934,7 @@ public class Ventana extends javax.swing.JFrame {
                 for (DatosVuelo datosVuelo : listaDatoVuelos){
 
                     ///Me fijo si el usuario ya reservo un avion ese dia
-            
+
                     if(datosVuelo.getFecha().equals(fechaElegida)) {
 
                         if (datosVuelo.getUsuario().equals(usuario) ) {

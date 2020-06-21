@@ -120,7 +120,7 @@ public class Archivo {
     ///Busca los vuelos de un determinado usuario y los devuelve en una lista
     public ArrayList<DatosVuelo> listarVuelosDeUsuario(Usuario usuario, ArrayList<DatosVuelo> listadoVuelos)
     {
-        ArrayList<DatosVuelo> listadoVuelosUsuario=null;
+        ArrayList<DatosVuelo> listadoVuelosUsuario= new ArrayList<>();
 
         if(listadoVuelos!=null)
         {
