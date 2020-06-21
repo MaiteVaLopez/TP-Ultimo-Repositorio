@@ -12,6 +12,7 @@ import com.company.Persistencia.Archivo;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.html.Option;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -497,14 +498,15 @@ public class Ventana extends javax.swing.JFrame {
         lFechaPcancelarVuelo.setFont(new Font("Vivaldi", 1, 18)); // NOI18N
         lFechaPcancelarVuelo.setText("Fecha");
 
+
         //Obtenemos una fecha de inicio, será la fecha actual del sistema
         Date inicio = calendar.getTime();
-        //Indicamos año hasta -100 del actual
-        calendar.add(Calendar.YEAR, -100);
+        //Indicamos año hasta -1 del actual
+        calendar.add(Calendar.YEAR, -1);
         //Guardamos la configuración en un DATE
         Date fechaAnterior = calendar.getTime();
-        //Indicamos año hasta +200 del actual
-        calendar.add(Calendar.YEAR, 200);
+        //Indicamos año hasta +2 del actual
+        calendar.add(Calendar.YEAR, +2);
         //Guardamos la configuración en un DATE
         Date fechaPosterior = calendar.getTime();
         //Usamos el contructor de abajo para crear un modelo para el Spinner
@@ -1404,7 +1406,9 @@ public class Ventana extends javax.swing.JFrame {
         ///Al ingresar por pantalla entra un sTring hay q setearlo pues DNI de usuario es un int
         DNIPantalla= tIngresarDNIUsuarioText.getText();
 
-        DNIIngresadoPantalla=Integer.parseInt(DNIPantalla);
+        DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
+
+
 
 ///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
 
@@ -1812,8 +1816,14 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bVerAvionesPreservarVueloActionPerformed(ActionEvent evt) {
 
+        ///Fecha actual para ver si no se ingresa una fecha q ya paso
+        java.util.Date fecha = new Date();
+
         ///Esto esta por si apreta el boton varias veces para que no se repitan los aviones
         avionesDisponibles= new ArrayList<>();
+
+        ///Gurado la fecha ingresada por pantalla
+        fechaElegida= (Date) bElegirFechaPreservarVuelo.getValue();
 
         ///Verifico si el usuario pidio un avion para ese dia
         boolean fechaOcupadaPorUsuario=false;
@@ -1823,102 +1833,91 @@ public class Ventana extends javax.swing.JFrame {
 
         nroAcompañantes++;///Para agregar al usuario en la cantidad maxima de pasajeros
 
-        ///Guardo la fecha del vuelo ingresada por pantalla Porque al comienzo no nos dejaba
-        fechaElegida= (Date) bElegirFechaPreservarVuelo.getValue();
-
-        ///Guardo un boolean para que no entre en el if de acompañantes si el avion ya fue eliminado en fecha
-//        boolean avionEliminado=false;
+        ///Si la fecha que ingreso es anterior a la fecha de hoy sale un mensaje diciendo el error
+        if(fechaElegida.hashCode()>fecha.hashCode()){
 
 
-        ///Guardo los nombres de los aviones en lista disponioble
-        for (Avion avion : listaAviones) {
+            ///Guardo los nombres de los aviones en lista disponioble
+            for (Avion avion : listaAviones) {
 
-            avionesDisponibles.add(avion.getIdentificador());
-        }
-
-
-        ///Si la lista no esta vacioa, hay reservas
-        if(listaDatoVuelos !=null){
+                avionesDisponibles.add(avion.getIdentificador());
+            }
 
 
-            ///Me fijo si el usuario ya reservo un avion para esa fecha
-            for (DatosVuelo datosVuelo : listaDatoVuelos){
+            ///Si la lista no esta vacioa, hay reservas
+            if(listaDatoVuelos !=null){
 
-                ///Me fijo si el usuario ya reservo un avion ese dia
-                ///No me tomo el equals
 
-                if(datosVuelo.getFecha().equals(fechaElegida)) {
+                ///Me fijo si el usuario ya reservo un avion para esa fecha
+                for (DatosVuelo datosVuelo : listaDatoVuelos){
 
-                    if (datosVuelo.getUsuario().equals(usuario) ) {
-                        JOptionPane.showMessageDialog(null, "El usuario ya tiene reservado un avion para esa fecha, No es posible reservar otro");
-                        ///Cambio el booleana true
-                        fechaOcupadaPorUsuario=true;
-                        ///Vacio la lista de aviones para mostrar
-                        avionesDisponibles=null;
+                    ///Me fijo si el usuario ya reservo un avion ese dia
+            
+                    if(datosVuelo.getFecha().equals(fechaElegida)) {
+
+                        if (datosVuelo.getUsuario().equals(usuario) ) {
+                            JOptionPane.showMessageDialog(null, "El usuario ya tiene reservado un avion para esa fecha, No es posible reservar otro");
+                            ///Cambio el booleana true
+                            fechaOcupadaPorUsuario=true;
+                            ///Vacio la lista de aviones para mostrar
+                            avionesDisponibles=null;
+                        }
+                    }
+
+                }
+
+                if(fechaOcupadaPorUsuario==false){
+
+                    ///Me fijo si hay reservas de otros usuarios
+                    for (DatosVuelo datosVuelos : listaDatoVuelos) {
+
+                        if (fechaElegida.equals(datosVuelos.getFecha())) {
+                            ///Borro de aviones disponibles ese nombre
+                            avionesDisponibles.remove(datosVuelos.getAvion().getIdentificador());
+
+                        }
                     }
                 }
 
+
             }
 
-        if(fechaOcupadaPorUsuario==false){
+            ///Si los aviones no se eliminaron todos porq ya habia pedido la fecha o la fecha estaba reservada
+            if(avionesDisponibles!=null){
 
-            ///Me fijo si hay reservas de otros usuarios
-                for (DatosVuelo datosVuelos : listaDatoVuelos) {
+                for(Avion avion :listaAviones){
 
-                    if (fechaElegida.equals(datosVuelos.getFecha())) {
-                        ///Borro de aviones disponibles ese nombre
-                        avionesDisponibles.remove(datosVuelos.getAvion().getIdentificador());
+                    ///Verifica que los aviones disponibles para la cantidad solicitada de acompañantes
+                    if(nroAcompañantes>avion.getMaxPasajeros()){
 
-                        ///Aviso que lo borre al nombre para cuando verifico acompañantes
-//                        avionEliminado=true;
+                        ///Descarto el avion si no me alcanza la capaciddad de maxima de pasajeros
+
+                        avionesDisponibles.remove(avion.getIdentificador());
+
                     }
-//
-//                    ///Verifica que los aviones disponibles para la cantidad solicitada de acompañantes, descartando los aviones que fueron eliminados
-//                    if((nroAcompañantes>datosVuelos.getAvion().getMaxPasajeros())&&avionEliminado!=true){
-//
-//                        ///Descarto el avion si no me alcanza la capaciddad de maxima de pasajeros
-//                        avionesDisponibles.remove(datosVuelos.getAvion().getIdentificador());
-//
-//                    }
-////
-//                    ///Vuelvo a poner el avionEliminado en false para el siguiente
-//                    avionEliminado=false;
                 }
             }
 
 
-        }
 
-        ///Si los aviones no se eliminaron todos porq ya habia pedido la fecha o la fecha estaba reservada
-        if(avionesDisponibles!=null){
+            if(avionesDisponibles==null){
 
-            for(Avion avion :listaAviones){
-
-                ///Verifica que los aviones disponibles para la cantidad solicitada de acompañantes
-                if(nroAcompañantes>avion.getMaxPasajeros()){
-
-                    ///Descarto el avion si no me alcanza la capaciddad de maxima de pasajeros
-
-                    avionesDisponibles.remove(avion.getIdentificador());
-
-                }
+                JOptionPane.showMessageDialog(null,"No hay aviones disponibles para la fecha elegida");
             }
-         }
+            else {
 
 
+                ///Guardo en Text area los aviones disponibles
+                textAreaAvionesDisponiblesPreservarVuelo.setText(avionesDisponibles.toString());
 
-        if(avionesDisponibles==null){
 
-            JOptionPane.showMessageDialog(null,"No hay aviones disponibles para la fecha elegida");
+            }
         }
-        else {
+        else{
 
-
-            ///Guardo en Text area los aviones disponibles
-            textAreaAvionesDisponiblesPreservarVuelo.setText(avionesDisponibles.toString());
-
-
+            JOptionPane.showMessageDialog(null, "La fecha ingresada ya pasó. Ingrese una fecha igual o posterior a la fecha de hoy");
         }
+
     }
 
     private void bCalcularCostoPreservarVeuloActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1993,17 +1992,19 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     private void TIngresarDNIUsuarioKeyTyped(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
         ///Para no permitir ingresar letras
-        char validar  = evt.getKeyChar();
+        char validar = evt.getKeyChar();
 
-        if(Character.isLetter(validar)){
+
+        if (!Character.isDigit(validar) || validar == '.' || validar == ',') {
 
             getToolkit().beep();
             evt.consume();
 
-            JOptionPane.showMessageDialog (rootPane, "Ingresar Solo Numeros");
+//            JOptionPane.showMessageDialog (rootPane, "Ingresar Solo Numeros");
+
         }
+
     }
 
     private void TIngresarDNIUsuarioActionPerformed(java.awt.event.ActionEvent evt) {
