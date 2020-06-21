@@ -1396,7 +1396,7 @@ public class Ventana extends javax.swing.JFrame {
         JFrame ventanaIngesarDNI = pIngresarDNI;
 
         ///Variable que guarda el DNI del usuario ingresado por pantalla
-        int DNIIngresadoPantalla=0;
+        int DNIIngresadoPantalla = 0;
         String DNIPantalla;
 
         ///Se convierte en true si el DNI coincide con algun usuario de la lista
@@ -1406,18 +1406,16 @@ public class Ventana extends javax.swing.JFrame {
         ///Al ingresar por pantalla entra un sTring hay q setearlo pues DNI de usuario es un int
         DNIPantalla= tIngresarDNIUsuarioText.getText();
 
-        DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
+        try{
+            DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
+        }catch (NumberFormatException e){
 
-
-
-///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
+        }
 
         ///Verifico que el usuario esté en la lista de registro
 
         ///Recorro la lista de usuarios buscando el que se ingreso por teclado
-
-
-
+        
         for (Usuario usuarioListado: listaUsuarios) {
 
             ///Comparo DNI
@@ -1432,8 +1430,8 @@ public class Ventana extends javax.swing.JFrame {
 
         ///Si no lo encontro le pido que ingrese un DNI valido
 
-        if (usuarioEncontrado ==false) {
-            JOptionPane.showMessageDialog(null, "Dni incorrecto");
+        if (!usuarioEncontrado) {
+            JOptionPane.showMessageDialog(null, "ERROR: Ingrese un DNI correcto");
 
             ///Vuelve a la ventana DNI
             ventanaIngesarDNI.setVisible(true);
