@@ -1660,7 +1660,6 @@ public class Ventana extends javax.swing.JFrame {
 
     }
     private void bConfirmarVueloPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
-
         
 
         JFrame ventanaReservarVuelo = pReservarVuelo;
@@ -1833,15 +1832,17 @@ public class Ventana extends javax.swing.JFrame {
         }
 
 //        muestro la lista de  DatoVuelos para fecha ingresada por pantalla
-        for (DatosVuelo dato : listaDatoVuelos) {
+        if(listaDatoVuelos!=null) {
+            for (DatosVuelo dato : listaDatoVuelos) {
 
-            if(fechaIngresadaPantalla.equals(dato.getFecha())){
+                if (fechaIngresadaPantalla.equals(dato.getFecha())) {
 
-                ///Carga la tabla
-                model.addRow(new Object[]{dato.getUsuario().getNombre(),dato.getUsuario().getApellido(),dato.getAvion().getIdentificador(),dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(),dato.getCostoDeVuelo(),dato.getKmsRuta()});
+                    ///Carga la tabla
+                    model.addRow(new Object[]{dato.getUsuario().getNombre(), dato.getUsuario().getApellido(), dato.getAvion().getIdentificador(), dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(), dato.getCostoDeVuelo(), dato.getKmsRuta()});
+
+                }
 
             }
-
         }
 
         //este metodo devuelve el tamaño de la pantalla
