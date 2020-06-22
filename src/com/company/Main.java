@@ -19,51 +19,6 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        /*
-        Usuario user = new Usuario("Pedro", "Perez", 1234, 21);
-        Date fecha = new Date();
-        Avion bronce = new Bronze("avion1", 300, 100, 20, 500, Propulsion.A_REACCION);
-
-        DatosVuelo datos = new DatosVuelo (user, fecha, MONTEVIDEO, BUENOS_AIRES, 2, bronce);
-
-        int kms = datos.calcularKms();
-        datos.setKmsRuta(kms);
-
-        System.out.println(datos.getKmsRuta());
-
-        ///Probando clases Usuario y DatosVuelo
-
-        Date fecha=null;
-
-        List<DatosVuelo>listado=new ArrayList<DatosVuelo>();
-
-        DatosVuelo vuelo= new DatosVuelo(fecha,"asia","argentina",2,avion,1500);
-
-        listado.add(vuelo);
-        Usuario usuario=new Usuario("aye","marinoni",1,26,listado);
-
-         System.out.println(usuario.toString());*/
-/*
-        Archivo miarchivo = new Archivo();
-
-
-        ArrayList<Avion> listaAviones = new ArrayList<>();
-
-        listaAviones = miarchivo.LeoUnArchivoAvion();
-
-
-        for(Avion avion: listaAviones){
-
-
-            if(avion instanceof Bronze){
-                System.out.println(avion.toString());
-            }else if(avion instanceof Silver){
-                System.out.println(avion.toString());
-            }else{
-                System.out.println(avion.toString());
-            }
-        }
-*/
 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -95,11 +50,7 @@ public class Main {
             }
         });
 
-        /*
-                Scanner scan=new Scanner(System.in);
-                String  fechaIngresada=scan.nextLine();
-                SimpleDateFormat formatoFecha=new Simple("aaaa/mm/dd");
-*/
+
     }
 }
 
