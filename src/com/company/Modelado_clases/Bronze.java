@@ -9,8 +9,7 @@ public final class Bronze extends Avion implements Serializable {
 
     public Bronze(String identificador, int combMax, int costo_x_km, int maxPasajeros, int velMax, Propulsion propulsion) {
         super(identificador, combMax, costo_x_km, maxPasajeros, velMax, propulsion);
-
-//        this.setType("Bronze");
+//        this.setType("bronze");
     }
 
 //    public Bronze() {
@@ -28,6 +27,7 @@ public final class Bronze extends Avion implements Serializable {
     public String toString() {
         return "Clase Bronze. " + super.toString() + "El costo fijo es " + costoFijo;
     }
+
 
 
 }

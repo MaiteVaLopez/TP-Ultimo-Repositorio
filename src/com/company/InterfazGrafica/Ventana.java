@@ -1,8 +1,5 @@
 package com.company.InterfazGrafica;
 
-
-
-
 import com.company.Modelado_clases.Avion;
 import com.company.Modelado_clases.Ciudad;
 import com.company.Persistencia.DatosVuelo;
@@ -25,9 +22,108 @@ import static com.company.Modelado_clases.Ciudad.*;
 
 
 public class Ventana extends javax.swing.JFrame {
+    ///////////////////////////////////////////////VARIABLES//////////////////////////////////////////////////////////////////////////////////////
+    // Variables declaration
+    private javax.swing.JLabel aeroTaxi;
+    private javax.swing.JLabel aeroTaxi1;
+    private javax.swing.JLabel aeroTaxi2;
+    private javax.swing.JLabel aeroTaxi3;
+    private javax.swing.JLabel aeroTaxi4;
+    private javax.swing.JButton bAtrasPlistas;
+    private javax.swing.JButton bContinuarPIngresarDNI;
+    private javax.swing.JButton bListasPPrincipal;
+    private javax.swing.JButton bUsuariosPprincipal;
+    private javax.swing.JButton bAtrasPcancelarVuelo;
+    private javax.swing.JButton bAtrasPingresarDNI;
+    private javax.swing.JButton bAtrasPlistaUsuarios;
+    private javax.swing.JButton bAtrasPlistaVuelos;
+    private javax.swing.JButton bAtrasPlistaVuelosMostrados;
+    private javax.swing.JButton bAtrasPreservarCancelarvuelo;
+    private javax.swing.JButton bAtrasPreservarVuelo;
+    private javax.swing.JButton bCalcularCostoPreservarVeulo;
+    private javax.swing.JButton bCancelarPreservarCancelarVuelo;
+    private javax.swing.JButton bCancelarVueloPcancelarVuelo;
+    private javax.swing.JSpinner bCantidadAcompañantesPreservarVuelo;
+    private javax.swing.JButton bConfirmarVueloPreservarVuelo;
+    private javax.swing.JComboBox<Ciudad> bDestinoPreservarVuelo;
+    private javax.swing.JSpinner bElegirFechaPreservarVuelo;
+    private javax.swing.JTextField bEscribirAvionPreservarVuelo;
+    private javax.swing.JSpinner bFechaPcancelarVuelo;
+    private javax.swing.JSpinner bFechaPlistaVuelos;
+    private javax.swing.JLabel bienvenidos;
+    private javax.swing.JButton bListaVuelosPlistaVuelos;
+    private javax.swing.JButton bListasUsuariosPlistas;
+    private javax.swing.JButton bListasVuelosPlistas;
+    private javax.swing.JComboBox<Ciudad> bOrigenPreservarVuelo;
+    private javax.swing.JButton botonComenzar;
+    private javax.swing.JButton bReservarPreservarCancelarVuelo;
+    private javax.swing.JButton bVerAvionesPreservarVuelo;
+    private javax.swing.JLabel confortExcelencia;
+    private javax.swing.JLabel lAdminUsuariosPprincipal;
+    private javax.swing.JLabel lDNIPIngresarDNI;
+    private javax.swing.JLabel lVerListasPprincipal;
+    private javax.swing.JLabel labelAeroTaxiPPrincipal;
+    private javax.swing.JLabel labelAeroTaxiPPrincipal1;
+    private javax.swing.JLabel labelAeroTaxiPRegistrarse1;
+    private javax.swing.JLabel labelAeroTaxiPRegistrarse2;
+    private javax.swing.JLabel labelAeroTaxiPRegistrarse8;
+    private javax.swing.JLabel lAcompañantesPreservarVuelo;
+    private javax.swing.JLabel lCostoTotalPreservarVuelo;
+    private javax.swing.JLabel lDeseacancelarreservarPreservarcancelarVuelo;
+    private javax.swing.JLabel lDestinoPreservarVuelo;
+    private javax.swing.JLabel lEscribaAvionPreservarVuelo;
+    private javax.swing.JLabel lFechaPcancelarVuelo;
+    private javax.swing.JLabel lFechaPlistaVuelos;
+    private javax.swing.JLabel lFechavueloPreservarVuelo;
+    private javax.swing.JLabel lIngresefechaPcancelarVuelo;
+    private javax.swing.JLabel lIngresefechaPlistaVuelos;
+    private javax.swing.JLabel lListaPlistas;
+    private javax.swing.JLabel lNombrePreservarCancelarVuelo;
+    private javax.swing.JLabel lOrigenPreservarVuelo;
+    private javax.swing.JLabel lRespeteMayusculasPreservarVuelo;
+    private javax.swing.JLabel lSeleccionePlistas;
+    private javax.swing.JLabel lUnaPlistas;
+    private javax.swing.JLabel lUsuarioPreservarCancelarVuelo;
+    private javax.swing.JFrame pCancelarVuelo;
+    private javax.swing.JFrame pIngresarDNI;
+    private javax.swing.JFrame pListaUsuarios;
+    private javax.swing.JFrame pListaVuelosMostrados;
+    private javax.swing.JFrame pListas;
+    private javax.swing.JFrame pListasVuelos;
+    private javax.swing.JFrame preservarcancelarvuelo;
+    private javax.swing.JFrame pReservarVuelo;
+    private javax.swing.JPanel panelAeroTaxi;
+    private javax.swing.JPanel panelAeroTaxi1;
+    private javax.swing.JPanel panelAeroTaxi2;
+    private javax.swing.JPanel panelAeroTaxi3;
+    private javax.swing.JPanel panelAeroTaxi4;
+    private javax.swing.JPanel panelAeroTaxiPRegistrarse1;
+    private javax.swing.JPanel panelAeroTaxiPRegistrarse2;
+    private javax.swing.JPanel panelAeroTaxiPRegistrarse8;
+    private javax.swing.JPanel panelAeroTaxiPantallaPrincipal;
+    private javax.swing.JPanel panelAeroTaxiPantallaPrincipal1;
+    private javax.swing.JPanel panelBienvenidos;
+    private javax.swing.JPanel panelBotonesPRegistrarse1;
+    private javax.swing.JPanel panelBotonesPRegistrarse2;
+    private javax.swing.JPanel panelBotonesPRegistrarse7;
+    private javax.swing.JPanel panelBotonesPantallaPrincipal;
+    private javax.swing.JPanel panelBotonesPantallaPrincipal1;
+    private javax.swing.JPanel panelComenzar;
+    private javax.swing.JPanel panelComenzar1;
+    private javax.swing.JPanel panelComenzar2;
+    private javax.swing.JPanel panelComenzar3;
+    private javax.swing.JPanel panelComenzar4;
+    private javax.swing.JFrame pantallaPrincipal;
+    private javax.swing.JTextField tIngresarDNIUsuarioText;
+    private javax.swing.JTable tablaListaUsuariosPlistaUsuarios;
+    private javax.swing.JTable tablaMostrarVuelos;
+    private javax.swing.JTextArea textAreaAvionesDisponiblesPreservarVuelo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
 
-    ///lINEA 197 ATRIBUTOS CREADOS POR NOSOTROS, INICIALIZADOS
-    ///Linea 1373 Comienzan los botones
+
+    ///////////////////VARIABLES DECLARADAS///////////////////
     DatosVuelo nuevoDato;
 
     ///Para poder acceder a la lectura y escritura de archivos
@@ -51,13 +147,6 @@ public class Ventana extends javax.swing.JFrame {
     ///Guardo el destino elegido
     Ciudad destino;
 
-
-    ///Las listas se cargan en la ventana principal en el boton comenzar
-    ///Los archivos se crean, si no existen en la ventana principal en eL boton comenzar
-
-
-    ////////lISTAS//////////////////////////////
-
     ///Lista de Datos Vuelo
     ArrayList<DatosVuelo> listaDatosVuelo = new ArrayList<>();
 
@@ -70,11 +159,8 @@ public class Ventana extends javax.swing.JFrame {
     ///Lista de datos mejor avion y costo total del usurio
     ArrayList<DatosVuelo> listadeVuelosConfirmados = new ArrayList<>();
 
-
     ///Guardo el nuevo avion elegido
     Avion nuevoAvion;
-
-
 
     ///Guardo el usuario de la lista al que se está accediendo con DNI
     Usuario usuario;
@@ -86,29 +172,15 @@ public class Ventana extends javax.swing.JFrame {
     Calendar calendar = Calendar.getInstance();//Variable de Objeto Calendar
 
 
-    /**
-     * Creates new form ventana
-     */
-
+    ////////////////////////////////CONTRUCTOR/////////////////////////
 
     public Ventana() {
         initComponents();
 
     }
 
-///
-
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    //////////////////////////////////VARIABLES INICIALIZADAS/////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void initComponents() {
-
-
 
         pantallaPrincipal = new JFrame();
         pIngresarDNI = new JFrame();
@@ -209,9 +281,6 @@ public class Ventana extends javax.swing.JFrame {
         panelComenzar = new JPanel();
         botonComenzar = new JButton();
 
-
-        ///DESDE ACA SON LOS TAMAÑOS DE LOS BOTONES Y CUESTIONES GRAFICAS TRAIDAS DE NETBEANS, HASTA LA LINEA 1329
-
         panelAeroTaxiPantallaPrincipal.setBackground(new Color(51, 153, 255));
         panelAeroTaxiPantallaPrincipal.setBorder(new LineBorder(new Color(0, 153, 255), 4, true));
         panelAeroTaxiPantallaPrincipal.setForeground(new Color(0, 153, 204));
@@ -247,7 +316,7 @@ public class Ventana extends javax.swing.JFrame {
         bContinuarPIngresarDNI.setText("Continuar");
         bContinuarPIngresarDNI.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bContinuarPIngresarDNIActionPerformed(evt);
+                bContinuarPU(evt);
             }
         });
 
@@ -255,7 +324,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPingresarDNI.setText("Atras");
         bAtrasPingresarDNI.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPingresarDNIActionPerformed(evt);
+                bAtrasPU(evt);
             }
         });
 
@@ -282,11 +351,6 @@ public class Ventana extends javax.swing.JFrame {
 
         tIngresarDNIUsuarioText.setFont(new Font("Vivaldi", 1, 24)); // NOI18N
         tIngresarDNIUsuarioText.setHorizontalAlignment(JTextField.CENTER);
-        tIngresarDNIUsuarioText.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                TIngresarDNIUsuarioActionPerformed(evt);
-            }
-        });
         tIngresarDNIUsuarioText.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
                 TIngresarDNIUsuarioKeyTyped(evt);
@@ -327,7 +391,7 @@ public class Ventana extends javax.swing.JFrame {
         bReservarPreservarCancelarVuelo.setText("Reservar Vuelo ");
         bReservarPreservarCancelarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bReservarPreservarCancelarVueloActionPerformed(evt);
+                bReservarVueloPRC(evt);
             }
         });
 
@@ -335,7 +399,7 @@ public class Ventana extends javax.swing.JFrame {
         bCancelarPreservarCancelarVuelo.setText("Cancelar Vuelo");
         bCancelarPreservarCancelarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bCancelarPreservarCancelarVueloActionPerformed(evt);
+                bCancelarVueloPRC(evt);
             }
         });
 
@@ -343,7 +407,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPreservarCancelarvuelo.setText("Atras");
         bAtrasPreservarCancelarvuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPreservarCancelarvueloActionPerformed(evt);
+                bAtrasPRC(evt);
             }
         });
 
@@ -465,7 +529,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPcancelarVuelo.setText("Atras");
         bAtrasPcancelarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPcancelarVueloActionPerformed(evt);
+                bAtrasPCV(evt);
             }
         });
 
@@ -473,7 +537,7 @@ public class Ventana extends javax.swing.JFrame {
         bCancelarVueloPcancelarVuelo.setText("Cancelar Vuelo");
         bCancelarVueloPcancelarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bCancelarVueloPcancelarVueloActionPerformed(evt);
+                bCancelarVueloPCV(evt);
             }
         });
 
@@ -565,7 +629,7 @@ public class Ventana extends javax.swing.JFrame {
         bConfirmarVueloPreservarVuelo.setText("Confirmar Vuelo");
         bConfirmarVueloPreservarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bConfirmarVueloPreservarVueloActionPerformed(evt);
+                bConfirmarPRV(evt);
             }
         });
 
@@ -573,7 +637,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPreservarVuelo.setText("Atras");
         bAtrasPreservarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPreservarVueloActionPerformed(evt);
+                bAtrasPRV(evt);
             }
         });
 
@@ -619,7 +683,7 @@ public class Ventana extends javax.swing.JFrame {
         bOrigenPreservarVuelo.setModel(new DefaultComboBoxModel<Ciudad>(new Ciudad[] { BUENOS_AIRES, CORDOBA, MONTEVIDEO, SANTIAGO }));
         bOrigenPreservarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bOrigenPreservarVueloActionPerformed(evt);
+                bOrigenPRV(evt);
             }
         });
 
@@ -664,7 +728,7 @@ public class Ventana extends javax.swing.JFrame {
         bVerAvionesPreservarVuelo.setText("Ver Aviones Disponibles");
         bVerAvionesPreservarVuelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bVerAvionesPreservarVueloActionPerformed(evt);
+                bVerAvionesPRV(evt);
             }
         });
 
@@ -676,7 +740,7 @@ public class Ventana extends javax.swing.JFrame {
         bCalcularCostoPreservarVeulo.setText("Calcular Costo");
         bCalcularCostoPreservarVeulo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bCalcularCostoPreservarVeuloActionPerformed(evt);
+                bCalcularCostoPRV(evt);
             }
         });
 
@@ -781,7 +845,7 @@ public class Ventana extends javax.swing.JFrame {
         bListasVuelosPlistas.setText("Lista Vuelos");
         bListasVuelosPlistas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bListasVuelosPlistasActionPerformed(evt);
+                bListaVuelosPL(evt);
             }
         });
 
@@ -789,7 +853,7 @@ public class Ventana extends javax.swing.JFrame {
         bListasUsuariosPlistas.setText("Lista Usuarios");
         bListasUsuariosPlistas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bListasUsuariosPlistasActionPerformed(evt);
+                bListaUsuariosPL(evt);
             }
         });
 
@@ -797,7 +861,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistas.setText("Atras");
         bAtrasPlistas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPlistasActionPerformed(evt);
+                bAtrasPL(evt);
             }
         });
 
@@ -921,7 +985,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistaVuelos.setText("Atras");
         bAtrasPlistaVuelos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPlistaVuelosActionPerformed(evt);
+                bAtrasPLV(evt);
             }
         });
 
@@ -929,7 +993,7 @@ public class Ventana extends javax.swing.JFrame {
         bListaVuelosPlistaVuelos.setText("Lista de Vuelos");
         bListaVuelosPlistaVuelos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bListaVuelosPlistaVuelosActionPerformed(evt);
+                bListaVuelosPLV(evt);
             }
         });
 
@@ -993,7 +1057,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistaUsuarios.setText("Atras");
         bAtrasPlistaUsuarios.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPlistaUsuariosActionPerformed(evt);
+                bAtrasPLU(evt);
             }
         });
 
@@ -1069,7 +1133,7 @@ public class Ventana extends javax.swing.JFrame {
         });
 
 
-        ///No editar Tabla
+        ///LINEA DE CODIGO PARA QUE NO SE PUEDA EDITAR LA TABLA CUANDO APARECE POR PANTALLA
         tablaListaUsuariosPlistaUsuarios.enableInputMethods(false);
 
         jScrollPane1.setViewportView(tablaListaUsuariosPlistaUsuarios);
@@ -1145,7 +1209,7 @@ public class Ventana extends javax.swing.JFrame {
         bUsuariosPprincipal.setText("Usuarios");
         bUsuariosPprincipal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bUsuariosPprincipalActionPerformed(evt);
+                bUsuariosPP(evt);
             }
         });
 
@@ -1153,7 +1217,7 @@ public class Ventana extends javax.swing.JFrame {
         bListasPPrincipal.setText("Listas");
         bListasPPrincipal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bListasPPrincipalActionPerformed(evt);
+                bListasPP(evt);
             }
         });
 
@@ -1220,7 +1284,7 @@ public class Ventana extends javax.swing.JFrame {
         bAtrasPlistaVuelosMostrados.setText("Atras");
         bAtrasPlistaVuelosMostrados.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                bAtrasPlistaVuelosMostradosActionPerformed(evt);
+                bAtrasPMLV(evt);
             }
         });
 
@@ -1325,7 +1389,7 @@ public class Ventana extends javax.swing.JFrame {
         botonComenzar.setText("Comenzar");
         botonComenzar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                botonComenzarActionPerformed(evt);
+                bComenzarPI(evt);
             }
         });
 
@@ -1386,34 +1450,83 @@ public class Ventana extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>
 
+    ////////////////////////////////////////////////////BOTONES POR PANTALLA///////////////////////////////////////////////////////////////////////////
 
-    ///Estas funciones son para Tabla de lista usuarios
+    ////////////////////////////////////////////////////PANTALLA INICIO (PI)//////////////////////////////////////////////////////////////////////
 
-    private ArrayList<Label> cargarTablaUsuario() {
+    private void bComenzarPI(java.awt.event.ActionEvent evt) {
 
-        ArrayList<Label> tablaUsuarios = new ArrayList<>();
+        JFrame VentanaPPrincipal = pantallaPrincipal;
+        dispose();///Para que no se vea la pantalla comenzar
 
-        int i=0;
+        ////TAMAÑO Y NOMBRE DE LA VENTANA////////////////
+        VentanaPPrincipal.setSize(560,660);
+        VentanaPPrincipal.setTitle("Pantalla Principal");
 
-        Label labelusuario;
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        VentanaPPrincipal.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
-        for (Usuario usuario : listaUsuarios) {
+        ////PARA QUE LA VENTANA SEA VISIBLE
+        VentanaPPrincipal.setVisible(true);
 
-            labelusuario= new Label();
+        ///CARGO TODOS LOS ARCHIVOS////
 
-            labelusuario.setName("label"+String.valueOf(i));
+        listaAviones = archivo.LeoUnArchivoAvion();
 
-            labelusuario.setText(usuario.getNombre()+"     "+usuario.getApellido()+"     "+ usuario.getDni()+"     "+ usuario.getEdad()+"     "+ usuario.mejorAvion(listadeVuelosConfirmados)+"     "+ usuario.costoTotalDeVuelos(listadeVuelosConfirmados));
 
-            tablaUsuarios.add(labelusuario);
+        listaDatosVuelo = archivo.leoUnArchivoDatosVuelo();
 
+        if(listaDatosVuelo == null){
+            listaDatosVuelo = new ArrayList<>();
         }
 
-        return tablaUsuarios;
+        listaUsuarios = archivo.leoUnArchivoUsuario();
+
     }
 
-    ///HASTA ACA SON LAS CUESTIONES GRAFICAS TRAIDAS DEL NETBEANS
-    private void bContinuarPIngresarDNIActionPerformed(java.awt.event.ActionEvent evt) {
+    //////////////////////////////////////////////////////PANTALLA PRINCIPAL (PP)/////////////////////////////////////////////////////////////////
+
+    private void bUsuariosPP(ActionEvent evt) {
+
+        ////SE DEJA DE MOSTRAR LA PANTALLA PRINCIPAL Y SE MUESTRA RESERVAR CANCELAR VUELOS
+        JFrame ventanapprincipal = pantallaPrincipal;
+        JFrame ventanaIngreseDNI = pIngresarDNI;
+
+        ventanapprincipal.setVisible(false);
+        ventanaIngreseDNI.setSize(560,660);
+        ventanaIngreseDNI.setTitle("Ingresar Usuario");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaIngreseDNI.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaIngreseDNI.setVisible(true);
+    }
+
+    private void bListasPP(java.awt.event.ActionEvent evt) {
+        JFrame ventanaPPrincipal = pantallaPrincipal;
+        JFrame  ventanaListas= pListas;
+
+        ventanaPPrincipal.setVisible(false);
+        ventanaListas.setSize(560,660);
+        ventanaListas.setTitle("Listas");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaListas.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaListas.setVisible(true);
+
+
+    }
+
+    //////////////////////////////////////////////////////////PANTALLA USUARIOS (PU)//////////////////////////////////////////////////////////////////////////////////
+
+    private void bContinuarPU(java.awt.event.ActionEvent evt) {
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
         JFrame ventanaIngesarDNI = pIngresarDNI;
 
@@ -1423,8 +1536,6 @@ public class Ventana extends javax.swing.JFrame {
 
         ///Se convierte en true si el DNI coincide con algun usuario de la lista
         boolean usuarioEncontrado = false;
-
-
 
         ///Al ingresar por pantalla entra un sTring hay q setearlo pues DNI de usuario es un int
         DNIPantalla= tIngresarDNIUsuarioText.getText();
@@ -1439,16 +1550,8 @@ public class Ventana extends javax.swing.JFrame {
 
             DNIIngresadoPantalla= Integer.parseInt(DNIPantalla);
 
-
-
-
-
-///PROBLEMA ACA TAMBIEN!! SI NO ESCRIBE NADA POR PANTALLA TMB SALTA UN ERRROR; AUNQ NO SE ROMPE NO HACE NADA
-
             ///Verifico que el usuario esté en la lista de registro
-
             ///Recorro la lista de usuarios buscando el que se ingreso por teclado
-
 
             for (Usuario usuarioListado: listaUsuarios) {
 
@@ -1500,10 +1603,28 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void bReservarPreservarCancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bAtrasPU (java.awt.event.ActionEvent evt) {
+
+        JFrame ventanaPantallaPrincipal = pantallaPrincipal;
+        JFrame ventanaPingresarDNI = pIngresarDNI;
+
+        ventanaPingresarDNI.setVisible(false);
+        ventanaPantallaPrincipal.setSize(560, 660);
+        ventanaPantallaPrincipal.setTitle("Pantalla Principal");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaPantallaPrincipal.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
+
+        ventanaPantallaPrincipal.setVisible(true);
+    }
+
+    /////////////////////////////////////////////PANTALLA RESERVAR O CANCELAR (PRC)///////////////////////////////////////////////////////////////
+
+    private void bReservarVueloPRC(java.awt.event.ActionEvent evt) {
         
         JFrame ventanaReservarVuelo = pReservarVuelo;
-        
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
 
         ventanaReservarCancelarVuelo.setVisible(false);
@@ -1518,7 +1639,7 @@ public class Ventana extends javax.swing.JFrame {
         ventanaReservarVuelo.setVisible(true);
     }
 
-    private void bCancelarPreservarCancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bCancelarVueloPRC(java.awt.event.ActionEvent evt) {
         
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
         JFrame ventanaCancelarVuelo = pCancelarVuelo;
@@ -1535,7 +1656,7 @@ public class Ventana extends javax.swing.JFrame {
         ventanaCancelarVuelo.setVisible(true);
     }
 
-    private void bAtrasPreservarCancelarvueloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bAtrasPRC(java.awt.event.ActionEvent evt) {
         
         JFrame ventanaIngresarDNI = pIngresarDNI;
         
@@ -1553,7 +1674,9 @@ public class Ventana extends javax.swing.JFrame {
         ventanaIngresarDNI.setVisible(true);
     }
 
-    private void bCancelarVueloPcancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+    /////////////////////////////////////////PANTALLA CANCELAR VUELO (PCV)///////////////////////////////////////////////////////////////////////////////
+
+    private void bCancelarVueloPCV(java.awt.event.ActionEvent evt) {
 
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
 
@@ -1613,8 +1736,6 @@ public class Ventana extends javax.swing.JFrame {
             archivo.guardarListaVuelos(listaDatosVuelo);
 
         }
-
-
         ventanaCancelarVuelo.setVisible(false);
         ventanaReservarCancelarVuelo.setSize(560,660);
         ventanaReservarCancelarVuelo.setTitle("Reservar o Cancelar Vuelo");
@@ -1627,7 +1748,7 @@ public class Ventana extends javax.swing.JFrame {
         ventanaReservarCancelarVuelo.setVisible(true);
     }
 
-    private void bAtrasPcancelarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bAtrasPCV (java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         JFrame ventanaCancelarVuelo = pCancelarVuelo;
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
@@ -1643,22 +1764,9 @@ public class Ventana extends javax.swing.JFrame {
         ventanaCancelarVuelo.setVisible(false);
     }
 
-    private void borrarComponentes(){
+    //////////////////////////////////////////////PANTALLA RESERVAR VUELO (PRV)///////////////////////////////////////////////////////////////////////////////
 
-        java.util.Date fecha = new Date();
-
-        bOrigenPreservarVuelo.setSelectedIndex(-1);
-        bDestinoPreservarVuelo.setSelectedIndex(-1);
-        bElegirFechaPreservarVuelo.setValue(fecha);
-        bCantidadAcompañantesPreservarVuelo.setValue(0);
-        textAreaAvionesDisponiblesPreservarVuelo.setText("");
-        bEscribirAvionPreservarVuelo.setText("");
-        lCostoTotalPreservarVuelo.setText("$");
-
-
-
-    }
-    private void bConfirmarVueloPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bConfirmarPRV (java.awt.event.ActionEvent evt) {
 
 
         JFrame ventanaReservarVuelo = pReservarVuelo;
@@ -1699,7 +1807,7 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void bAtrasPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bAtrasPRV (java.awt.event.ActionEvent evt) {
 
         JFrame ventanaReservarCancelarVuelo = preservarcancelarvuelo;
         JFrame ventanaReservarVuelo = pReservarVuelo;
@@ -1717,7 +1825,7 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void bOrigenPreservarVueloActionPerformed(ActionEvent evt) {
+    private void bOrigenPRV (ActionEvent evt) {
 
 
         ///Guardo el indice de la ciudad elegida, lo uso debajo para tomar el valor de la ciudad elegida de la lista
@@ -1759,169 +1867,7 @@ public class Ventana extends javax.swing.JFrame {
         }
 
     }
-
-    private void bListasVuelosPlistasActionPerformed(java.awt.event.ActionEvent evt) {
-
-        JFrame ventanaListasvuelos = pListasVuelos;
-        JFrame ventanaListas = pListas;
-
-        ventanaListas.setVisible(false);
-        ventanaListasvuelos.setSize(560,660);
-        ventanaListasvuelos.setTitle("Lista Vuelos");
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        ventanaListasvuelos.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        ventanaListasvuelos.setVisible(true);
-    }
-
-    private void bListasUsuariosPlistasActionPerformed(java.awt.event.ActionEvent evt) {
-
-        JFrame ventanaListaUsuario = pListaUsuarios;
-        JFrame ventanaLista = pListas;
-
-        ventanaLista.setVisible(false);
-        ventanaListaUsuario.setSize(560,660);
-        ventanaListaUsuario.setTitle("Lista Usuarios");
-
-
-        DefaultTableModel model = (DefaultTableModel) tablaListaUsuariosPlistaUsuarios.getModel();
-
-        ///Para borrar las listas
-        while(model.getRowCount()>=1)
-            {
-            model.removeRow(0);
-            }
-        for (Usuario usuario : listaUsuarios) {
-
-
-            listadeVuelosConfirmados=archivo.listarVuelosDeUsuario(usuario, listaDatosVuelo);
-            model.addRow(new Object[]{usuario.getNombre(),usuario.getApellido(),usuario.getDni(), usuario.getEdad(), usuario.mejorAvion(listadeVuelosConfirmados),usuario.costoTotalDeVuelos(listadeVuelosConfirmados)});
-
-        }
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        ventanaListaUsuario.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        ventanaListaUsuario.setVisible(true);
-    }
-
-    private void bListaVuelosPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
-
-        ///Guardo la fecha ingresada
-        Date fechaIngresadaPantalla = (Date)bFechaPlistaVuelos.getValue();
-
-        JFrame ventanaListasVuelosMostrados = pListaVuelosMostrados;
-        JFrame ventanaListas = pListas;
-
-        ventanaListas.setVisible(false);
-        ventanaListasVuelosMostrados.setSize(560,660);
-        ventanaListasVuelosMostrados.setTitle("Lista Vuelos");
-
-
-        DefaultTableModel model = (DefaultTableModel) tablaMostrarVuelos.getModel();
-
-        ///Para borrar las listas
-        while(model.getRowCount()>=1)
-        {
-            model.removeRow(0);
-        }
-
-        listaDatosVuelo = archivo.leoUnArchivoDatosVuelo();
-//        muestro la lista de  DatoVuelos para fecha ingresada por pantalla
-        if(listaDatosVuelo !=null) {
-            for (DatosVuelo dato : listaDatosVuelo) {
-
-                if (fechaIngresadaPantalla.equals(dato.getFecha())) {
-
-                    ///Carga la tabla
-                    model.addRow(new Object[]{dato.getUsuario().getNombre(), dato.getUsuario().getApellido(), dato.getAvion().getIdentificador(), dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(), dato.getCostoDeVuelo(), dato.getKmsRuta()});
-
-                }
-
-            }
-        }
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        ventanaListasVuelosMostrados.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        ventanaListasVuelosMostrados.setVisible(true);
-    }
-
-    private void bAtrasPlistaVuelosActionPerformed(java.awt.event.ActionEvent evt) {
-        JFrame ventanaListas = pListas;
-        JFrame ventanaListasVuelos = pListasVuelos;
-
-        ventanaListasVuelos.setVisible(false);
-        ventanaListas.setSize(560,660);
-        ventanaListas.setTitle("Listas");
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        ventanaListas.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        ventanaListas.setVisible(true);
-    }
-
-    private void botonComenzarActionPerformed(java.awt.event.ActionEvent evt) {
-
-        JFrame VentanaPPrincipal = pantallaPrincipal;
-        dispose();///Para que no se vea la pantalla comenzar
-
-        ////TAMAÑO Y NOMBRE DE LA VENTANA////////////////
-        VentanaPPrincipal.setSize(560,660);
-        VentanaPPrincipal.setTitle("Pantalla Principal");
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        VentanaPPrincipal.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        ////PARA QUE LA VENTANA SEA VISIBLE
-        VentanaPPrincipal.setVisible(true);
-
-        ///CARGO TODOS LOS ARCHIVOS////
-
-        listaAviones = archivo.LeoUnArchivoAvion();
-
-
-        listaDatosVuelo = archivo.leoUnArchivoDatosVuelo();
-
-        if(listaDatosVuelo == null){
-            listaDatosVuelo = new ArrayList<>();
-        }
-
-        listaUsuarios = archivo.leoUnArchivoUsuario();
-
-    }
-
-    private void bAtrasPlistaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame jFrame11 = pListas;
-        JFrame jFrame22 = pListaUsuarios;
-
-        jFrame22.setVisible(false);
-        jFrame11.setSize(560,660);
-        jFrame11.setTitle("Listas");
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        jFrame11.setVisible(true);
-    }
-
-    private void bVerAvionesPreservarVueloActionPerformed(ActionEvent evt) {
-
-
+    private void bVerAvionesPRV(ActionEvent evt) {
 
         ///Guardo el indice de la ciudad elegida
         indiceListaDestino= bDestinoPreservarVuelo.getSelectedIndex();
@@ -2024,7 +1970,7 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void bCalcularCostoPreservarVeuloActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bCalcularCostoPRV (java.awt.event.ActionEvent evt) {
 
 
         ///Si el texto no coincide con ningun avion del String
@@ -2058,7 +2004,7 @@ public class Ventana extends javax.swing.JFrame {
             nuevoDato.setKmsRuta(kilometros);
             int costo=nuevoDato.calcularCostoVuelo();
             nuevoDato.setCostoDeVuelo(costo);
-                ///System.out.println("mostrar kilometros y costo"+kilometros, " ",+costo);
+            ///System.out.println("mostrar kilometros y costo"+kilometros, " ",+costo);
 
             ///Mustra el costo total por pantalla
             lCostoTotalPreservarVuelo.setText(String.valueOf(nuevoDato.calcularCostoVuelo()));
@@ -2077,8 +2023,61 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void bAtrasPlistasActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    //////////////////////////////////////////////PANTALLA LISTAS (PL) //////////////////////////////////////////////////////////////////////////
+
+    private void bListaVuelosPL(java.awt.event.ActionEvent evt) {
+
+        JFrame ventanaListasvuelos = pListasVuelos;
+        JFrame ventanaListas = pListas;
+
+        ventanaListas.setVisible(false);
+        ventanaListasvuelos.setSize(560,660);
+        ventanaListasvuelos.setTitle("Lista Vuelos");
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaListasvuelos.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaListasvuelos.setVisible(true);
+    }
+
+    private void bListaUsuariosPL (java.awt.event.ActionEvent evt) {
+
+        JFrame ventanaListaUsuario = pListaUsuarios;
+        JFrame ventanaLista = pListas;
+
+        ventanaLista.setVisible(false);
+        ventanaListaUsuario.setSize(560,660);
+        ventanaListaUsuario.setTitle("Lista Usuarios");
+
+
+        DefaultTableModel model = (DefaultTableModel) tablaListaUsuariosPlistaUsuarios.getModel();
+
+        ///Para borrar las listas
+        while(model.getRowCount()>=1)
+            {
+            model.removeRow(0);
+            }
+        for (Usuario usuario : listaUsuarios) {
+
+
+            listadeVuelosConfirmados=archivo.listarVuelosDeUsuario(usuario, listaDatosVuelo);
+            model.addRow(new Object[]{usuario.getNombre(),usuario.getApellido(),usuario.getDni(), usuario.getEdad(), usuario.mejorAvion(listadeVuelosConfirmados),usuario.costoTotalDeVuelos(listadeVuelosConfirmados)});
+
+        }
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaListaUsuario.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaListaUsuario.setVisible(true);
+    }
+
+
+    private void bAtrasPL(java.awt.event.ActionEvent evt) {
+
         JFrame ventanaPantallaPrincipal = pantallaPrincipal;
         JFrame ventanaListas = pListas;
 
@@ -2095,49 +2094,76 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    private void TIngresarDNIUsuarioKeyTyped(java.awt.event.KeyEvent evt) {
-        ///Para no permitir ingresar letras
-        char validar = evt.getKeyChar();
+///////////////////////////////////PANTALLA LISTA USUARIOS (PLU)/////////////////////////////////////////////////////////////////////
 
+    private void bAtrasPLU(java.awt.event.ActionEvent evt) {
 
-        if (!Character.isDigit(validar) || validar == '.' || validar == ',') {
+        JFrame jFrame11 = pListas;
+        JFrame jFrame22 = pListaUsuarios;
 
-            getToolkit().beep();
-            evt.consume();
-
-//            JOptionPane.showMessageDialog (rootPane, "Ingresar Solo Numeros");
-
-        }
-
-    }
-
-    private void TIngresarDNIUsuarioActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-
-    }
-
-    private void bAtrasPingresarDNIActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        JFrame ventanaPantallaPrincipal = pantallaPrincipal;
-        JFrame ventanaPingresarDNI = pIngresarDNI;
-
-        ventanaPingresarDNI.setVisible(false);
-        ventanaPantallaPrincipal.setSize(560, 660);
-        ventanaPantallaPrincipal.setTitle("Pantalla Principal");
+        jFrame22.setVisible(false);
+        jFrame11.setSize(560,660);
+        jFrame11.setTitle("Listas");
 
         //este metodo devuelve el tamaño de la pantalla
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         //para centrar la ventana lo hacemos con el siguiente calculo
-        ventanaPantallaPrincipal.setLocation((pantalla.width) / 4, (pantalla.height) / 16);
+        jFrame11.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
-        ventanaPantallaPrincipal.setVisible(true);
+        jFrame11.setVisible(true);
     }
 
-    private void bListasPPrincipalActionPerformed(java.awt.event.ActionEvent evt) {
-        JFrame ventanaPPrincipal = pantallaPrincipal;
-        JFrame  ventanaListas= pListas;
+    ////////////////////////////////////PANTALLA LISTAS VUELOS (PLV)///////////////////////////////////////////////////////////////////////////////////
 
-        ventanaPPrincipal.setVisible(false);
+    private void bListaVuelosPLV (java.awt.event.ActionEvent evt) {
+
+        ///Guardo la fecha ingresada
+        Date fechaIngresadaPantalla = (Date)bFechaPlistaVuelos.getValue();
+
+        JFrame ventanaListasVuelosMostrados = pListaVuelosMostrados;
+        JFrame ventanaListas = pListas;
+
+        ventanaListas.setVisible(false);
+        ventanaListasVuelosMostrados.setSize(560,660);
+        ventanaListasVuelosMostrados.setTitle("Lista Vuelos");
+
+
+        DefaultTableModel model = (DefaultTableModel) tablaMostrarVuelos.getModel();
+
+        ///Para borrar las listas
+        while(model.getRowCount()>=1)
+        {
+            model.removeRow(0);
+        }
+
+        listaDatosVuelo = archivo.leoUnArchivoDatosVuelo();
+//        muestro la lista de  DatoVuelos para fecha ingresada por pantalla
+        if(listaDatosVuelo !=null) {
+            for (DatosVuelo dato : listaDatosVuelo) {
+
+                if (fechaIngresadaPantalla.equals(dato.getFecha())) {
+
+                    ///Carga la tabla
+                    model.addRow(new Object[]{dato.getUsuario().getNombre(), dato.getUsuario().getApellido(), dato.getAvion().getIdentificador(), dato.getOrigen(), dato.getDestino(), dato.getCantidadPasajeros(), dato.getCostoDeVuelo(), dato.getKmsRuta()});
+
+                }
+
+            }
+        }
+
+        //este metodo devuelve el tamaño de la pantalla
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para centrar la ventana lo hacemos con el siguiente calculo
+        ventanaListasVuelosMostrados.setLocation((pantalla.width )/4, (pantalla.height )/16);
+
+        ventanaListasVuelosMostrados.setVisible(true);
+    }
+
+    private void bAtrasPLV(java.awt.event.ActionEvent evt) {
+        JFrame ventanaListas = pListas;
+        JFrame ventanaListasVuelos = pListasVuelos;
+
+        ventanaListasVuelos.setVisible(false);
         ventanaListas.setSize(560,660);
         ventanaListas.setTitle("Listas");
 
@@ -2147,29 +2173,10 @@ public class Ventana extends javax.swing.JFrame {
         ventanaListas.setLocation((pantalla.width )/4, (pantalla.height )/16);
 
         ventanaListas.setVisible(true);
-
-
     }
 
-    private void bUsuariosPprincipalActionPerformed(ActionEvent evt) {
-
-        ////SE DEJA DE MOSTRAR LA PANTALLA PRINCIPAL Y SE MUESTRA RESERVAR CANCELAR VUELOS
-        JFrame ventanapprincipal = pantallaPrincipal;
-        JFrame ventanaIngreseDNI = pIngresarDNI;
-
-        ventanapprincipal.setVisible(false);
-        ventanaIngreseDNI.setSize(560,660);
-        ventanaIngreseDNI.setTitle("Ingresar Usuario");
-
-        //este metodo devuelve el tamaño de la pantalla
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        //para centrar la ventana lo hacemos con el siguiente calculo
-        ventanaIngreseDNI.setLocation((pantalla.width )/4, (pantalla.height )/16);
-
-        ventanaIngreseDNI.setVisible(true);
-    }
-
-    private void bAtrasPlistaVuelosMostradosActionPerformed(java.awt.event.ActionEvent evt) {
+////////////////////////////////////////PANTALLA MOSTRAR LISTA VUELOS (PMLV)//////////////////////////////////////////////////////////////////////////////
+    private void bAtrasPMLV(java.awt.event.ActionEvent evt) {
         JFrame ventanaListaVuelosMostrados = pListaVuelosMostrados;
         JFrame ventanaListaVuelos = pListasVuelos;
         
@@ -2186,110 +2193,39 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    /**
-     * @param args the command line arguments
-     */
+
+    //////////////////////////////////////FUNCION PARA BORRAR LOS DATOS UNA VEZ QUE SE CONFIRMO EL VUELO EN RESERVAR VUELO/////////////////////////////
+    private void borrarComponentes(){
+
+        java.util.Date fecha = new Date();
+
+        bOrigenPreservarVuelo.setSelectedIndex(-1);
+        bDestinoPreservarVuelo.setSelectedIndex(-1);
+        bElegirFechaPreservarVuelo.setValue(fecha);
+        bCantidadAcompañantesPreservarVuelo.setValue(0);
+        textAreaAvionesDisponiblesPreservarVuelo.setText("");
+        bEscribirAvionPreservarVuelo.setText("");
+        lCostoTotalPreservarVuelo.setText("$");
 
 
-    // Variables declaration - do not modify
-    private javax.swing.JLabel aeroTaxi;
-    private javax.swing.JLabel aeroTaxi1;
-    private javax.swing.JLabel aeroTaxi2;
-    private javax.swing.JLabel aeroTaxi3;
-    private javax.swing.JLabel aeroTaxi4;
-    private javax.swing.JButton bAtrasPlistas;
-    private javax.swing.JButton bContinuarPIngresarDNI;
-    private javax.swing.JButton bListasPPrincipal;
-    private javax.swing.JButton bUsuariosPprincipal;
-    private javax.swing.JButton bAtrasPcancelarVuelo;
-    private javax.swing.JButton bAtrasPingresarDNI;
-    private javax.swing.JButton bAtrasPlistaUsuarios;
-    private javax.swing.JButton bAtrasPlistaVuelos;
-    private javax.swing.JButton bAtrasPlistaVuelosMostrados;
-    private javax.swing.JButton bAtrasPreservarCancelarvuelo;
-    private javax.swing.JButton bAtrasPreservarVuelo;
-    private javax.swing.JButton bCalcularCostoPreservarVeulo;
-    private javax.swing.JButton bCancelarPreservarCancelarVuelo;
-    private javax.swing.JButton bCancelarVueloPcancelarVuelo;
-    private javax.swing.JSpinner bCantidadAcompañantesPreservarVuelo;
-    private javax.swing.JButton bConfirmarVueloPreservarVuelo;
-    private javax.swing.JComboBox<Ciudad> bDestinoPreservarVuelo;
-    private javax.swing.JSpinner bElegirFechaPreservarVuelo;
-    private javax.swing.JTextField bEscribirAvionPreservarVuelo;
-    private javax.swing.JSpinner bFechaPcancelarVuelo;
-    private javax.swing.JSpinner bFechaPlistaVuelos;
-    private javax.swing.JLabel bienvenidos;
-    private javax.swing.JButton bListaVuelosPlistaVuelos;
-    private javax.swing.JButton bListasUsuariosPlistas;
-    private javax.swing.JButton bListasVuelosPlistas;
-    private javax.swing.JComboBox<Ciudad> bOrigenPreservarVuelo;
 
-    private javax.swing.JButton botonComenzar;
-    private javax.swing.JButton bReservarPreservarCancelarVuelo;
-    private javax.swing.JButton bVerAvionesPreservarVuelo;
-    private javax.swing.JLabel confortExcelencia;
-    private javax.swing.JLabel lAdminUsuariosPprincipal;
-    private javax.swing.JLabel lDNIPIngresarDNI;
-    private javax.swing.JLabel lVerListasPprincipal;
-    private javax.swing.JLabel labelAeroTaxiPPrincipal;
-    private javax.swing.JLabel labelAeroTaxiPPrincipal1;
-    private javax.swing.JLabel labelAeroTaxiPRegistrarse1;
-    private javax.swing.JLabel labelAeroTaxiPRegistrarse2;
-    private javax.swing.JLabel labelAeroTaxiPRegistrarse8;
-    private javax.swing.JLabel lAcompañantesPreservarVuelo;
-    private javax.swing.JLabel lCostoTotalPreservarVuelo;
-    private javax.swing.JLabel lDeseacancelarreservarPreservarcancelarVuelo;
-    private javax.swing.JLabel lDestinoPreservarVuelo;
-    private javax.swing.JLabel lEscribaAvionPreservarVuelo;
-    private javax.swing.JLabel lFechaPcancelarVuelo;
-    private javax.swing.JLabel lFechaPlistaVuelos;
-    private javax.swing.JLabel lFechavueloPreservarVuelo;
-    private javax.swing.JLabel lIngresefechaPcancelarVuelo;
-    private javax.swing.JLabel lIngresefechaPlistaVuelos;
-    private javax.swing.JLabel lListaPlistas;
-    private javax.swing.JLabel lNombrePreservarCancelarVuelo;
-    private javax.swing.JLabel lOrigenPreservarVuelo;
-    private javax.swing.JLabel lRespeteMayusculasPreservarVuelo;
-    private javax.swing.JLabel lSeleccionePlistas;
-    private javax.swing.JLabel lUnaPlistas;
-    private javax.swing.JLabel lUsuarioPreservarCancelarVuelo;
-    private javax.swing.JFrame pCancelarVuelo;
-    private javax.swing.JFrame pIngresarDNI;
-    private javax.swing.JFrame pListaUsuarios;
-    private javax.swing.JFrame pListaVuelosMostrados;
-    private javax.swing.JFrame pListas;
-    private javax.swing.JFrame pListasVuelos;
-    private javax.swing.JFrame preservarcancelarvuelo;
-    private javax.swing.JFrame pReservarVuelo;
-    private javax.swing.JPanel panelAeroTaxi;
-    private javax.swing.JPanel panelAeroTaxi1;
-    private javax.swing.JPanel panelAeroTaxi2;
-    private javax.swing.JPanel panelAeroTaxi3;
-    private javax.swing.JPanel panelAeroTaxi4;
-    private javax.swing.JPanel panelAeroTaxiPRegistrarse1;
-    private javax.swing.JPanel panelAeroTaxiPRegistrarse2;
-    private javax.swing.JPanel panelAeroTaxiPRegistrarse8;
-    private javax.swing.JPanel panelAeroTaxiPantallaPrincipal;
-    private javax.swing.JPanel panelAeroTaxiPantallaPrincipal1;
-    private javax.swing.JPanel panelBienvenidos;
-    private javax.swing.JPanel panelBotonesPRegistrarse1;
-    private javax.swing.JPanel panelBotonesPRegistrarse2;
-    private javax.swing.JPanel panelBotonesPRegistrarse7;
-    private javax.swing.JPanel panelBotonesPantallaPrincipal;
-    private javax.swing.JPanel panelBotonesPantallaPrincipal1;
-    private javax.swing.JPanel panelComenzar;
-    private javax.swing.JPanel panelComenzar1;
-    private javax.swing.JPanel panelComenzar2;
-    private javax.swing.JPanel panelComenzar3;
-    private javax.swing.JPanel panelComenzar4;
-    private javax.swing.JFrame pantallaPrincipal;
-    private javax.swing.JTextField tIngresarDNIUsuarioText;
-    private javax.swing.JTable tablaListaUsuariosPlistaUsuarios;
-    private javax.swing.JTable tablaMostrarVuelos;
-    private javax.swing.JTextArea textAreaAvionesDisponiblesPreservarVuelo;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    // End of variables declaration
+    }
+/////////////////////////////////////CODIGO QUE VALIDA QUE SE INGRESEN SOLO NUMEROS EN EL DNI DEL USUARIO///////////////////////////////////////
+
+    private void TIngresarDNIUsuarioKeyTyped(java.awt.event.KeyEvent evt) {
+        ///Para no permitir ingresar letras NI CARACTERES NI EL ESPACIO EN BLANCO
+        char validar = evt.getKeyChar();
+
+
+        if (!Character.isDigit(validar) || validar == '.' || validar == ',') {
+
+            getToolkit().beep();
+            evt.consume();
+
+        }
+
+    }
+
+
 }
 
