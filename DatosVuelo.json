@@ -1,0 +1,1 @@
+[{"origen":"MONTEVIDEO","destino":"BUENOS_AIRES","usuario":{"nombre":"Maite","apellido":"Lopez","dni":123,"edad":30},"fecha":"Jun 25, 2020, 12:00:00 AM","cantidadPasajeros":7,"avion":{"identificador":"Silver1","combMax":1000,"costo_x_km":245,"maxPasajeros":17,"velMax":700,"propulsion":"A_HELICE"},"costoDeVuelo":261250.0,"kmsRuta":950}]

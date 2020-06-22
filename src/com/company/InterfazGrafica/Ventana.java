@@ -1660,7 +1660,9 @@ public class Ventana extends javax.swing.JFrame {
 
     }
     private void bConfirmarVueloPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
-        
+
+        ///Lista de Datos Vuelo
+        ArrayList<DatosVuelo> listaDatoVuelos = new ArrayList<>();
 
         JFrame ventanaReservarVuelo = pReservarVuelo;
         JFrame ventanaPantallaPrincipal = pantallaPrincipal;
