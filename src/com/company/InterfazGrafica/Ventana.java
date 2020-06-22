@@ -59,7 +59,7 @@ public class Ventana extends javax.swing.JFrame {
     ////////lISTAS//////////////////////////////
 
     ///Lista de Datos Vuelo
-    ArrayList<DatosVuelo> listaDatoVuelos = new ArrayList<>();
+    ArrayList<DatosVuelo> listaDatosVuelo = new ArrayList<>();
 
     ///Lista Usuarios
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
@@ -1586,9 +1586,9 @@ public class Ventana extends javax.swing.JFrame {
             }
             ///Si la fecha es mayor a la de hoy se puede cancelar el vuelo
             else {
-                if (listaDatoVuelos != null) {
+                if (listaDatosVuelo != null) {
 
-                    for (DatosVuelo dato : listaDatoVuelos) {
+                    for (DatosVuelo dato : listaDatosVuelo) {
 
                         if ((fechaCancelar.equals(dato.getFecha())) && (usuario.equals(dato.getUsuario()))) {
 
@@ -1601,7 +1601,6 @@ public class Ventana extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "No es posible cancelar el vuelo pues no hay vuelos reservados en esa fecha");
                     }
 
-
             }
         }
 
@@ -1609,9 +1608,9 @@ public class Ventana extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null,"La Fecha Fue Cancelada Con Éxito");
 
-            listaDatoVuelos.remove(datoABorrar);
+            listaDatosVuelo.remove(datoABorrar);
 
-            archivo.guardarListaVuelos(listaDatoVuelos);
+            archivo.guardarListaVuelos(listaDatosVuelo);
 
         }
 
@@ -1661,6 +1660,7 @@ public class Ventana extends javax.swing.JFrame {
     }
     private void bConfirmarVueloPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
 
+
         JFrame ventanaReservarVuelo = pReservarVuelo;
         JFrame ventanaPantallaPrincipal = pantallaPrincipal;
 
@@ -1673,10 +1673,10 @@ public class Ventana extends javax.swing.JFrame {
             ///Guardo el nuevo dato a la lista de datos vuelo
 
             ///Primero agrego el nuevo dato a la lista
-            listaDatoVuelos.add(nuevoDato);
+            listaDatosVuelo.add(nuevoDato);
 
             ///Luego guardo la lista en el archivo
-            archivo.guardarListaVuelos(listaDatoVuelos);
+            archivo.guardarListaVuelos(listaDatosVuelo);
 
             JOptionPane.showMessageDialog(null,"Vuelo Reservado con éxito");
         }
@@ -1797,7 +1797,7 @@ public class Ventana extends javax.swing.JFrame {
         for (Usuario usuario : listaUsuarios) {
 
 
-            listadeVuelosConfirmados=archivo.listarVuelosDeUsuario(usuario,listaDatoVuelos);
+            listadeVuelosConfirmados=archivo.listarVuelosDeUsuario(usuario, listaDatosVuelo);
             model.addRow(new Object[]{usuario.getNombre(),usuario.getApellido(),usuario.getDni(), usuario.getEdad(), usuario.mejorAvion(listadeVuelosConfirmados),usuario.costoTotalDeVuelos(listadeVuelosConfirmados)});
 
         }
@@ -1831,10 +1831,10 @@ public class Ventana extends javax.swing.JFrame {
             model.removeRow(0);
         }
 
-        listaDatoVuelos = archivo.leoUnArchivoDatosVuelo();
+        listaDatosVuelo = archivo.leoUnArchivoDatosVuelo();
 //        muestro la lista de  DatoVuelos para fecha ingresada por pantalla
-        if(listaDatoVuelos!=null) {
-            for (DatosVuelo dato : listaDatoVuelos) {
+        if(listaDatosVuelo !=null) {
+            for (DatosVuelo dato : listaDatosVuelo) {
 
                 if (fechaIngresadaPantalla.equals(dato.getFecha())) {
 
@@ -1891,7 +1891,12 @@ public class Ventana extends javax.swing.JFrame {
 
         listaAviones = archivo.LeoUnArchivoAvion();
 
-        listaDatoVuelos = archivo.leoUnArchivoDatosVuelo();
+
+        listaDatosVuelo = archivo.leoUnArchivoDatosVuelo();
+
+        if(listaDatosVuelo == null){
+            listaDatosVuelo = new ArrayList<>();
+        }
 
         listaUsuarios = archivo.leoUnArchivoUsuario();
 
@@ -1953,11 +1958,10 @@ public class Ventana extends javax.swing.JFrame {
 
 
             ///Si la lista no esta vacia, hay reservas
-            if(listaDatoVuelos !=null){
-
+            if(listaDatosVuelo !=null){
 
                 ///Me fijo si el usuario ya reservo un avion para esa fecha
-                for (DatosVuelo datosVuelo : listaDatoVuelos){
+                for (DatosVuelo datosVuelo : listaDatosVuelo){
 
                     ///Me fijo si el usuario ya reservo un avion ese dia
 
@@ -1968,7 +1972,7 @@ public class Ventana extends javax.swing.JFrame {
                             ///Cambio el booleana true
                             fechaOcupadaPorUsuario=true;
                             ///Vacio la lista de aviones para mostrar
-                            avionesDisponibles=null;
+                            avionesDisponibles.clear();
                         }
                     }
 
@@ -1977,7 +1981,7 @@ public class Ventana extends javax.swing.JFrame {
                 if(!fechaOcupadaPorUsuario){
 
                     ///Me fijo si hay reservas de otros usuarios
-                    for (DatosVuelo datosVuelos : listaDatoVuelos) {
+                    for (DatosVuelo datosVuelos : listaDatosVuelo) {
 
                         if (fechaElegida.equals(datosVuelos.getFecha())) {
                             ///Borro de aviones disponibles ese nombre
@@ -1995,7 +1999,7 @@ public class Ventana extends javax.swing.JFrame {
 
                 for(Avion avion :listaAviones){
 
-                    ///Verifica que los aviones disponibles para la cantidad solicitada de acompañantes
+                    ///Verifica los aviones disponibles para la cantidad solicitada de acompañantes
                     if(nroAcompanantes >avion.getMaxPasajeros()){
 
                         ///Descarto el avion si no me alcanza la capaciddad de maxima de pasajeros
@@ -2004,11 +2008,12 @@ public class Ventana extends javax.swing.JFrame {
 
                     }
                 }
-                textAreaAvionesDisponiblesPreservarVuelo.setText(avionesDisponibles.toString());
-                ///Guardo en Text area los aviones disponibles
+            }
 
-            }else{
+            if(avionesDisponibles.size() == 0 && !fechaOcupadaPorUsuario){
                 JOptionPane.showMessageDialog(null,"No hay aviones disponibles para la fecha elegida");
+            }else{
+                textAreaAvionesDisponiblesPreservarVuelo.setText(avionesDisponibles.toString());
             }
 
         }
@@ -2036,7 +2041,7 @@ public class Ventana extends javax.swing.JFrame {
         }
 
         ///Si se ingreso un nombre de avion valido
-        if(ingresoTextoCorrecto==true){
+        if(ingresoTextoCorrecto){
 
             ///Recorre la lista de aviones para guardar el avion seleccionado
             for (Avion avion : listaAviones){

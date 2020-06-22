@@ -97,6 +97,7 @@ public class Archivo {
         try{
             if(!(datosvuelo).exists()){     ///si no existe el archivo datosvuelo.json, lo crea VACIO
                 datosvuelo.createNewFile();
+
             }
 
             BufferedReader bufferDatosVuelo = new BufferedReader(new FileReader(datosvuelo));
