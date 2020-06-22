@@ -77,7 +77,7 @@ public class Usuario {
             }
 
             if (condGold == 1) {
-                mensaje = "GOLD";
+                mensaje = "Gold";
             } else if (condSilver == 1) {
                 mensaje = "Silver";
             } else if (condBronze == 1) {

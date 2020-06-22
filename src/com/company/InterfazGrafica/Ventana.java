@@ -37,7 +37,7 @@ public class Ventana extends javax.swing.JFrame {
     Date fechaElegida;
 
     ///Guardo el numero acompañantes igresada por pantalla
-    int nroAcompañantes;
+    int nroAcompanantes;
 
     ///Como origen es una lista de las posibles ciudades se debe almacenar el indice elegido además de la ciudad
     int indiceListaOrigen;
@@ -632,7 +632,7 @@ public class Ventana extends javax.swing.JFrame {
         lAcompañantesPreservarVuelo.setText("Acompañantes");
 
         bCantidadAcompañantesPreservarVuelo.setFont(new Font("Tahoma", 1, 14)); // NOI18N
-        bCantidadAcompañantesPreservarVuelo.setModel(new SpinnerNumberModel(0, 0, 20, 1));
+        bCantidadAcompañantesPreservarVuelo.setModel(new SpinnerNumberModel(0, 0, 19, 1));
 
         panelAeroTaxiPRegistrarse1.setBackground(new Color(51, 153, 255));
         panelAeroTaxiPRegistrarse1.setBorder(new LineBorder(new Color(0, 153, 255), 4, true));
@@ -1464,7 +1464,7 @@ public class Ventana extends javax.swing.JFrame {
 
             ///Si no lo encontro le pido que ingrese un DNI valido
 
-            if (usuarioEncontrado ==false) {
+            if (!usuarioEncontrado) {
                 JOptionPane.showMessageDialog(null, "Dni incorrecto");
 
                 ///Vuelve a la ventana DNI
@@ -1653,16 +1653,13 @@ public class Ventana extends javax.swing.JFrame {
         bElegirFechaPreservarVuelo.setValue(fecha);
         bCantidadAcompañantesPreservarVuelo.setValue(0);
         textAreaAvionesDisponiblesPreservarVuelo.setText("");
-        bEscribirAvionPreservarVuelo.setText(" ");
+        bEscribirAvionPreservarVuelo.setText("");
         lCostoTotalPreservarVuelo.setText("$");
 
 
 
     }
     private void bConfirmarVueloPreservarVueloActionPerformed(java.awt.event.ActionEvent evt) {
-
-        ///Lista de Datos Vuelo
-        ArrayList<DatosVuelo> listaDatoVuelos = new ArrayList<>();
 
         JFrame ventanaReservarVuelo = pReservarVuelo;
         JFrame ventanaPantallaPrincipal = pantallaPrincipal;
@@ -1681,7 +1678,7 @@ public class Ventana extends javax.swing.JFrame {
             ///Luego guardo la lista en el archivo
             archivo.guardarListaVuelos(listaDatoVuelos);
 
-            JOptionPane.showMessageDialog(null,"Vuelo Reservado con éXito");
+            JOptionPane.showMessageDialog(null,"Vuelo Reservado con éxito");
         }
 
         else
@@ -1698,6 +1695,7 @@ public class Ventana extends javax.swing.JFrame {
 
         ventanaReservarVuelo.setVisible(false);
 
+        borrarComponentes();
 
     }
 
@@ -1833,6 +1831,7 @@ public class Ventana extends javax.swing.JFrame {
             model.removeRow(0);
         }
 
+        listaDatoVuelos = archivo.leoUnArchivoDatosVuelo();
 //        muestro la lista de  DatoVuelos para fecha ingresada por pantalla
         if(listaDatoVuelos!=null) {
             for (DatosVuelo dato : listaDatoVuelos) {
@@ -1938,22 +1937,22 @@ public class Ventana extends javax.swing.JFrame {
         boolean fechaOcupadaPorUsuario=false;
 
         ///Guardo el numero acompañantes igresada por pantalla
-        nroAcompañantes =(int) bCantidadAcompañantesPreservarVuelo.getValue();
+        nroAcompanantes =(int) bCantidadAcompañantesPreservarVuelo.getValue();
 
-        nroAcompañantes++;///Para agregar al usuario en la cantidad maxima de pasajeros
+        nroAcompanantes++;///Para agregar al usuario en la cantidad maxima de pasajeros
 
         ///Si la fecha que ingreso es anterior a la fecha de hoy sale un mensaje diciendo el error
-        if(fechaElegida.hashCode()>fecha.hashCode()){
+        if(fechaElegida.hashCode()>=fecha.hashCode()){
 
 
-            ///Guardo los nombres de los aviones en lista disponioble
+            ///Guardo los nombres de los aviones en lista disponible
             for (Avion avion : listaAviones) {
 
                 avionesDisponibles.add(avion.getIdentificador());
             }
 
 
-            ///Si la lista no esta vacioa, hay reservas
+            ///Si la lista no esta vacia, hay reservas
             if(listaDatoVuelos !=null){
 
 
@@ -1975,7 +1974,7 @@ public class Ventana extends javax.swing.JFrame {
 
                 }
 
-                if(fechaOcupadaPorUsuario==false){
+                if(!fechaOcupadaPorUsuario){
 
                     ///Me fijo si hay reservas de otros usuarios
                     for (DatosVuelo datosVuelos : listaDatoVuelos) {
@@ -1997,7 +1996,7 @@ public class Ventana extends javax.swing.JFrame {
                 for(Avion avion :listaAviones){
 
                     ///Verifica que los aviones disponibles para la cantidad solicitada de acompañantes
-                    if(nroAcompañantes>avion.getMaxPasajeros()){
+                    if(nroAcompanantes >avion.getMaxPasajeros()){
 
                         ///Descarto el avion si no me alcanza la capaciddad de maxima de pasajeros
 
@@ -2005,26 +2004,17 @@ public class Ventana extends javax.swing.JFrame {
 
                     }
                 }
-            }
+                textAreaAvionesDisponiblesPreservarVuelo.setText(avionesDisponibles.toString());
+                ///Guardo en Text area los aviones disponibles
 
-
-
-            if(avionesDisponibles==null){
-
+            }else{
                 JOptionPane.showMessageDialog(null,"No hay aviones disponibles para la fecha elegida");
             }
-            else {
 
-
-                ///Guardo en Text area los aviones disponibles
-                textAreaAvionesDisponiblesPreservarVuelo.setText(avionesDisponibles.toString());
-
-
-            }
         }
         else{
-
-            JOptionPane.showMessageDialog(null, "La fecha ingresada ya pasó. Ingrese una fecha igual o posterior a la fecha de hoy");
+            ///no permite reservar vuelos para el mismo dia
+            JOptionPane.showMessageDialog(null, "La fecha ingresada no es válida. Ingrese una fecha posterior a la fecha de hoy");
         }
 
     }
@@ -2058,7 +2048,7 @@ public class Ventana extends javax.swing.JFrame {
             }
 
             ///Genera un datos vuelo para guardar en el archivo
-            nuevoDato = new DatosVuelo(usuario,fechaElegida,origen,destino,nroAcompañantes,nuevoAvion);
+            nuevoDato = new DatosVuelo(usuario,fechaElegida,origen,destino, nroAcompanantes,nuevoAvion);
             int kilometros=nuevoDato.calcularKms();
             nuevoDato.setKmsRuta(kilometros);
             int costo=nuevoDato.calcularCostoVuelo();
