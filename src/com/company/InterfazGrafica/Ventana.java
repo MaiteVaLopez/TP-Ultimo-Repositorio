@@ -1724,7 +1724,7 @@ public class Ventana extends javax.swing.JFrame {
 
                     }
 
-                    if(fechaBorrada==false){
+                    if(!fechaBorrada){
                         JOptionPane.showMessageDialog(null, "No es posible cancelar el vuelo pues no hay vuelos reservados en esa fecha");
                     }
                 }

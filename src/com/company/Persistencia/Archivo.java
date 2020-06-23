@@ -236,7 +236,8 @@ public class Archivo {
             bufferedWriter.close();
 
         } catch (IOException e) {
-           }
+            System.out.println("Error. No se pudo guardar el archivo Vuelos");
+        }
 
     }
 
