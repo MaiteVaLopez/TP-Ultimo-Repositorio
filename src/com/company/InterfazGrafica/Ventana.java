@@ -1682,6 +1682,8 @@ public class Ventana extends javax.swing.JFrame {
 
         JFrame ventanaCancelarVuelo = pCancelarVuelo;
 
+        ///Booleno que ve si se borro la fecha
+        boolean fechaBorrada= false;
         ///Guardo el dato de la listaDatosVuelo que coincida con la fecha y usuario a borrar y lo guardo
 
         DatosVuelo datoABorrar = null;
@@ -1698,9 +1700,9 @@ public class Ventana extends javax.swing.JFrame {
 
         ArrayList<DatosVuelo> listaModificada= new ArrayList<>();
 
-        if(fecha.equals(fechaCancelar)){
+        if(fecha.hashCode()>=fechaCancelar.hashCode()){
 
-            JOptionPane.showMessageDialog(null,"No se puede Cancelar un vuelo con menos de 24hs de anticipación"); }
+            JOptionPane.showMessageDialog(null,"No se puede Cancelar un vuelo con menos de 24hs de anticipación o la fecha ingresada ya pasó"); }
         else {
             ///Si se ingresa una fecha que ya paso
             if (fecha.hashCode() > fechaCancelar.hashCode()) {
@@ -1716,12 +1718,18 @@ public class Ventana extends javax.swing.JFrame {
                         if ((fechaCancelar.equals(dato.getFecha())) && (usuario.equals(dato.getUsuario()))) {
 
                             datoABorrar = dato;
+
+                            fechaBorrada=true;
                         }
 
                     }
+
+                    if(fechaBorrada==false){
+                        JOptionPane.showMessageDialog(null, "No es posible cancelar el vuelo pues no hay vuelos reservados en esa fecha");
+                    }
                 }
                 else{
-                        JOptionPane.showMessageDialog(null, "No es posible cancelar el vuelo pues no hay vuelos reservados en esa fecha");
+                        JOptionPane.showMessageDialog(null, "No es posible cancelar el vuelo pues la lista de vuelos es null");
                     }
 
             }
